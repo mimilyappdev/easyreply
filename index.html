@@ -947,6 +947,11 @@ const templates = {
     text: '制作を希望のものに関して、下記テンプレートに記載いただけますでしょうか。\n\n【ご依頼の際のテンプレート】\nご依頼の内容をメッセージなどで送付をお願い致します。\nなるべく空欄がないように記載お願いいたします。未定の箇所は未定でも構いません。\n\n・配信者様SNS、活動アカウント\n・ご依頼内容：\n・ご予算：\n・商用利用の有無：\n・詳細：\n　例）カラー、希望の雰囲気（可愛い、クール、ポップなど）、サイズ、解像度など\n・使用範囲：\n　例）グッズ作成、サムネイルなど\n・支払い方法：\n　銀行振込 OR 仲介サイト経由\n（サイト手数料、振込費はご負担となります）\n・ご希望納期：\n・その他オプションの有無：'
   },
 
+  btn_transfer_info: {
+    label: '振込先連絡',
+    type: 'static',
+    text: 'お振込み予定日:\n（予定より遅れる場合は連絡いただけますと幸いです）\n\nお振込み手数料は御負担いただいております。お振込み時のスクリーンショットや写真など添付いただけますとお振込み確認が早くなります。\n\n金融機関によっては口座番号の末尾の1を抜いて入力する場合がございますので、金融機関に合わせて使用ください。\n\nもしお急ぎの場合は添付いただけますと幸いです。\n\n振込み確認後からの制作になりますので、お振込みが遅れる場合は納期がずれ込んで希望する納期に間に合わないことがあります。'
+  },
   btn_decline_budget: {
     label: '理由：予算',
     type: 'static',
@@ -1053,7 +1058,7 @@ const addons = {
 
 // Before-phase button layouts per direction（差し込みゾーンに入るボタン）
 const beforeLayouts = {
-  accept: ['btn_accept_guide', 'btn_estimate', 'btn_quote_confirm'],
+  accept: ['btn_accept_guide', 'btn_estimate', 'btn_quote_confirm', 'btn_transfer_info'],
   condition: ['btn_confirm_budget', 'btn_confirm_deadline', 'btn_required_template'],
   decline: ['btn_decline_budget', 'btn_decline_deadline', 'btn_decline_schedule', 'btn_decline_other']
 };
