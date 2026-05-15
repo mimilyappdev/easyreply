@@ -645,6 +645,56 @@
   }
   .est-note-input:focus { border-color: var(--accent); }
   .est-note-input::placeholder { color: #BBCAD4; }
+
+  /* ── MOBILE RESPONSIVE ── */
+  #mobile-tabs { display: none; }
+
+  @media (max-width: 700px) {
+    .main {
+      flex-direction: column;
+      padding: 0;
+      gap: 0;
+    }
+    .left-panel {
+      width: 100%;
+      padding: 12px 12px 0;
+    }
+    .right-panel {
+      padding: 12px;
+    }
+    #mobile-tabs {
+      display: flex;
+      border-bottom: 1.5px solid var(--border);
+      background: var(--white);
+      position: sticky;
+      top: 56px;
+      z-index: 90;
+    }
+    .mobile-tab {
+      flex: 1;
+      padding: 12px 0;
+      font-family: 'BIZ UDGothic', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      border-bottom: 2.5px solid transparent;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .mobile-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .left-panel.mobile-hidden,
+    .right-panel.mobile-hidden {
+      display: none;
+    }
+    #preview-textarea {
+      height: 280px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -658,6 +708,11 @@
   <div class="header-right"></div>
 </header>
 <div class="gold-line"></div>
+
+<div id="mobile-tabs">
+  <button class="mobile-tab active" id="mtab-op" onclick="switchMobileTab('op')">操作パネル</button>
+  <button class="mobile-tab" id="mtab-pre" onclick="switchMobileTab('pre')">プレビュー</button>
+</div>
 
 <div class="main">
   <!-- LEFT -->
@@ -678,7 +733,7 @@
         <div class="section-label">返答の方向を選ぶ</div>
         <div class="direction-chips">
           <button class="dir-chip accept" data-dir="accept">受ける</button>
-          <button class="dir-chip condition" data-dir="condition">受ける<br>（詳細記載）</button>
+          <button class="dir-chip condition" data-dir="condition">詳細確認して<br>受ける</button>
           <button class="dir-chip decline" data-dir="decline">断る</button>
         </div>
       </div>
@@ -1342,6 +1397,15 @@ document.getElementById('btn-copy').addEventListener('click', () => {
 document.getElementById('btn-reset').addEventListener('click', () => {
   fullReset();
 });
+
+// ── MOBILE TAB SWITCH ──
+function switchMobileTab(tab) {
+  const isOp = tab === 'op';
+  document.querySelector('.left-panel').classList.toggle('mobile-hidden', !isOp);
+  document.querySelector('.right-panel').classList.toggle('mobile-hidden', isOp);
+  document.getElementById('mtab-op').classList.toggle('active', isOp);
+  document.getElementById('mtab-pre').classList.toggle('active', !isOp);
+}
 </script>
 </body>
 </html>
