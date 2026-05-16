@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>設定 — EasyReply</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tilt+Warp&family=Kaisei+Opti:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #F7F2EC;
+    --bg-alt:    #EDE7DF;
+    --surface:   #FFFFFF;
+    --ink:       #2E2A26;
+    --muted:     #7A7068;
+    --slate:     #4A5C6A;
+    --slate-dk:  #38495A;
+    --slate-lt:  #E8EEF2;
+    --gold:      #C8943A;
+    --gold-lt:   #F5E8CF;
+    --border:    #DDD5C8;
+    --border-dk: #C0B8AE;
+    --coral:     #C8523A;
+    --white:     #FFFFFF;
+    --success:   #4A8A6A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    background: var(--bg); color: var(--ink);
+    line-height: 1.7; -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(247,242,236,0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px; height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .hd-logo { font-family: 'Tilt Warp', cursive; font-size: 20px; color: var(--slate); }
+  .hd-sub  { font-size: 11px; color: var(--muted); margin-left: 6px; }
+  .hd-back {
+    font-size: 13px; color: var(--muted); text-decoration: none;
+    display: flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 7px; border: 1px solid var(--border);
+    transition: all 0.16s;
+  }
+  .hd-back:hover { border-color: var(--slate); color: var(--slate); background: var(--surface); }
+
+  /* ── TOP BANNER AD ── */
+  .ad-banner-wrap {
+    display: flex; justify-content: center;
+    padding: 16px 40px 0;
+  }
+  .ad-banner {
+    width: 100%; max-width: 728px; height: 90px;
+    background: var(--bg-alt);
+    border: 1.5px dashed var(--border-dk);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--border-dk); font-size: 12px; letter-spacing: 0.08em;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-hd {
+    max-width: 1100px; margin: 0 auto;
+    padding: 28px 40px 0;
+  }
+  .page-hd h1 {
+    font-family: 'Kaisei Opti', serif;
+    font-size: 26px; color: var(--slate);
+  }
+  .page-hd p { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* ── TABS ── */
+  .tab-bar-wrap {
+    max-width: 1100px; margin: 0 auto;
+    padding: 20px 40px 0;
+  }
+  .tab-bar {
+    display: flex; gap: 0;
+    border-bottom: 2px solid var(--border);
+  }
+  .tab-btn {
+    padding: 10px 22px;
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 14px; font-weight: 700;
+    color: var(--muted);
+    background: none; border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    cursor: pointer; transition: all 0.16s;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .tab-btn:hover { color: var(--slate); }
+  .tab-btn.active { color: var(--slate); border-bottom-color: var(--gold); }
+  .tab-icon { font-size: 15px; }
+
+  /* ── LAYOUT ── */
+  .layout {
+    max-width: 1100px; margin: 0 auto;
+    padding: 28px 40px 80px;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 28px;
+    align-items: start;
+  }
+  .main-col { min-width: 0; }
+
+  /* ── TAB PANES ── */
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+
+  /* ── THEME TAB ── */
+  .pane-desc {
+    font-size: 13px; color: var(--muted); margin-bottom: 20px;
+  }
+  .theme-compare {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+  }
+  .theme-card {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 14px; overflow: hidden;
+    cursor: pointer; transition: all 0.2s;
+    position: relative;
+  }
+  .theme-card:hover { border-color: var(--border-dk); box-shadow: 0 4px 16px rgba(46,42,38,0.10); }
+  .theme-card.selected {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(200,148,58,0.14);
+  }
+  .selected-badge {
+    display: none;
+    position: absolute; top: 10px; right: 10px;
+    background: var(--gold); color: white;
+    font-size: 10px; font-weight: 700;
+    padding: 3px 10px; border-radius: 20px;
+    letter-spacing: 0.05em; z-index: 2;
+  }
+  .theme-card.selected .selected-badge { display: inline-block; }
+
+  /* Mini App Preview */
+  .mini-app {
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+  }
+  .mini-hd {
+    height: 26px; display: flex; align-items: center;
+    padding: 0 10px; gap: 7px;
+  }
+  .mini-logo { font-family: 'Tilt Warp', cursive; font-size: 11px; color: white; }
+  .mini-kana { font-size: 8px; color: rgba(255,255,255,0.45); }
+  .mini-line { height: 2px; }
+  .mini-body {
+    display: grid; grid-template-columns: 96px 1fr;
+    height: 148px;
+  }
+  .mini-left {
+    padding: 8px; display: flex; flex-direction: column; gap: 5px;
+    border-right: 1px solid;
+  }
+  .mini-label {
+    font-size: 7px; font-weight: 700;
+    letter-spacing: 0.05em; margin-bottom: 1px;
+  }
+  .mini-phases { display: flex; gap: 2px; }
+  .mini-ph {
+    flex: 1; height: 11px; border-radius: 2px;
+    border: 1px solid;
+  }
+  .mini-dirs { display: flex; gap: 2px; margin-top: 1px; }
+  .mini-dir { flex: 1; height: 15px; border-radius: 3px; }
+  .mini-cbtn {
+    height: 11px; border-radius: 2px; border: 1px solid;
+  }
+  .mini-right { padding: 8px; display: flex; flex-direction: column; gap: 5px; }
+  .mini-tones { display: flex; gap: 3px; }
+  .mini-tone {
+    height: 15px; border-radius: 3px; border: 1.5px solid;
+  }
+  .mini-prev {
+    flex: 1; border: 1.5px dashed;
+    border-radius: 4px; padding: 5px;
+    display: flex; flex-direction: column; gap: 3px;
+  }
+  .mini-line-el { height: 4px; border-radius: 2px; }
+  .mini-acts { display: flex; gap: 3px; }
+  .mini-act { height: 13px; border-radius: 2px; }
+
+  /* ── WARM THEME PREVIEW COLORS ── */
+  .preview-warm .mini-hd      { background: #4A5C6A; }
+  .preview-warm .mini-line    { background: linear-gradient(90deg,#C8943A,#E0B050,#C8943A); }
+  .preview-warm .mini-body    { background: #F7F2EC; }
+  .preview-warm .mini-left    { background: #EDE7DF; border-color: #DDD5C8; }
+  .preview-warm .mini-label   { color: #7A7068; }
+  .preview-warm .mini-ph      { background: #FFFFFF; border-color: #DDD5C8; }
+  .preview-warm .mini-ph.on   { background: #4A5C6A; border-color: #4A5C6A; }
+  .preview-warm .mini-dir.a   { background: #F5E8CF; }
+  .preview-warm .mini-dir.b   { background: #E8EEF2; }
+  .preview-warm .mini-dir.c   { background: #EDEDED; }
+  .preview-warm .mini-cbtn    { background: #FFFFFF; border-color: #DDD5C8; }
+  .preview-warm .mini-cbtn.on { background: #E8EEF2; border-color: #8BA5B5; }
+  .preview-warm .mini-tone    { background: #FFFFFF; border-color: #DDD5C8; }
+  .preview-warm .mini-tone.on { background: #4A5C6A; border-color: #4A5C6A; }
+  .preview-warm .mini-prev    { background: #FFFFFF; border-color: #DDD5C8; }
+  .preview-warm .mini-line-el { background: #DDD5C8; }
+  .preview-warm .mini-act.p   { background: #4A5C6A; width: 44px; }
+  .preview-warm .mini-act.s   { background: #FFFFFF; border: 1px solid #DDD5C8; width: 32px; }
+  .preview-warm .mini-act.f   { background: #F5E8CF; border: 1px solid #E0C060; flex: 1; }
+
+  /* ── ONYX THEME PREVIEW COLORS ── */
+  .preview-onyx .mini-hd      { background: #141412; }
+  .preview-onyx .mini-line    { background: linear-gradient(90deg,#C8523A,#E06040,#C8523A); }
+  .preview-onyx .mini-body    { background: #1C1C1A; }
+  .preview-onyx .mini-left    { background: #222220; border-color: #363630; }
+  .preview-onyx .mini-label   { color: #888480; }
+  .preview-onyx .mini-ph      { background: #2A2A28; border-color: #363630; }
+  .preview-onyx .mini-ph.on   { background: #141412; border-color: #444440; }
+  .preview-onyx .mini-dir.a   { background: #1A2E22; }
+  .preview-onyx .mini-dir.b   { background: #1A2838; }
+  .preview-onyx .mini-dir.c   { background: #2A2A28; }
+  .preview-onyx .mini-cbtn    { background: #262624; border-color: #363630; }
+  .preview-onyx .mini-cbtn.on { background: #3A1A14; border-color: #C8523A; }
+  .preview-onyx .mini-tone    { background: #262624; border-color: #363630; }
+  .preview-onyx .mini-tone.on { background: #141412; border-color: #444440; }
+  .preview-onyx .mini-prev    { background: #262624; border-color: #363630; }
+  .preview-onyx .mini-line-el { background: #404040; }
+  .preview-onyx .mini-act.p   { background: #C8523A; width: 44px; }
+  .preview-onyx .mini-act.s   { background: #262624; border: 1px solid #363630; width: 32px; }
+  .preview-onyx .mini-act.f   { background: #3A1A14; border: 1px solid #C8523A; flex: 1; }
+
+  /* Theme card info section */
+  .theme-info { padding: 16px 18px; }
+  .theme-color-chips { display: flex; gap: 5px; margin-bottom: 10px; }
+  .chip { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid rgba(0,0,0,0.08); }
+  .theme-name {
+    font-family: 'Kaisei Opti', serif;
+    font-size: 18px; color: var(--ink); margin-bottom: 4px;
+  }
+  .theme-desc { font-size: 12px; color: var(--muted); line-height: 1.7; margin-bottom: 14px; }
+  .theme-select-btn {
+    width: 100%; padding: 10px;
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 13px; font-weight: 700;
+    border-radius: 8px; border: 2px solid var(--border);
+    background: var(--surface); color: var(--muted);
+    cursor: pointer; transition: all 0.18s;
+  }
+  .theme-select-btn:hover { border-color: var(--slate); color: var(--slate); }
+  .theme-card.selected .theme-select-btn {
+    background: var(--gold); border-color: var(--gold); color: white;
+  }
+  .theme-notice {
+    margin-top: 16px; padding: 12px 14px;
+    background: var(--slate-lt); border-radius: 8px;
+    font-size: 12px; color: var(--muted);
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  /* ── PROFILE TAB ── */
+  .form-section { margin-bottom: 28px; }
+  .form-section-title {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.08em; color: var(--muted);
+    margin-bottom: 14px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .form-row { margin-bottom: 14px; }
+  .form-label {
+    font-size: 12px; font-weight: 700; color: var(--slate);
+    display: block; margin-bottom: 5px;
+  }
+  .form-sub { font-size: 11px; color: var(--muted); margin-bottom: 5px; }
+  .form-input {
+    width: 100%; padding: 10px 14px;
+    border: 1.5px solid var(--border); border-radius: 8px;
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 13px; color: var(--ink); background: var(--surface);
+    outline: none; transition: border-color 0.16s;
+  }
+  .form-input:focus { border-color: var(--slate); }
+  .form-input::placeholder { color: var(--border-dk); }
+  .form-note {
+    font-size: 11px; color: var(--muted); margin-top: 5px;
+    padding-left: 2px;
+  }
+  .btn-save {
+    padding: 11px 28px;
+    background: var(--slate); color: white;
+    border: none; border-radius: 9px;
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: background 0.18s;
+  }
+  .btn-save:hover { background: var(--slate-dk); }
+
+  /* ── TEMPLATE JSON TAB ── */
+  .json-toolbar {
+    display: flex; gap: 8px; align-items: center;
+    margin-bottom: 12px; flex-wrap: wrap;
+  }
+  .btn-icon {
+    padding: 8px 14px;
+    border-radius: 7px; font-size: 12px; font-weight: 700;
+    border: 1.5px solid var(--border); background: var(--surface);
+    color: var(--slate); cursor: pointer;
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    transition: all 0.16s; display: flex; align-items: center; gap: 5px;
+  }
+  .btn-icon:hover { border-color: var(--slate); background: var(--slate-lt); }
+  .btn-icon.danger { color: var(--coral); border-color: #F0C0B0; }
+  .btn-icon.danger:hover { background: #FFF0EC; border-color: var(--coral); }
+  .btn-icon input[type="file"] { display: none; }
+  .json-textarea {
+    width: 100%; height: 320px;
+    border: 1.5px solid var(--border); border-radius: 10px;
+    background: var(--surface); padding: 14px 16px;
+    font-family: 'SF Mono', 'Courier New', monospace;
+    font-size: 12px; line-height: 1.7; color: var(--ink);
+    resize: vertical; outline: none; tab-size: 2;
+    transition: border-color 0.16s;
+  }
+  .json-textarea:focus { border-color: var(--slate); }
+  .json-status {
+    margin-top: 8px; font-size: 11px; color: var(--muted);
+    min-height: 18px;
+  }
+  .json-status.ok { color: var(--success); }
+  .json-status.err { color: var(--coral); }
+  .json-guide {
+    margin-top: 16px; padding: 14px 16px;
+    background: var(--bg-alt); border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .json-guide-title {
+    font-size: 11px; font-weight: 700;
+    color: var(--muted); letter-spacing: 0.06em; margin-bottom: 8px;
+  }
+  .json-guide-body { font-size: 12px; color: var(--muted); line-height: 1.8; }
+  .json-guide-body code {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 4px; padding: 1px 6px; font-size: 11px;
+    color: var(--slate);
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar { display: flex; flex-direction: column; gap: 16px; }
+  .ad-sidebar {
+    width: 100%; height: 250px;
+    background: var(--bg-alt);
+    border: 1.5px dashed var(--border-dk);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--border-dk); font-size: 12px; letter-spacing: 0.08em;
+  }
+  .sidebar-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px;
+  }
+  .sidebar-card-title {
+    font-size: 11px; font-weight: 700; color: var(--muted);
+    letter-spacing: 0.06em; margin-bottom: 10px;
+  }
+  .sidebar-link {
+    display: block; padding: 9px 12px;
+    background: var(--bg); border: 1.5px solid var(--border);
+    border-radius: 7px; color: var(--slate); text-decoration: none;
+    font-size: 13px; font-weight: 700;
+    transition: all 0.16s; text-align: center;
+    margin-bottom: 8px;
+  }
+  .sidebar-link:hover { background: var(--slate-lt); border-color: var(--slate); }
+  .sidebar-link.primary {
+    background: var(--slate); color: white; border-color: var(--slate);
+  }
+  .sidebar-link.primary:hover { background: var(--slate-dk); }
+  .sidebar-info { font-size: 11px; color: var(--muted); line-height: 1.7; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--bg); flex-wrap: wrap; gap: 16px;
+  }
+  .ft-logo { font-family: 'Tilt Warp', cursive; font-size: 17px; color: var(--slate); }
+  .ft-links { display: flex; gap: 20px; }
+  .ft-link { font-size: 12px; color: var(--muted); text-decoration: none; }
+  .ft-link:hover { color: var(--slate); }
+  .ft-copy { font-size: 11px; color: var(--border-dk); }
+
+  /* ── TOAST ── */
+  #toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--slate); color: white;
+    padding: 10px 22px; border-radius: 24px;
+    font-size: 13px; font-weight: 700;
+    z-index: 9999; transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1);
+    white-space: nowrap;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+  }
+  #toast.show { transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 800px) {
+    header, footer { padding: 0 20px; }
+    header { padding: 0 20px; }
+    .ad-banner-wrap { padding: 12px 20px 0; }
+    .page-hd, .tab-bar-wrap { padding-left: 20px; padding-right: 20px; }
+    .layout { grid-template-columns: 1fr; padding: 20px 20px 60px; }
+    .theme-compare { grid-template-columns: 1fr; }
+    .sidebar { order: -1; }
+    .ad-sidebar { height: 120px; }
+    footer { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div>
+    <span class="hd-logo">EasyReply</span>
+    <span class="hd-sub">設定</span>
+  </div>
+  <a href="./index.html" class="hd-back">← アプリに戻る</a>
+</header>
+
+<!-- TOP BANNER AD -->
+<div class="ad-banner-wrap">
+  <div class="ad-banner">広告エリア（728 × 90）</div>
+</div>
+
+<!-- PAGE HEADER -->
+<div class="page-hd">
+  <h1>設定</h1>
+  <p>テーマ・プロフィール・テンプレートの管理</p>
+</div>
+
+<!-- TABS -->
+<div class="tab-bar-wrap">
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="theme">
+      <span class="tab-icon">🎨</span>テーマ
+    </button>
+    <button class="tab-btn" data-tab="profile">
+      <span class="tab-icon">👤</span>プロフィール
+    </button>
+    <button class="tab-btn" data-tab="templates">
+      <span class="tab-icon">📝</span>テンプレJSON
+    </button>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+  <div class="main-col">
+
+    <!-- ── テーマタブ ── -->
+    <div class="tab-pane active" id="pane-theme">
+      <p class="pane-desc">テーマを選んでアプリの見た目を変えます。選択後、アプリを開くと反映されます。</p>
+
+      <div class="theme-compare">
+
+        <!-- WARM CARD -->
+        <div class="theme-card" id="card-warm" onclick="setTheme('warm')">
+          <div class="selected-badge">選択中</div>
+
+          <!-- Mini Preview: Warm -->
+          <div class="mini-app preview-warm">
+            <div class="mini-hd">
+              <span class="mini-logo">EasyReply</span>
+              <span class="mini-kana">ラクリプ</span>
+            </div>
+            <div class="mini-line"></div>
+            <div class="mini-body">
+              <div class="mini-left">
+                <div class="mini-label">フェーズ</div>
+                <div class="mini-phases">
+                  <div class="mini-ph on"></div>
+                  <div class="mini-ph"></div>
+                  <div class="mini-ph"></div>
+                </div>
+                <div class="mini-label" style="margin-top:3px;">返答</div>
+                <div class="mini-dirs">
+                  <div class="mini-dir a"></div>
+                  <div class="mini-dir b"></div>
+                  <div class="mini-dir c"></div>
+                </div>
+                <div class="mini-cbtn on"></div>
+                <div class="mini-cbtn"></div>
+                <div class="mini-cbtn"></div>
+              </div>
+              <div class="mini-right">
+                <div class="mini-tones">
+                  <div class="mini-tone" style="width:36px;"></div>
+                  <div class="mini-tone on" style="width:36px;"></div>
+                </div>
+                <div class="mini-prev">
+                  <div class="mini-line-el" style="width:85%;"></div>
+                  <div class="mini-line-el" style="width:60%;"></div>
+                  <div class="mini-line-el" style="width:75%;"></div>
+                  <div class="mini-line-el" style="width:50%;"></div>
+                </div>
+                <div class="mini-acts">
+                  <div class="mini-act p"></div>
+                  <div class="mini-act s"></div>
+                  <div class="mini-act f"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="theme-info">
+            <div class="theme-color-chips">
+              <div class="chip" style="background:#4A5C6A;"></div>
+              <div class="chip" style="background:#C8943A;"></div>
+              <div class="chip" style="background:#F7F2EC;"></div>
+              <div class="chip" style="background:#8BA5B5;"></div>
+            </div>
+            <p class="theme-name">Warm</p>
+            <p class="theme-desc">温かみのあるスレートブルーとアンバーゴールド。北欧的な静けさと温もりを感じる、クリームベースのテーマ。</p>
+            <button class="theme-select-btn">選択する</button>
+          </div>
+        </div>
+
+        <!-- ONYX CARD -->
+        <div class="theme-card" id="card-onyx" onclick="setTheme('onyx')">
+          <div class="selected-badge">選択中</div>
+
+          <!-- Mini Preview: Onyx -->
+          <div class="mini-app preview-onyx">
+            <div class="mini-hd">
+              <span class="mini-logo">EasyReply</span>
+              <span class="mini-kana">ラクリプ</span>
+            </div>
+            <div class="mini-line"></div>
+            <div class="mini-body">
+              <div class="mini-left">
+                <div class="mini-label">フェーズ</div>
+                <div class="mini-phases">
+                  <div class="mini-ph on"></div>
+                  <div class="mini-ph"></div>
+                  <div class="mini-ph"></div>
+                </div>
+                <div class="mini-label" style="margin-top:3px;">返答</div>
+                <div class="mini-dirs">
+                  <div class="mini-dir a"></div>
+                  <div class="mini-dir b"></div>
+                  <div class="mini-dir c"></div>
+                </div>
+                <div class="mini-cbtn on"></div>
+                <div class="mini-cbtn"></div>
+                <div class="mini-cbtn"></div>
+              </div>
+              <div class="mini-right">
+                <div class="mini-tones">
+                  <div class="mini-tone" style="width:36px;"></div>
+                  <div class="mini-tone on" style="width:36px;"></div>
+                </div>
+                <div class="mini-prev">
+                  <div class="mini-line-el" style="width:85%;"></div>
+                  <div class="mini-line-el" style="width:60%;"></div>
+                  <div class="mini-line-el" style="width:75%;"></div>
+                  <div class="mini-line-el" style="width:50%;"></div>
+                </div>
+                <div class="mini-acts">
+                  <div class="mini-act p"></div>
+                  <div class="mini-act s"></div>
+                  <div class="mini-act f"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="theme-info">
+            <div class="theme-color-chips">
+              <div class="chip" style="background:#141412;"></div>
+              <div class="chip" style="background:#C8523A;"></div>
+              <div class="chip" style="background:#1C1C1A;"></div>
+              <div class="chip" style="background:#E4E0DA;"></div>
+            </div>
+            <p class="theme-name">Onyx</p>
+            <p class="theme-desc">ディープチャコールとコーラルレッドの鮮烈なコントラスト。都会的でシャープな、ダークテーマ。</p>
+            <button class="theme-select-btn">選択する</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="theme-notice">
+        💡 設定はブラウザに保存されます。アプリを開くと自動的に適用されます。
+      </div>
+    </div>
+
+    <!-- ── プロフィールタブ ── -->
+    <div class="tab-pane" id="pane-profile">
+      <p class="pane-desc">屋号・SNS情報を登録すると、テンプレートに自動反映されます。（機能連携は次のバージョンで対応予定）</p>
+
+      <div class="form-section">
+        <p class="form-section-title">基本情報</p>
+        <div class="form-row">
+          <label class="form-label" for="p-name">クリエイター名 / 屋号</label>
+          <p class="form-sub">テンプレート内の <code style="background:var(--bg-alt);padding:1px 5px;border-radius:3px;font-size:11px;">{{creator_name}}</code> に反映されます</p>
+          <input class="form-input" id="p-name" type="text" placeholder="例）SeventhWorks">
+        </div>
+      </div>
+
+      <div class="form-section">
+        <p class="form-section-title">SNS / リンク</p>
+        <div class="form-row">
+          <label class="form-label" for="p-twitter">X（Twitter）URL</label>
+          <input class="form-input" id="p-twitter" type="url" placeholder="https://twitter.com/yourname">
+        </div>
+        <div class="form-row">
+          <label class="form-label" for="p-web">Webサイト URL</label>
+          <input class="form-input" id="p-web" type="url" placeholder="https://yourportfolio.com">
+          <p class="form-note">納品テンプレートのフッターリンクに使用されます</p>
+        </div>
+      </div>
+
+      <button class="btn-save" onclick="saveProfile()">保存する</button>
+    </div>
+
+    <!-- ── テンプレJSONタブ ── -->
+    <div class="tab-pane" id="pane-templates">
+      <p class="pane-desc">テンプレートの文言をJSONで管理・書き出し・読み込みできます。</p>
+
+      <div class="json-toolbar">
+        <button class="btn-icon" onclick="saveTemplatesJSON()">💾 保存</button>
+        <button class="btn-icon" onclick="exportJSON()">↓ JSONをダウンロード</button>
+        <label class="btn-icon">
+          ↑ ファイルから読み込む
+          <input type="file" accept=".json" onchange="importJSON(event)">
+        </label>
+        <button class="btn-icon danger" onclick="resetTemplatesJSON()">✕ リセット</button>
+        <span id="json-valid-status" class="json-status"></span>
+      </div>
+
+      <textarea
+        class="json-textarea"
+        id="templates-json"
+        spellcheck="false"
+        placeholder="ここにJSONを貼り付けるか、index.htmlのエクスポート機能で出力したデータを読み込んでください。"
+        oninput="validateJSON(this.value)"
+      ></textarea>
+
+      <div class="json-guide">
+        <p class="json-guide-title">JSON 構造のガイド</p>
+        <div class="json-guide-body">
+          <p>以下の構造でテンプレートを管理します。<code>templates</code> 内の <code>text</code> を編集することで文言をカスタマイズできます。</p>
+          <pre style="margin-top:10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px;font-size:11px;overflow-x:auto;color:var(--ink);line-height:1.7;">{
+  "creator": {
+    "name": "屋号・クリエイター名",
+    "twitter": "https://twitter.com/...",
+    "web": "https://..."
+  },
+  "sandwiches": {
+    "accept": { "top": "挨拶文...", "bottom": "締め文..." },
+    "decline": { "top": "挨拶文...", "bottom": "締め文..." }
+  },
+  "templates": {
+    "btn_accept_guide": {
+      "label": "受諾・見積案内",
+      "type": "static",
+      "text": "カスタマイズしたテキスト..."
+    }
+  }
+}</pre>
+          <p style="margin-top:8px;">※ index.html にエクスポート機能が追加されると、現在の設定をここに読み込めます。</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main-col -->
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="ad-sidebar">広告エリア（300 × 250）</div>
+
+    <div class="sidebar-card">
+      <p class="sidebar-card-title">ナビゲーション</p>
+      <a href="./index.html" class="sidebar-link primary">← アプリを開く</a>
+      <a href="../index.html" class="sidebar-link">EasyReplyとは</a>
+    </div>
+
+    <div class="sidebar-card">
+      <p class="sidebar-card-title">保存状態</p>
+      <p class="sidebar-info" id="save-status-text">localStorageに保存されます。ブラウザを閉じても保持されますが、キャッシュ削除で消える場合があります。</p>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <span class="ft-logo">EasyReply</span>
+    <span style="font-size:11px;color:var(--muted);margin-left:6px;">by Mimily</span>
+  </div>
+  <div class="ft-links">
+    <a href="../privacy.html" class="ft-link">プライバシーポリシー</a>
+    <a href="../terms.html" class="ft-link">利用規約</a>
+  </div>
+  <p class="ft-copy">© 2025 Mimily</p>
+</footer>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ── TAB SWITCHING ──
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('pane-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ── DEFAULT TEMPLATES（index.htmlのデフォルト値）──
+const DEFAULT_TEMPLATES = {
+  version: '1.0',
+  creator: { name: '', twitter: '', web: '' },
+  sandwiches: {
+    accept:    { top: 'この度はお問合せいただきありがとうございます。\nSeventhWorksです。', bottom: 'どうぞよろしくお願い申し上げます。' },
+    condition: { top: 'この度はお問合せいただきありがとうございます。\nSeventhWorksです。', bottom: 'どうぞよろしくお願い申し上げます。' },
+    decline:   { top: 'この度はお問い合わせいただきありがとうございます。\n\nせっかくお問合せいただいたにも関わらず今回依頼をお受けすることが出来かねます。', bottom: 'また機会がございましたらお問い合わせいただけますと幸いです。\n\n何卒よろしくお願い申し上げます。' }
+  },
+  templates: {
+    btn_accept_guide:       { label: '受諾・見積案内', type: 'static', text: '頂戴しました内容からお見積もりを作成いたしますので少々お待ちくださいませ。\n\n3営業日程度でご返信しておりますが、お急ぎの場合は一言いただければ幸いです。' },
+    btn_estimate:           { label: '見積もり提示', type: 'estimate', text: '' },
+    btn_quote_confirm:      { label: '見積確認後連絡（3万以上）', type: 'static', text: 'お世話になっております。\n\nお見積りをご確認いただきましてありがとうございます。\nお支払いに関しては企業様以外は全額前払いをお願いしておりますが、三万円以上の場合は前金で半額、納品前に最終確認をいただいて全額振り込み後納品という形を取らせていただいております。\n銀行振込または仲介サイトの利用も可能です。振込手数料は負担いただいております。\n銀行振込で問題なければ振込先を連絡いたします。\n\nご検討の程よろしくお願い申し上げます。' },
+    btn_confirm_budget:     { label: '予算確認', type: 'static', text: 'ご予算を教えていただけないでしょうか。' },
+    btn_confirm_deadline:   { label: '納期確認', type: 'static', text: '納品希望日を教えていただけないでしょうか。' },
+    btn_required_template:  { label: '必要事項テンプレ', type: 'static', text: '制作を希望のものに関して、下記テンプレートに記載いただけますでしょうか。\n\n【ご依頼の際のテンプレート】\nご依頼の内容をメッセージなどで送付をお願い致します。\nなるべく空欄がないように記載お願いいたします。未定の箇所は未定でも構いません。\n\n・配信者様SNS、活動アカウント\n・ご依頼内容：\n・ご予算：\n・商用利用の有無：\n・詳細：\n　例）カラー、希望の雰囲気（可愛い、クール、ポップなど）、サイズ、解像度など\n・使用範囲：\n　例）グッズ作成、サムネイルなど\n・支払い方法：\n　銀行振込 OR 仲介サイト経由\n（サイト手数料、振込費はご負担となります）\n・ご希望納期：\n・その他オプションの有無：' },
+    btn_transfer_info:      { label: '振込先連絡', type: 'static', text: 'お振込み予定日:\n（予定より遅れる場合は連絡いただけますと幸いです）\n\nお振込み手数料は御負担いただいております。お振込み時のスクリーンショットや写真など添付いただけますとお振込み確認が早くなります。\n\n金融機関によっては口座番号の末尾の1を抜いて入力する場合がございますので、金融機関に合わせて使用ください。\n\nもしお急ぎの場合は添付いただけますと幸いです。\n\n振込み確認後からの制作になりますので、お振込みが遅れる場合は納期がずれ込んで希望する納期に間に合わないことがあります。' },
+    btn_decline_budget:     { label: '理由：予算', type: 'static', text: '現在ご提示いただいている予算では制作が難しいです。' },
+    btn_decline_deadline:   { label: '理由：納期', type: 'static', text: '現在ご提示いただいている納期では制作が難しいです。' },
+    btn_decline_schedule:   { label: '理由：スケジュール', type: 'static', text: '現在ご提示いただいている内容ではスケジュールが合わないため、制作が難しいです。' },
+    btn_decline_other:      { label: '理由：その他', type: 'input', text: '' },
+    btn_check_draft:        { label: '制作物確認', type: 'static', text: 'お世話になっております。\n\nデザインを作成致しましたのでご確認お願い致します。\n\nどうしても入れて欲しいデザインやポイントがございましたら記載くださいませ。\n\n色味や簡易的な修正は可能ですが、大幅に変更や修正が発生する場合は修正費が必要となります。\n\n気になるところや修正点があればサンプル画像内に直接記載いただいても大丈夫です。\n\nなお修正指示につきましてはお互いの齟齬をなくす為、具体的な指示でお願い致します。\n\nラフ時点からおまかせの場合は恐れ入りますが、全ての範囲など描き直しする場合などは修正料金を頂戴します。\n\n問題なければ色味やバランスを最終調整してこちらで納品致します。\n\nお忙しい中大変申し訳ありませんが、お手隙の際にご返信いただけますと幸いです。\n\n何卒よろしくお願い申し上げます。' },
+    btn_production_start:   { label: '制作開始連絡', type: 'static', text: 'お世話になっております。\n\nお忙しいところお振込みいただき有難うございました。\n\nこれより制作に入ります。\n\n心を込めて作成させていただきます。\n\nラフもしくはデザインが完成しましたら、ご連絡いたします。\n\n引き続き何卒よろしくお願い申し上げます。' },
+    btn_rough_check:        { label: 'ラフ確認', type: 'static', text: 'お世話になっております。ラフを作成致しましたのでご確認お願い致します。\n当初記載いただきました内容から作成しておりますが、大幅にラフから修正する場合は修正費が必要となります。\n気になるところや修正点があれば画像内にでも直接記載いただいて大丈夫です。\nお忙しい中大変申し訳ありませんが、お手隙の際にご返信いただけますと幸いです。\n\n清書に取り掛かりますと追加のご要望がある場合は追加料金が発生する場合がございます。\nその際は別途ご連絡いただけますと幸いです。\n引き続き何卒よろしくお願い致します。\n\n※ミニキャラクターなどデフォルメをする制作物に関してはデザインを簡略化して作画を行う関係上、どうしても入れて欲しいデザインやポイントがございましたら記載くださいませ。' },
+    btn_rough_revision_reply: { label: 'ラフ確認後返信・修正あり', type: 'static', text: 'お世話になっております。\nお忙しいところ、ラフを確認いただき有難うございます。\nいただきました修正点で再度修正いたします。\n恐縮ながら修正点が増える場合や追加指示の場合は追加料金がかかります。\nその際は事前にご連絡いたします。予算内で納めたい場合などあればご連絡ください。\n\n引き続きよろしくお願い申し上げます。' },
+    btn_rough_no_revision:  { label: 'ラフ確認・修正点なし', type: 'static', text: 'お世話になっております。\nお忙しいところ、ラフを確認いただき有難うございます。\nこれより清書に入ります。\n\n清書に取り掛かりますと追加のご要望がある場合は追加料金が発生する場合がございます。\nその際は別途ご連絡いただけますと幸いです。\n\n引き続き何卒よろしくお願い申し上げます。' },
+    btn_rough_fix:          { label: 'ラフ修正', type: 'static', text: 'お世話になっております。\nいただいた指示に基づいて修正いたしましたので、恐れ入りますがご確認お願い致します。\n\n恐縮ながらさらに修正点が増える場合や追加指示の場合は追加料金がかかります。\nその際は事前にご連絡いたします。予算内で納めたい場合などあればご連絡ください。\n\n引き続きよろしくお願い申し上げます。' },
+    btn_revision_ok:        { label: '修正確認・問題なし', type: 'static', text: 'お世話になっております。\nお忙しいところ、修正点をご確認いただき有難うございます。\nこれより清書に入ります。\n\n清書に取り掛かりますと追加のご要望がある場合は追加料金が発生する場合がございます。\nその際は別途ご連絡いただけますと幸いです。\n\n引き続き何卒よろしくお願い申し上げます。' },
+    btn_payment_request:    { label: '制作完了・振込依頼', type: 'variable', variables: [{ key: 'bank_info', label: '振込先情報', placeholder: '銀行名・支店・口座番号・名義など' }], text: 'お世話になっております。\n\n制作物が完成いたしましたので、\n残金分のお振込みをお願い致します。\n\nお振込み先：\n{{bank_info}}\n\nお振込み予定日：\n（ご予定をご記載ください）\n\n※お振込みが遅れる場合はご連絡いただけますと幸いです。\n※お振込み手数料はご負担をお願いしております。\n\nまた、お振込み後にスクリーンショット等を添付いただけますと、\n確認がスムーズになります。\n\nなお、お振込み確認後の納品・進行となりますため、\nご入金状況によっては納期が変更となる場合がございます。\n\nお忙しいところ恐縮ですが、\nお手隙の際にご対応いただけますと幸いです。\n\n何卒よろしくお願い申し上げます。' },
+    btn_delivery_no_payment: { label: '納品＆完了（振込なし）', type: 'variable', variables: [{ key: 'file_url', label: 'ダウンロードURL', placeholder: 'https://...' }, { key: 'password', label: 'パスワード', placeholder: 'パスワードを入力' }], text: 'お世話になっております。\n\n制作物を納品いたします。\n\n【ダウンロードURL】\n{{file_url}}\n\n【パスワード】\n{{password}}\n\n納品作品につきましては、規約の範囲内でご使用をお願い致します。\n\nまた、ポートフォリオ・サンプル・制作実績・メイキング等へ掲載させていただく場合がございます。\n公開時期のご希望や、実績非公開をご希望の場合はご連絡くださいませ。\n（※実績非公開は別途料金となります）\n\nSNS等へ掲載いただく際は、透かし入りでご使用いただけますと幸いです。\n\nご不明点などございましたら、お気軽にご連絡ください。\n\nこの度はご依頼いただき誠にありがとうございました。\nまた機会がございましたら、何卒よろしくお願い申し上げます。\n\nX：https://twitter.com/7thworks7\nWeb：https://meltingportfolio.tumblr.com' },
+    btn_delivery_with_payment: { label: '納品＆完了（振込あり）', type: 'variable', variables: [{ key: 'file_url', label: 'ダウンロードURL', placeholder: 'https://...' }, { key: 'password', label: 'パスワード', placeholder: 'パスワードを入力' }], text: 'お世話になっております。\n\nお忙しいところお振込みいただき、誠にありがとうございました。\nご入金を確認いたしました。\n\n制作物を納品いたします。\n\n【ダウンロードURL】\n{{file_url}}\n\n【パスワード】\n{{password}}\n\n納品作品につきましては、規約の範囲内でご使用をお願い致します。\n\nまた、ポートフォリオ・サンプル・制作実績・メイキング等へ掲載させていただく場合がございます。\n公開時期のご希望や、実績非公開をご希望の場合はご連絡くださいませ。\n（※実績非公開は別途料金となります）\n\nSNS等へ掲載いただく際は、透かし入りでご使用いただけますと幸いです。\n\nご不明点などございましたら、お気軽にご連絡ください。\n\nこの度はご依頼いただき誠にありがとうございました。\nまた機会がございましたら、何卒よろしくお願い申し上げます。\n\nX：https://twitter.com/7thworks7\nWeb：https://meltingportfolio.tumblr.com' }
+  },
+  addons: {
+    portfolio:       '実績掲載につきましては、公開可能な場合はご連絡いただけますと幸いです。',
+    revision:        '修正は〇回まで無料で承っております。それ以上は別途修正料金をいただく場合がございます。',
+    deadline_notice: 'お振込みの確認後に制作を開始いたします。ご入金が遅れた場合、納期が変更となる場合がございます。'
+  }
+};
+
+// ── THEME ──
+let currentTheme = localStorage.getItem('er_theme') || 'warm';
+
+function setTheme(theme) {
+  localStorage.setItem('er_theme', theme);
+  currentTheme = theme;
+  updateThemeUI();
+  showToast('テーマを「' + (theme === 'warm' ? 'Warm' : 'Onyx') + '」に変更しました');
+}
+
+function updateThemeUI() {
+  document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('selected'));
+  const card = document.getElementById('card-' + currentTheme);
+  if (card) card.classList.add('selected');
+}
+
+// ── PROFILE ──
+function saveProfile() {
+  const profile = {
+    name:    document.getElementById('p-name').value.trim(),
+    twitter: document.getElementById('p-twitter').value.trim(),
+    web:     document.getElementById('p-web').value.trim(),
+  };
+  localStorage.setItem('er_profile', JSON.stringify(profile));
+  showToast('プロフィールを保存しました');
+}
+
+function loadProfile() {
+  const raw = localStorage.getItem('er_profile');
+  if (!raw) return;
+  try {
+    const p = JSON.parse(raw);
+    document.getElementById('p-name').value    = p.name    || '';
+    document.getElementById('p-twitter').value = p.twitter || '';
+    document.getElementById('p-web').value     = p.web     || '';
+  } catch(e) {}
+}
+
+// ── TEMPLATE JSON ──
+function validateJSON(val) {
+  const el = document.getElementById('json-valid-status');
+  if (!val.trim()) { el.textContent = ''; el.className = 'json-status'; return; }
+  try {
+    JSON.parse(val);
+    el.textContent = '✓ 有効なJSON'; el.className = 'json-status ok';
+  } catch(e) {
+    el.textContent = '✗ ' + e.message; el.className = 'json-status err';
+  }
+}
+
+function saveTemplatesJSON() {
+  const val = document.getElementById('templates-json').value;
+  if (!val.trim()) { showToast('内容が空です', true); return; }
+  try {
+    const parsed = JSON.parse(val);
+    localStorage.setItem('er_templates', JSON.stringify(parsed));
+    showToast('テンプレートを保存しました');
+  } catch(e) {
+    showToast('JSONの形式が正しくありません', true);
+  }
+}
+
+function exportJSON() {
+  const raw = localStorage.getItem('er_templates');
+  // localStorageになければデフォルトをそのままエクスポート
+  const data = raw ? JSON.parse(raw) : DEFAULT_TEMPLATES;
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'easyreply-templates.json';
+  a.click();
+  showToast('ダウンロードしました');
+}
+
+function importJSON(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const parsed = JSON.parse(ev.target.result);
+      document.getElementById('templates-json').value = JSON.stringify(parsed, null, 2);
+      validateJSON(JSON.stringify(parsed, null, 2));
+      showToast('読み込みました。「保存」で反映されます');
+    } catch(err) {
+      showToast('JSONの形式が正しくありません', true);
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+function resetTemplatesJSON() {
+  if (!confirm('保存済みのテンプレートデータを削除しますか？\n（アプリはデフォルトのテンプレートに戻ります）')) return;
+  localStorage.removeItem('er_templates');
+  // リセット後はデフォルトを表示
+  const ta = document.getElementById('templates-json');
+  ta.value = JSON.stringify(DEFAULT_TEMPLATES, null, 2);
+  document.getElementById('json-valid-status').textContent = '※ デフォルト値に戻しました';
+  showToast('リセットしました');
+}
+
+function loadTemplatesJSON() {
+  const raw = localStorage.getItem('er_templates');
+  const ta  = document.getElementById('templates-json');
+  const src = raw ? JSON.parse(raw) : DEFAULT_TEMPLATES;
+  ta.value  = JSON.stringify(src, null, 2);
+  validateJSON(ta.value);
+  if (!raw) {
+    document.getElementById('json-valid-status').textContent =
+      '※ デフォルト値を表示中（⚙設定ボタンで最新のテンプレートを書き出せます）';
+  }
+}
+
+// ── TOAST ──
+function showToast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = isError ? '#993C1D' : '#4A5C6A';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+// ── INIT ──
+updateThemeUI();
+loadProfile();
+loadTemplatesJSON();
+</script>
+</body>
+</html>

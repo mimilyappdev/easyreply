@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>利用規約 — Mimily</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tilt+Warp&family=Kaisei+Opti:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #F7F2EC;
+    --surface:   #FFFFFF;
+    --ink:       #2E2A26;
+    --muted:     #7A7068;
+    --slate:     #4A5C6A;
+    --slate-dk:  #38495A;
+    --slate-lt:  #E8EEF2;
+    --gold:      #C8943A;
+    --gold-lt:   #F5E8CF;
+    --border:    #DDD5C8;
+    --border-dk: #C0B8AE;
+    --white:     #FFFFFF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    background: var(--bg); color: var(--ink);
+    line-height: 1.8; -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--slate); text-decoration: none; border-bottom: 1px solid var(--border); transition: color 0.15s; }
+  a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* HEADER */
+  header {
+    background: rgba(247,242,236,0.93);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .hd-logo { font-family: 'Tilt Warp', cursive; font-size: 20px; color: var(--slate); text-decoration: none; border: none; }
+  .hd-kana { font-size: 11px; color: var(--muted); margin-left: 6px; font-family: 'Zen Kaku Gothic New', sans-serif; }
+  .hd-right { font-size: 12px; color: var(--muted); }
+
+  /* HERO */
+  .page-hero {
+    background: var(--slate);
+    padding: 56px 48px;
+    text-align: center;
+  }
+  .page-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.5); margin-bottom: 12px; text-transform: uppercase;
+  }
+  .page-title {
+    font-family: 'Kaisei Opti', serif;
+    font-size: 36px; color: var(--white);
+    margin-bottom: 12px; line-height: 1.4;
+  }
+  .page-updated { font-size: 12px; color: rgba(255,255,255,0.45); }
+
+  /* CONTENT */
+  .content-wrap {
+    max-width: 760px; margin: 0 auto;
+    padding: 72px 48px 96px;
+  }
+  .toc {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px 28px; margin-bottom: 56px;
+  }
+  .toc-title { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 12px; }
+  .toc-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .toc-list li { font-size: 13px; padding-left: 12px; position: relative; }
+  .toc-list li::before { content: '—'; position: absolute; left: 0; color: var(--gold); font-size: 11px; top: 3px; }
+  .toc-list a { font-size: 13px; color: var(--slate); border-bottom-color: transparent; }
+  .toc-list a:hover { color: var(--gold); }
+
+  .article { display: flex; flex-direction: column; gap: 48px; }
+  .art-section { scroll-margin-top: 80px; }
+  .art-num {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    color: var(--gold); margin-bottom: 8px; text-transform: uppercase;
+  }
+  .art-head {
+    font-family: 'Kaisei Opti', serif;
+    font-size: 22px; color: var(--slate);
+    border-left: 3px solid var(--gold);
+    padding-left: 14px; margin-bottom: 18px; line-height: 1.5;
+  }
+  .art-body { font-size: 14px; color: var(--ink); line-height: 1.9; }
+  .art-body p + p { margin-top: 12px; }
+  .art-body ul { padding-left: 20px; margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+  .art-body ul li { font-size: 14px; }
+  .art-body .note {
+    font-size: 13px; color: var(--muted); background: var(--slate-lt);
+    border-radius: 8px; padding: 12px 16px; margin-top: 14px;
+    border-left: 3px solid var(--slate);
+  }
+  .art-body .warn {
+    font-size: 13px; color: #7A4A1A; background: var(--gold-lt);
+    border-radius: 8px; padding: 12px 16px; margin-top: 14px;
+    border-left: 3px solid var(--gold);
+  }
+  .art-divider { border: none; border-top: 1px solid var(--border); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--bg); gap: 24px; flex-wrap: wrap;
+  }
+  .ft-logo { font-family: 'Tilt Warp', cursive; font-size: 18px; color: var(--slate); }
+  .ft-by { font-size: 11px; color: var(--muted); margin-left: 8px; font-family: 'Zen Kaku Gothic New', sans-serif; }
+  .ft-links { display: flex; gap: 24px; }
+  .ft-link { font-size: 12px; color: var(--muted); border-bottom: none; }
+  .ft-link:hover { color: var(--slate); }
+  .ft-copy { font-size: 11px; color: var(--border-dk); }
+
+  @media (max-width: 720px) {
+    header { padding: 0 20px; }
+    .page-hero { padding: 48px 20px; }
+    .page-title { font-size: 28px; }
+    .content-wrap { padding: 48px 20px 72px; }
+    footer { padding: 28px 20px; flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <a href="https://mimilyappdev.github.io/" class="hd-logo">Mimily</a>
+    <span class="hd-kana">アプリ</span>
+  </div>
+  <div class="hd-right">利用規約</div>
+</header>
+
+<div class="page-hero">
+  <p class="page-label">Legal</p>
+  <h1 class="page-title">利用規約</h1>
+  <p class="page-updated">最終更新日：2025年5月</p>
+</div>
+
+<div class="content-wrap">
+
+  <div class="toc">
+    <p class="toc-title">目次</p>
+    <ol class="toc-list">
+      <li><a href="#s1">本規約への同意</a></li>
+      <li><a href="#s2">サービスの内容</a></li>
+      <li><a href="#s3">利用上の注意</a></li>
+      <li><a href="#s4">禁止事項</a></li>
+      <li><a href="#s5">著作権・知的財産権</a></li>
+      <li><a href="#s6">免責事項</a></li>
+      <li><a href="#s7">サービスの変更・停止</a></li>
+      <li><a href="#s8">準拠法・管轄</a></li>
+    </ol>
+  </div>
+
+  <div class="article">
+
+    <section class="art-section" id="s1">
+      <p class="art-num">Article 01</p>
+      <h2 class="art-head">本規約への同意</h2>
+      <div class="art-body">
+        <p>本利用規約（以下「本規約」）は、Mimily（以下「当方」）が提供するすべてのWebアプリケーション（EasyReply・RakuThrough・RakuNovelほか。以下「本サービス」）の利用条件を定めるものです。</p>
+        <p>本サービスをご利用いただくことで、本規約に同意したものとみなします。同意いただけない場合は、本サービスの利用をお控えください。</p>
+      </div>
+    </section>
+
+    <hr class="art-divider">
+
+    <section class="art-section" id="s2">
+      <p class="art-num">Article 02</p>
+      <h2 class="art-head">サービスの内容</h2>
+      <div class="art-body">
+        <p>本サービスは、クリエイター・個人事業主の業務効率化を支援することを目的としたWebアプリケーション群です。</p>
+        <p>本サービスは現在、無料にてご提供しています。一部の機能については、将来的に有料プランを導入する予定があります。有料プランの導入にあたっては、事前に告知を行います。</p>
+      </div>
+    </section>
+
+    <hr class="art-divider">
+
+    <section class="art-section" id="s3">
+      <p class="art-num">Article 03</p>
+      <h2 class="art-head">利用上の注意</h2>
+      <div class="art-body">
+        <p>本サービスはブラウザ上で動作するWebアプリです。以下の点をあらかじめご了承ください。</p>
+        <ul>
+          <li>ブラウザのキャッシュ・ストレージを削除すると、保存データが失われる場合があります</li>
+          <li>機種変更・端末変更の際、データの引き継ぎができない場合があります（クラウドバックアップ機能は準備中）</li>
+          <li>推奨ブラウザ以外の環境では、一部の機能が正常に動作しないことがあります</li>
+        </ul>
+        <p class="warn">大切なデータは定期的にご自身でテキストのコピーなど、バックアップをお取りください。</p>
+      </div>
+    </section>
+
+    <hr class="art-divider">
+
+    <section class="art-section" id="s4">
+      <p class="art-num">Article 04</p>
+      <h2 class="art-head">禁止事項</h2>
+      <div class="art-body">
+        <p>本サービスの利用にあたり、以下の行為を禁止します。</p>
+        <ul>
+          <li>本サービスを違法な目的または公序良俗に反する目的で使用すること</li>
+          <li>本サービスのソースコード・デザインを無断で複製・販売・再配布すること</li>
+          <li>本サービスの運営を妨害する行為（過度なアクセス・クローリングなど）</li>
+          <li>当方または第三者の知的財産権・プライバシー権・名誉権を侵害する行為</li>
+          <li>本サービスを通じて生成したテンプレート文章を、他者を欺く目的で使用すること</li>
+          <li>その他、当方が不適切と判断する行為</li>
+        </ul>
+      </div>
+    </section>
+
+    <hr class="art-divider">
+
+    <section class="art-section" id="s5">
+      <p class="art-num">Article 05</p>
+      <h2 class="art-head">著作権・知的財産権</h2>
+      <div class="art-body">
+        <p>本サービスのデザイン・コード・テンプレート文章・ロゴ等に関する著作権・知的財産権は、当方に帰属します。</p>
+        <p>利用者がご自身の業務のために本サービスを通じて生成・編集したテンプレート文章については、利用者自身が著作権を有します。当方は、利用者が生成したテキストに対して権利を主張しません。</p>
+        <p class="note">本サービスで利用しているフォント・外部ライブラリ等については、各ライセンスに従い使用しています。</p>
+      </div>
+    </section>
+
+    <hr class="art-divider">
+
+    <section class="art-section" id="s6">
+      <p class="art-num">Article 06</p>
+      <h2 class="art-head">免責事項</h2>
+      <div class="art-body">
+        <p>当方は、本サービスの提供を通じて生じた以下の事項について、一切の責任を負いません。</p>
+        <ul>
+          <li>本サービスの利用によって生じた損害・損失</li>
+          <li>テンプレート文章の内容・表現に起因するトラブル</li>
+          <li>通信環境・ブラウザの問題による機能不全</li>
+          <li>データの消失・破損</li>
+          <li>サービスの停止・中断による機会損失</li>
+        </ul>
+        <p>本サービスのテンプレートは汎用的な文例として提供しています。実際の取引・業務における利用については、利用者ご自身の責任においてご判断ください。</p>
+      </div>
+    </section>
+
+    <hr class="art-divider">
+
+    <section class="art-section" id="s7">
+      <p class="art-num">Article 07</p>
+      <h2 class="art-head">サービスの変更・停止</h2>
+      <div class="art-body">
+        <p>当方は、以下の場合において、事前の告知なく本サービスの内容を変更、または提供を停止することがあります。</p>
+        <ul>
+          <li>サービスの保守・改善のために必要な場合</li>
+          <li>天災・システム障害など不可抗力が生じた場合</li>
+          <li>その他、当方がやむを得ないと判断した場合</li>
+        </ul>
+        <p>サービスの終了にあたっては、可能な限り事前に告知するよう努めます。</p>
+      </div>
+    </section>
+
+    <hr class="art-divider">
+
+    <section class="art-section" id="s8">
+      <p class="art-num">Article 08</p>
+      <h2 class="art-head">準拠法・管轄</h2>
+      <div class="art-body">
+        <p>本規約は日本法に準拠し、解釈されます。本サービスに関して紛争が生じた場合は、当方の所在地を管轄する裁判所を専属的合意管轄とします。</p>
+        <p>本規約に関するご質問は、下記よりお問い合わせください。</p>
+        <p class="note">運営：Mimily<br>X（旧Twitter）：<a href="https://twitter.com/7thworks7" target="_blank" rel="noopener">@7thworks7</a></p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<footer>
+  <div>
+    <span class="ft-logo">Mimily</span>
+    <span class="ft-by">アプリ</span>
+  </div>
+  <div class="ft-links">
+    <a href="./privacy.html" class="ft-link">プライバシーポリシー</a>
+    <a href="./terms.html" class="ft-link" style="color:var(--slate);">利用規約</a>
+    <a href="https://mimilyappdev.github.io/" class="ft-link">アプリ一覧</a>
+  </div>
+  <p class="ft-copy">© 2025 Mimily</p>
+</footer>
+
+</body>
+</html>

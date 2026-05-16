@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>プライバシーポリシー — Mimily</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tilt+Warp&family=Kaisei+Opti:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #F7F2EC;
+    --surface:   #FFFFFF;
+    --ink:       #2E2A26;
+    --muted:     #7A7068;
+    --slate:     #4A5C6A;
+    --slate-lt:  #E8EEF2;
+    --gold:      #C8943A;
+    --border:    #DDD5C8;
+    --border-dk: #C0B8AE;
+    --white:     #FFFFFF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    background: var(--bg); color: var(--ink);
+    line-height: 1.9; -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--slate); text-decoration: none; border-bottom: 1px solid var(--border); transition: color 0.15s; }
+  a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  header {
+    background: rgba(247,242,236,0.93);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .hd-logo { font-family: 'Tilt Warp', cursive; font-size: 20px; color: var(--slate); text-decoration: none; border: none; }
+  .hd-kana { font-size: 11px; color: var(--muted); margin-left: 6px; }
+  .hd-right { font-size: 12px; color: var(--muted); }
+
+  .page-hero { background: var(--slate); padding: 56px 48px; text-align: center; }
+  .page-label { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; color: rgba(255,255,255,0.5); margin-bottom: 12px; text-transform: uppercase; }
+  .page-title { font-family: 'Kaisei Opti', serif; font-size: 36px; color: var(--white); margin-bottom: 12px; }
+  .page-updated { font-size: 12px; color: rgba(255,255,255,0.45); }
+
+  .content-wrap {
+    max-width: 680px; margin: 0 auto;
+    padding: 72px 48px 96px;
+    display: flex; flex-direction: column; gap: 40px;
+  }
+
+  .sec h2 {
+    font-family: 'Kaisei Opti', serif;
+    font-size: 18px; color: var(--slate);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sec p { font-size: 14px; color: var(--ink); }
+  .sec p + p { margin-top: 10px; }
+  .sec ul {
+    margin-top: 10px; padding-left: 0;
+    list-style: none; display: flex; flex-direction: column; gap: 6px;
+  }
+  .sec ul li {
+    font-size: 14px; color: var(--ink);
+    padding-left: 14px; position: relative;
+  }
+  .sec ul li::before {
+    content: '–'; position: absolute; left: 0;
+    color: var(--gold);
+  }
+  .note {
+    font-size: 13px; color: var(--muted);
+    background: var(--slate-lt); border-radius: 8px;
+    padding: 12px 16px; margin-top: 12px;
+    border-left: 3px solid var(--slate);
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--bg); gap: 24px; flex-wrap: wrap;
+  }
+  .ft-logo { font-family: 'Tilt Warp', cursive; font-size: 18px; color: var(--slate); }
+  .ft-by { font-size: 11px; color: var(--muted); margin-left: 8px; }
+  .ft-links { display: flex; gap: 24px; }
+  .ft-link { font-size: 12px; color: var(--muted); border-bottom: none; }
+  .ft-link:hover { color: var(--slate); }
+  .ft-copy { font-size: 11px; color: var(--border-dk); }
+
+  @media (max-width: 720px) {
+    header { padding: 0 20px; }
+    .page-hero { padding: 48px 20px; }
+    .page-title { font-size: 28px; }
+    .content-wrap { padding: 48px 20px 72px; }
+    footer { padding: 28px 20px; flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <a href="https://mimilyappdev.github.io/" class="hd-logo">Mimily</a>
+    <span class="hd-kana">アプリ</span>
+  </div>
+  <div class="hd-right">プライバシーポリシー</div>
+</header>
+
+<div class="page-hero">
+  <p class="page-label">Legal</p>
+  <h1 class="page-title">プライバシーポリシー</h1>
+  <p class="page-updated">最終更新日：2026年5月</p>
+</div>
+
+<div class="content-wrap">
+
+  <div class="sec">
+    <h2>広告の配信について</h2>
+    <p>本サービスでは、Google AdSense による広告を表示しています。Google などの第三者配信事業者は、Cookie を使用してユーザーの過去のアクセス情報にもとづいた広告を配信します。</p>
+    <p>パーソナライズ広告の設定は <a href="https://adssettings.google.com/" target="_blank" rel="noopener">Google 広告設定ページ</a> から変更できます。</p>
+  </div>
+
+  <div class="sec">
+    <h2>利用している外部サービス</h2>
+    <p>本サービスの一部では、以下の外部サービスを使用しています。</p>
+    <ul>
+      <li>Google Analytics（アクセス解析）— <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">プライバシーポリシー</a></li>
+      <li>Firebase（認証・データ保存）— <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">プライバシーポリシー</a></li>
+    </ul>
+    <p class="note">Firebase を使用しないアプリ（EasyReply など）では、データはお使いの端末内のみに保存されます。</p>
+  </div>
+
+  <div class="sec">
+    <h2>Cookie について</h2>
+    <p>本サービスでは、利便性向上や利用状況の把握のために Cookie およびローカルストレージを使用することがあります。ブラウザの設定から無効にできますが、一部機能が動作しなくなる場合があります。</p>
+  </div>
+
+  <div class="sec">
+    <h2>お問い合わせ</h2>
+    <p>本ポリシーに関するご質問は、以下からどうぞ。</p>
+    <ul>
+      <li>お問い合わせフォーム：<a href="https://forms.gle/U75vwaeXWvAWSAEX7" target="_blank" rel="noopener">こちら</a></li>
+      <li>X（旧Twitter）：<a href="https://twitter.com/mimilydesign" target="_blank" rel="noopener">@mimilydesign</a></li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>
+  <div>
+    <span class="ft-logo">Mimily</span>
+    <span class="ft-by">アプリ</span>
+  </div>
+  <div class="ft-links">
+    <a href="./privacy.html" class="ft-link" style="color:var(--slate);">プライバシーポリシー</a>
+    <a href="./terms.html" class="ft-link">利用規約</a>
+    <a href="https://mimilyappdev.github.io/" class="ft-link">アプリ一覧</a>
+  </div>
+  <p class="ft-copy">© 2026 Mimily</p>
+</footer>
+
+</body>
+</html>
