@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EasyReply（ラクリプ）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tilt+Warp&family=BIZ+UDGothic:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand: #3A6080;
+    --deep: #1A3A52;
+    --header-bg: #2C4A5E;
+    --bg: #F5F1EB;
+    --sidebar: #EEF2F5;
+    --sidebar-border: #D8E2EA;
+    --accent: #3A7CA5;
+    --accent-light: #E3EFF7;
+    --premium: #B8860B;
+    --premium-light: #FFF8E7;
+    --accept: #C8A030;
+    --accept-light: #FFF8DC;
+    --condition: #3A7CA5;
+    --condition-light: #E3EFF7;
+    --decline: #6B7F8C;
+    --decline-light: #E8EDEF;
+    --text: #2A2A2A;
+    --text-muted: #7A8A96;
+    --border: #D0D8E0;
+    --white: #FFFFFF;
+    --shadow: 0 2px 8px rgba(42,74,94,0.10);
+    --shadow-md: 0 4px 16px rgba(42,74,94,0.13);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'BIZ UDGothic', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--header-bg);
+    padding: 0 24px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+  }
+  .header-left {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .logo {
+    font-family: 'Tilt Warp', cursive;
+    font-size: 22px;
+    color: var(--white);
+    letter-spacing: 0.02em;
+  }
+  .logo-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.55);
+    font-family: 'BIZ UDGothic', sans-serif;
+    letter-spacing: 0.05em;
+  }
+  .tagline {
+    color: rgba(255,255,255,0.75);
+    font-size: 13px;
+    margin-left: 8px;
+    border-left: 1px solid rgba(255,255,255,0.25);
+    padding-left: 14px;
+  }
+  .header-right {
+    color: rgba(255,255,255,0.65);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+  .gold-line {
+    height: 3px;
+    background: linear-gradient(90deg, var(--premium) 0%, #e0a830 50%, var(--premium) 100%);
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    padding: 20px 20px 20px 20px;
+    gap: 18px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* ── LEFT PANEL ── */
+  .left-panel {
+    width: 260px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+
+  /* Phase Tabs */
+  .phase-tabs {
+    display: flex;
+    gap: 6px;
+  }
+  .phase-tab {
+    flex: 1;
+    padding: 9px 4px;
+    border: 1.5px solid var(--sidebar-border);
+    background: var(--white);
+    border-radius: 8px;
+    font-family: 'BIZ UDGothic', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.18s;
+    text-align: center;
+  }
+  .phase-tab:hover { border-color: var(--accent); color: var(--accent); }
+  .phase-tab.active {
+    background: var(--header-bg);
+    border-color: var(--header-bg);
+    color: var(--white);
+    box-shadow: var(--shadow);
+  }
+
+  /* Direction Chips */
+  .direction-chips {
+    display: flex;
+    gap: 7px;
+  }
+  .dir-chip {
+    flex: 1;
+    padding: 10px 4px;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    font-family: 'BIZ UDGothic', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.18s;
+    line-height: 1.3;
+  }
+  .dir-chip.accept {
+    background: var(--accept-light);
+    color: #9A7820;
+    border-color: #e0c870;
+  }
+  .dir-chip.accept:hover, .dir-chip.accept.active {
+    background: var(--accept);
+    color: var(--white);
+    border-color: var(--accept);
+    box-shadow: 0 2px 8px rgba(200,160,48,0.3);
+  }
+  .dir-chip.condition {
+    background: var(--condition-light);
+    color: var(--condition);
+    border-color: #b0d0e8;
+  }
+  .dir-chip.condition:hover, .dir-chip.condition.active {
+    background: var(--condition);
+    color: var(--white);
+    border-color: var(--condition);
+    box-shadow: 0 2px 8px rgba(58,124,165,0.3);
+  }
+  .dir-chip.decline {
+    background: var(--decline-light);
+    color: var(--decline);
+    border-color: #c0ccd4;
+  }
+  .dir-chip.decline:hover, .dir-chip.decline.active {
+    background: var(--decline);
+    color: var(--white);
+    border-color: var(--decline);
+    box-shadow: 0 2px 8px rgba(107,127,140,0.3);
+  }
+
+  /* Content Buttons */
+  .content-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .content-btn {
+    width: 100%;
+    padding: 11px 14px;
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'BIZ UDGothic', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.16s;
+    position: relative;
+  }
+  .content-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+  .content-btn.active {
+    border-color: var(--accent);
+    background: var(--accent-light);
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .content-btn.active::after {
+    content: '✓';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent);
+    font-size: 13px;
+  }
+
+  /* Addon Section */
+  .addon-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .addon-chip {
+    padding: 5px 10px;
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    font-family: 'BIZ UDGothic', sans-serif;
+    font-size: 11px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .addon-chip:hover { border-color: var(--brand); color: var(--brand); }
+  .addon-chip.active {
+    background: var(--brand);
+    border-color: var(--brand);
+    color: var(--white);
+  }
+
+  /* ── RIGHT PANEL ── */
+  .right-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  /* Tone Toggle */
+  .tone-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .tone-btn {
+    padding: 8px 22px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    background: var(--white);
+    font-family: 'Tilt Warp', cursive;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.18s;
+    color: var(--text-muted);
+  }
+  .tone-btn.warm { color: var(--premium); border-color: #e8c870; }
+  .tone-btn.warm:hover, .tone-btn.warm.active {
+    background: var(--premium-light);
+    border-color: var(--premium);
+    color: var(--premium);
+  }
+  .tone-btn.formal { color: var(--brand); border-color: var(--sidebar-border); }
+  .tone-btn.formal:hover, .tone-btn.formal.active {
+    background: var(--header-bg);
+    border-color: var(--header-bg);
+    color: var(--white);
+  }
+  .tone-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-left: 4px;
+  }
+
+  /* Preview */
+  .preview-wrap {
+    flex: 1;
+    position: relative;
+  }
+  .preview-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    letter-spacing: 0.05em;
+  }
+  #preview-textarea {
+    width: 100%;
+    height: 360px;
+    border: 2px dashed var(--sidebar-border);
+    border-radius: 12px;
+    background: var(--white);
+    padding: 18px 20px;
+    font-family: 'BIZ UDGothic', sans-serif;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text);
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.18s;
+  }
+  #preview-textarea:focus { border-color: var(--accent); border-style: solid; }
+  #preview-textarea::placeholder { color: #BBCAD4; }
+
+  /* Variable Input Area */
+  .var-area {
+    background: var(--sidebar);
+    border: 1px solid var(--sidebar-border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .var-area.visible { display: flex; }
+  .var-area-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+  }
+  .var-input-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .var-input-label {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .var-input {
+    padding: 8px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    font-family: 'BIZ UDGothic', sans-serif;
+    font-size: 13px;
+    background: var(--white);
+    color: var(--text);
+    outline: none;
+    width: 100%;
+  }
+  .var-input:focus { border-color: var(--accent); }
+  .var-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .var-note::before { content: '🔒'; font-size: 11px; }
+
+  /* Custom reason input */
+  .custom-reason-area {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .custom-reason-area.visible { display: flex; }
+
+  /* Action Row */
+  .action-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .btn-copy {
+    padding: 11px 28px;
+    background: var(--header-bg);
+    color: var(--white);
+    border: none;
+    border-radius: 9px;
+    font-family: 'BIZ UDGothic', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .btn-copy:hover { background: var(--deep); }
+  .btn-copy.copied { background: var(--accept); }
+  .btn-reset {
+    padding: 11px 20px;
+    background: var(--white);
+    color: var(--text-muted);
+    border: 1.5px solid var(--border);
+    border-radius: 9px;
+    font-family: 'BIZ UDGothic', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .btn-reset:hover { border-color: var(--decline); color: var(--decline); }
+  .btn-favorite {
+    margin-left: auto;
+    padding: 11px 22px;
+    background: var(--premium-light);
+    color: var(--premium);
+    border: 2px solid #e0c060;
+    border-radius: 9px;
+    font-family: 'BIZ UDGothic', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.18s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-favorite:hover { background: #fff0c0; }
+  .btn-favorite .premium-badge {
+    display: inline-block;
+    background: var(--premium);
+    color: var(--white);
+    font-size: 9px;
+    padding: 1px 5px;
+    border-radius: 10px;
+    margin-left: 6px;
+    vertical-align: middle;
+    font-weight: 700;
+  }
+
+  /* Favorites Section */
+  .favorites-section {
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: var(--white);
+    overflow: hidden;
+    position: relative;
+  }
+  .favorites-header {
+    padding: 10px 14px;
+    background: var(--sidebar);
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+  .favorites-list {
+    position: relative;
+  }
+  .fav-item {
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--sidebar);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    filter: blur(3px);
+    user-select: none;
+  }
+  .favorites-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.95) 60%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 14px;
+  }
+  .premium-pill {
+    background: var(--premium-light);
+    border: 1.5px solid #e0c060;
+    color: var(--premium);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Section card */
+  .section-card {
+    background: var(--white);
+    border: 1px solid var(--sidebar-border);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+
+  /* Placeholder state */
+  .empty-state {
+    text-align: center;
+    padding: 24px 0 8px;
+    color: var(--text-muted);
+    font-size: 13px;
+    display: none;
+  }
+  .empty-state.visible { display: block; }
+
+  /* ── ESTIMATE UI ── */
+  .estimate-area {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .estimate-area.visible { display: flex; }
+  .estimate-area-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    margin-bottom: 2px;
+  }
+  .est-table-wrap {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .est-table-wrap th {
+    text-align: left;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 700;
+    border-bottom: 1px solid var(--border);
+    padding: 5px 7px;
+    background: var(--sidebar);
+  }
+  .est-table-wrap th:nth-child(1) { width: 40%; }
+  .est-table-wrap th:nth-child(2) { width: 16%; }
+  .est-table-wrap th:nth-child(3) { width: 24%; }
+  .est-table-wrap th:nth-child(4) { width: 16%; text-align: right; }
+  .est-table-wrap th:nth-child(5) { width: 4%; }
+  .est-table-wrap td {
+    padding: 5px 7px;
+    border-bottom: 1px solid var(--sidebar);
+    vertical-align: middle;
+  }
+  .est-table-wrap td input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 12px;
+    width: 100%;
+    color: var(--text);
+    font-family: 'BIZ UDGothic', sans-serif;
+  }
+  .est-table-wrap td input::placeholder { color: #BBCAD4; }
+  .est-table-wrap td.est-subtotal {
+    text-align: right;
+    font-size: 12px;
+    color: var(--text);
+    font-weight: 700;
+  }
+  .est-table-wrap td.est-subtotal.minus { color: #993C1D; }
+  .est-table-wrap tr.est-discount td { background: #FFF8F6; }
+  .est-table-wrap tr:hover td { background: var(--accent-light); }
+  .est-table-wrap tr.est-discount:hover td { background: #FFF2EE; }
+  .est-btn-del {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #BBCAD4;
+    font-size: 14px;
+    line-height: 1;
+    padding: 2px 3px;
+    font-family: inherit;
+  }
+  .est-btn-del:hover { color: #993C1D; }
+  .est-add-row {
+    display: flex;
+    gap: 7px;
+    margin-top: 4px;
+  }
+  .est-btn-add {
+    font-size: 11px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--brand);
+    border-radius: 6px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-family: 'BIZ UDGothic', sans-serif;
+    transition: all 0.15s;
+  }
+  .est-btn-add:hover { background: var(--sidebar); }
+  .est-btn-add.discount { color: #854F0B; border-color: #FAC775; }
+  .est-btn-add.discount:hover { background: #FFF8E7; }
+  .est-total-row {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 4px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 2px;
+  }
+  .est-total-label { font-size: 12px; color: var(--text-muted); }
+  .est-total-amount {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--deep);
+  }
+  .est-note-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 3px;
+  }
+  .est-note-input {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    padding: 8px 10px;
+    font-family: 'BIZ UDGothic', sans-serif;
+    font-size: 12px;
+    color: var(--text);
+    background: var(--white);
+    resize: none;
+    outline: none;
+    line-height: 1.7;
+  }
+  .est-note-input:focus { border-color: var(--accent); }
+  .est-note-input::placeholder { color: #BBCAD4; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <span class="logo">EasyReply</span>
+    <span class="logo-sub">ラクリプ</span>
+    <span class="tagline">返信をラクに。　ご依頼返信を迷わず作れる。</span>
+  </div>
+  <div class="header-right"></div>
+</header>
+<div class="gold-line"></div>
+
+<div class="main">
+  <!-- LEFT -->
+  <div class="left-panel">
+
+    <div class="section-card">
+      <div class="section-label">フェーズ</div>
+      <div class="phase-tabs">
+        <button class="phase-tab active" data-phase="before">依頼前</button>
+        <button class="phase-tab" data-phase="during">依頼中</button>
+        <button class="phase-tab" data-phase="done">完了</button>
+      </div>
+    </div>
+
+    <!-- 依頼前 panel -->
+    <div id="panel-before">
+      <div class="section-card">
+        <div class="section-label">返答の方向を選ぶ</div>
+        <div class="direction-chips">
+          <button class="dir-chip accept" data-dir="accept">受ける</button>
+          <button class="dir-chip condition" data-dir="condition">受ける<br>（詳細記載）</button>
+          <button class="dir-chip decline" data-dir="decline">断る</button>
+        </div>
+      </div>
+
+      <div class="section-card" id="content-section-before" style="display:none;">
+        <div class="section-label">差し込む内容（複数選択可）</div>
+        <div class="content-buttons" id="before-buttons"></div>
+        <!-- estimate area -->
+        <div class="estimate-area" id="estimate-area">
+          <div class="estimate-area-title">💴 見積もり内容</div>
+          <table class="est-table-wrap">
+            <thead>
+              <tr>
+                <th>品目</th>
+                <th>数量</th>
+                <th>単価（円）</th>
+                <th>小計</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="est-body"></tbody>
+          </table>
+          <div class="est-add-row">
+            <button class="est-btn-add" onclick="estAddRow(false)">＋ 行を追加</button>
+            <button class="est-btn-add discount" onclick="estAddRow(true)">－ 割引行を追加</button>
+          </div>
+          <div class="est-total-row">
+            <span class="est-total-label">合計</span>
+            <span class="est-total-amount" id="est-total">¥0</span>
+          </div>
+          <div>
+            <div class="est-note-label">補足・備考</div>
+            <textarea class="est-note-input" id="est-note" rows="2" placeholder="例）修正は2回まで込みです。納期は約2週間を予定しております。" oninput="buildPreview()"></textarea>
+          </div>
+        </div>
+
+        <!-- custom reason input -->
+        <div class="custom-reason-area" id="custom-reason-area">
+          <label class="var-input-label">その他理由を入力</label>
+          <input type="text" class="var-input" id="custom-reason-input" placeholder="例）現在受付を停止しています">
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-label">追加一文（複数選択可）</div>
+        <div class="addon-chips">
+          <button class="addon-chip" data-addon="portfolio">実績公開確認</button>
+          <button class="addon-chip" data-addon="revision">修正回数案内</button>
+          <button class="addon-chip" data-addon="deadline_notice">納期注意</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 依頼中 panel -->
+    <div id="panel-during" style="display:none;">
+      <div class="section-card">
+        <div class="section-label">振込後着手</div>
+        <div class="content-buttons">
+          <button class="content-btn" data-btnid="btn_production_start">制作開始連絡</button>
+        </div>
+      </div>
+      <div class="section-card" style="margin-top:10px;">
+        <div class="section-label">ラフ</div>
+        <div class="content-buttons">
+          <button class="content-btn" data-btnid="btn_rough_check">ラフ確認</button>
+          <button class="content-btn" data-btnid="btn_rough_revision_reply">ラフ確認後返信・修正あり</button>
+          <button class="content-btn" data-btnid="btn_rough_no_revision">ラフ確認・修正点なし</button>
+        </div>
+      </div>
+      <div class="section-card" style="margin-top:10px;">
+        <div class="section-label">修正</div>
+        <div class="content-buttons">
+          <button class="content-btn" data-btnid="btn_rough_fix">ラフ修正</button>
+          <button class="content-btn" data-btnid="btn_revision_ok">修正確認・問題なし</button>
+        </div>
+      </div>
+      <div class="section-card" style="margin-top:10px;">
+        <div class="section-label">制作物・振込</div>
+        <div class="content-buttons">
+          <button class="content-btn" data-btnid="btn_check_draft">制作物確認</button>
+          <button class="content-btn" data-btnid="btn_payment_request">制作完了・振込依頼</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 完了 panel -->
+    <div id="panel-done" style="display:none;">
+      <div class="section-card">
+        <div class="section-label">返す内容</div>
+        <div class="content-buttons">
+          <button class="content-btn" data-btnid="btn_delivery_no_payment">納品＆完了連絡（振込なし）</button>
+          <button class="content-btn" data-btnid="btn_delivery_with_payment">納品＆完了連絡（振込あり）</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right-panel">
+
+    <div class="tone-row">
+      <button class="tone-btn warm" data-tone="warm">Warm</button>
+      <button class="tone-btn formal active" data-tone="formal">Formal</button>
+      <span class="tone-note">※ Warmは準備中</span>
+    </div>
+
+    <div class="preview-wrap">
+      <div class="preview-label">返信プレビュー（直接編集できます）</div>
+      <textarea id="preview-textarea" placeholder="左のパネルからボタンを選ぶと、ここに文章が組み立てられます。&#10;&#10;複数のボタンを選ぶと積み上げて表示されます。"></textarea>
+    </div>
+
+    <!-- Variable Input Area -->
+    <div class="var-area" id="var-area">
+      <div class="var-area-title">📝 変数入力</div>
+      <div id="var-inputs"></div>
+      <div class="var-note">セッション中のみ保持 · 閉じると消えます</div>
+    </div>
+
+    <div class="action-row">
+      <button class="btn-copy" id="btn-copy">コピー</button>
+      <button class="btn-reset" id="btn-reset">全リセット</button>
+      <button class="btn-favorite">お気に入りに保存 ♥<span class="premium-badge">PRO</span></button>
+    </div>
+
+    <!-- Favorites -->
+    <div class="favorites-section">
+      <div class="favorites-header">⭐ お気に入り返信</div>
+      <div class="favorites-list">
+        <div class="fav-item">この度はお問合せいただきありがとうございます。SeventhWorksです...</div>
+        <div class="fav-item">お世話になっております。制作物が完成いたしましたので...</div>
+        <div class="fav-item">納品作品につきましては、規約の範囲内でご使用をお願い致します...</div>
+        <div class="favorites-overlay">
+          <div class="premium-pill">🔒 プレミアムで保存できます</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── ESTIMATE STATE ──
+let estRows = [];
+let estIdCounter = 0;
+
+function estAddRow(isDiscount) {
+  const id = ++estIdCounter;
+  estRows.push({ id, name: '', qty: '', price: '', isDiscount });
+  estRender();
+}
+
+function estRemoveRow(id) {
+  estRows = estRows.filter(r => r.id !== id);
+  estRender();
+}
+
+function estUpdateRow(id, field, val) {
+  const r = estRows.find(r => r.id === id);
+  if (r) r[field] = val;
+  estRender();
+}
+
+function estCalcSubtotalNum(r) {
+  const q = parseFloat(r.qty) || 1;
+  const p = parseFloat(r.price);
+  if (isNaN(p)) return 0;
+  return r.isDiscount ? -(Math.abs(p) * q) : p * q;
+}
+
+function estFormatSubtotal(r) {
+  const q = parseFloat(r.qty) || 1;
+  const p = parseFloat(r.price);
+  if (isNaN(p)) return '-';
+  const sub = r.isDiscount ? -(Math.abs(p) * q) : p * q;
+  return (sub < 0 ? '-¥' : '¥') + Math.abs(Math.round(sub)).toLocaleString();
+}
+
+function estRender() {
+  const tbody = document.getElementById('est-body');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  estRows.forEach(r => {
+    const tr = document.createElement('tr');
+    if (r.isDiscount) tr.className = 'est-discount';
+    tr.innerHTML = `
+      <td><input placeholder="${r.isDiscount ? '割引・値引き名' : '品目名'}" value="${r.name.replace(/"/g, '&quot;')}" oninput="estUpdateRow(${r.id},'name',this.value)"></td>
+      <td><input placeholder="${r.isDiscount ? '-' : '1'}" value="${r.qty}" oninput="estUpdateRow(${r.id},'qty',this.value)" style="text-align:center" type="number" min="0"></td>
+      <td><input placeholder="例）30000" value="${r.price}" oninput="estUpdateRow(${r.id},'price',this.value)" style="text-align:right" type="number" min="0"></td>
+      <td class="est-subtotal${r.isDiscount ? ' minus' : ''}">${estFormatSubtotal(r)}</td>
+      <td><button class="est-btn-del" onclick="estRemoveRow(${r.id})" aria-label="削除">×</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  const total = estRows.reduce((s, r) => s + estCalcSubtotalNum(r), 0);
+  const totalEl = document.getElementById('est-total');
+  if (totalEl) totalEl.textContent = (total < 0 ? '-¥' : '¥') + Math.abs(Math.round(total)).toLocaleString();
+  buildPreview();
+}
+
+function estBuildText() {
+  const validRows = estRows.filter(r => r.name || r.price !== '');
+  if (validRows.length === 0) return '';
+  let lines = ['お見積りは下記となります。', ''];
+  lines.push('品目\t数量\t金額');
+  validRows.forEach(r => {
+    const q = r.qty || '1';
+    const sub = estFormatSubtotal(r);
+    lines.push(`${r.name || '（品目）'}\t${q}\t${sub}`);
+  });
+  const total = estRows.reduce((s, r) => s + estCalcSubtotalNum(r), 0);
+  lines.push('');
+  lines.push('合計：' + (total < 0 ? '-¥' : '¥') + Math.abs(Math.round(total)).toLocaleString());
+  const note = document.getElementById('est-note');
+  if (note && note.value.trim()) {
+    lines.push('');
+    lines.push(note.value.trim());
+  }
+  lines.push('');
+  lines.push('以上となります。 お忙しいところ恐縮ですが、ご確認頂けますと幸いです。');
+  return lines.join('\n');
+}
+
+function estReset() {
+  estRows = [];
+  estIdCounter = 0;
+  const tbody = document.getElementById('est-body');
+  if (tbody) tbody.innerHTML = '';
+  const totalEl = document.getElementById('est-total');
+  if (totalEl) totalEl.textContent = '¥0';
+  const note = document.getElementById('est-note');
+  if (note) note.value = '';
+  document.getElementById('estimate-area').classList.remove('visible');
+}
+
+// ── DATA ──
+const templates = {
+  btn_accept_guide: {
+    label: '受諾・見積案内',
+    type: 'static',
+    text: '頂戴しました内容からお見積もりを作成いたしますので少々お待ちくださいませ。\n\n3営業日程度でご返信しておりますが、お急ぎの場合は一言いただければ幸いです。'
+  },
+  btn_estimate: {
+    label: '見積もり提示',
+    type: 'estimate',
+    text: ''
+  },
+  btn_quote_confirm: {
+    label: '見積確認後連絡（3万以上）',
+    type: 'static',
+    text: 'お世話になっております。\n\nお見積りをご確認いただきましてありがとうございます。\nお支払いに関しては企業様以外は全額前払いをお願いしておりますが、三万円以上の場合は前金で半額、納品前に最終確認をいただいて全額振り込み後納品という形を取らせていただいております。\n銀行振込または仲介サイトの利用も可能です。振込手数料は負担いただいております。\n銀行振込で問題なければ振込先を連絡いたします。\n\nご検討の程よろしくお願い申し上げます。'
+  },
+  btn_confirm_budget: {
+    label: '予算確認',
+    type: 'static',
+    text: 'ご予算を教えていただけないでしょうか。'
+  },
+  btn_confirm_deadline: {
+    label: '納期確認',
+    type: 'static',
+    text: '納品希望日を教えていただけないでしょうか。'
+  },
+  btn_required_template: {
+    label: '必要事項テンプレ',
+    type: 'static',
+    text: '制作を希望のものに関して、下記テンプレートに記載いただけますでしょうか。\n\n【ご依頼の際のテンプレート】\nご依頼の内容をメッセージなどで送付をお願い致します。\nなるべく空欄がないように記載お願いいたします。未定の箇所は未定でも構いません。\n\n・配信者様SNS、活動アカウント\n・ご依頼内容：\n・ご予算：\n・商用利用の有無：\n・詳細：\n　例）カラー、希望の雰囲気（可愛い、クール、ポップなど）、サイズ、解像度など\n・使用範囲：\n　例）グッズ作成、サムネイルなど\n・支払い方法：\n　銀行振込 OR 仲介サイト経由\n（サイト手数料、振込費はご負担となります）\n・ご希望納期：\n・その他オプションの有無：'
+  },
+
+  btn_decline_budget: {
+    label: '理由：予算',
+    type: 'static',
+    text: '現在ご提示いただいている予算では制作が難しいです。'
+  },
+  btn_decline_deadline: {
+    label: '理由：納期',
+    type: 'static',
+    text: '現在ご提示いただいている納期では制作が難しいです。'
+  },
+  btn_decline_schedule: {
+    label: '理由：スケジュール',
+    type: 'static',
+    text: '現在ご提示いただいている内容ではスケジュールが合わないため、制作が難しいです。'
+  },
+  btn_decline_other: {
+    label: '理由：その他',
+    type: 'input',
+    text: ''
+  },
+  btn_check_draft: {
+    label: '制作物確認',
+    type: 'static',
+    text: 'お世話になっております。\n\nデザインを作成致しましたのでご確認お願い致します。\n\nどうしても入れて欲しいデザインやポイントがございましたら記載くださいませ。\n\n色味や簡易的な修正は可能ですが、大幅に変更や修正が発生する場合は修正費が必要となります。\n\n気になるところや修正点があればサンプル画像内に直接記載いただいても大丈夫です。\n\nなお修正指示につきましてはお互いの齟齬をなくす為、具体的な指示でお願い致します。\n\nラフ時点からおまかせの場合は恐れ入りますが、全ての範囲など描き直しする場合などは修正料金を頂戴します。\n\n問題なければ色味やバランスを最終調整してこちらで納品致します。\n\nお忙しい中大変申し訳ありませんが、お手隙の際にご返信いただけますと幸いです。\n\n何卒よろしくお願い申し上げます。'
+  },
+  btn_production_start: {
+    label: '制作開始連絡',
+    type: 'static',
+    text: 'お世話になっております。\n\nお忙しいところお振込みいただき有難うございました。\n\nこれより制作に入ります。\n\n心を込めて作成させていただきます。\n\nラフもしくはデザインが完成しましたら、ご連絡いたします。\n\n引き続き何卒よろしくお願い申し上げます。'
+  },
+  btn_rough_check: {
+    label: 'ラフ確認',
+    type: 'static',
+    text: 'お世話になっております。ラフを作成致しましたのでご確認お願い致します。\n当初記載いただきました内容から作成しておりますが、大幅にラフから修正する場合は修正費が必要となります。\n気になるところや修正点があれば画像内にでも直接記載いただいて大丈夫です。\nお忙しい中大変申し訳ありませんが、お手隙の際にご返信いただけますと幸いです。\n\n清書に取り掛かりますと追加のご要望がある場合は追加料金が発生する場合がございます。\nその際は別途ご連絡いただけますと幸いです。\n引き続き何卒よろしくお願い致します。\n\n※ミニキャラクターなどデフォルメをする制作物に関してはデザインを簡略化して作画を行う関係上、どうしても入れて欲しいデザインやポイントがございましたら記載くださいませ。'
+  },
+  btn_rough_revision_reply: {
+    label: 'ラフ確認後返信・修正あり',
+    type: 'static',
+    text: 'お世話になっております。\nお忙しいところ、ラフを確認いただき有難うございます。\nいただきました修正点で再度修正いたします。\n恐縮ながら修正点が増える場合や追加指示の場合は追加料金がかかります。\nその際は事前にご連絡いたします。予算内で納めたい場合などあればご連絡ください。\n\n引き続きよろしくお願い申し上げます。'
+  },
+  btn_rough_no_revision: {
+    label: 'ラフ確認・修正点なし',
+    type: 'static',
+    text: 'お世話になっております。\nお忙しいところ、ラフを確認いただき有難うございます。\nこれより清書に入ります。\n\n清書に取り掛かりますと追加のご要望がある場合は追加料金が発生する場合がございます。\nその際は別途ご連絡いただけますと幸いです。\n\n引き続き何卒よろしくお願い申し上げます。'
+  },
+  btn_rough_fix: {
+    label: 'ラフ修正',
+    type: 'static',
+    text: 'お世話になっております。\nいただいた指示に基づいて修正いたしましたので、恐れ入りますがご確認お願い致します。\n\n恐縮ながらさらに修正点が増える場合や追加指示の場合は追加料金がかかります。\nその際は事前にご連絡いたします。予算内で納めたい場合などあればご連絡ください。\n\n引き続きよろしくお願い申し上げます。'
+  },
+  btn_revision_ok: {
+    label: '修正確認・問題なし',
+    type: 'static',
+    text: 'お世話になっております。\nお忙しいところ、修正点をご確認いただき有難うございます。\nこれより清書に入ります。\n\n清書に取り掛かりますと追加のご要望がある場合は追加料金が発生する場合がございます。\nその際は別途ご連絡いただけますと幸いです。\n\n引き続き何卒よろしくお願い申し上げます。'
+  },
+  btn_payment_request: {
+    label: '制作完了・振込依頼',
+    type: 'variable',
+    variables: [{ key: 'bank_info', label: '振込先情報', placeholder: '銀行名・支店・口座番号・名義など' }],
+    text: 'お世話になっております。\n\n制作物が完成いたしましたので、\n残金分のお振込みをお願い致します。\n\nお振込み先：\n{{bank_info}}\n\nお振込み予定日：\n（ご予定をご記載ください）\n\n※お振込みが遅れる場合はご連絡いただけますと幸いです。\n※お振込み手数料はご負担をお願いしております。\n\nまた、お振込み後にスクリーンショット等を添付いただけますと、\n確認がスムーズになります。\n\nなお、お振込み確認後の納品・進行となりますため、\nご入金状況によっては納期が変更となる場合がございます。\n\nお忙しいところ恐縮ですが、\nお手隙の際にご対応いただけますと幸いです。\n\n何卒よろしくお願い申し上げます。'
+  },
+  btn_delivery_no_payment: {
+    label: '納品＆完了（振込なし）',
+    type: 'variable',
+    variables: [
+      { key: 'file_url', label: 'ダウンロードURL', placeholder: 'https://...' },
+      { key: 'password', label: 'パスワード', placeholder: 'パスワードを入力' }
+    ],
+    text: 'お世話になっております。\n\n制作物を納品いたします。\n\n【ダウンロードURL】\n{{file_url}}\n\n【パスワード】\n{{password}}\n\n納品作品につきましては、規約の範囲内でご使用をお願い致します。\n\nまた、ポートフォリオ・サンプル・制作実績・メイキング等へ掲載させていただく場合がございます。\n公開時期のご希望や、実績非公開をご希望の場合はご連絡くださいませ。\n（※実績非公開は別途料金となります）\n\nSNS等へ掲載いただく際は、透かし入りでご使用いただけますと幸いです。\n\nご不明点などございましたら、お気軽にご連絡ください。\n\nこの度はご依頼いただき誠にありがとうございました。\nまた機会がございましたら、何卒よろしくお願い申し上げます。\n\nX：https://twitter.com/7thworks7\nWeb：https://meltingportfolio.tumblr.com'
+  },
+  btn_delivery_with_payment: {
+    label: '納品＆完了（振込あり）',
+    type: 'variable',
+    variables: [
+      { key: 'file_url', label: 'ダウンロードURL', placeholder: 'https://...' },
+      { key: 'password', label: 'パスワード', placeholder: 'パスワードを入力' }
+    ],
+    text: 'お世話になっております。\n\nお忙しいところお振込みいただき、誠にありがとうございました。\nご入金を確認いたしました。\n\n制作物を納品いたします。\n\n【ダウンロードURL】\n{{file_url}}\n\n【パスワード】\n{{password}}\n\n納品作品につきましては、規約の範囲内でご使用をお願い致します。\n\nまた、ポートフォリオ・サンプル・制作実績・メイキング等へ掲載させていただく場合がございます。\n公開時期のご希望や、実績非公開をご希望の場合はご連絡くださいませ。\n（※実績非公開は別途料金となります）\n\nSNS等へ掲載いただく際は、透かし入りでご使用いただけますと幸いです。\n\nご不明点などございましたら、お気軽にご連絡ください。\n\nこの度はご依頼いただき誠にありがとうございました。\nまた機会がございましたら、何卒よろしくお願い申し上げます。\n\nX：https://twitter.com/7thworks7\nWeb：https://meltingportfolio.tumblr.com'
+  }
+};
+
+// ── SANDWICH TEMPLATES ──
+// top/bottom: 固定テキスト、insertSlots: 差し込みゾーン数（PRO=複数）
+const sandwiches = {
+  accept: {
+    top: 'この度はお問合せいただきありがとうございます。\nSeventhWorksです。',
+    bottom: 'どうぞよろしくお願い申し上げます。'
+  },
+  condition: {
+    top: 'この度はお問合せいただきありがとうございます。\nSeventhWorksです。',
+    bottom: 'どうぞよろしくお願い申し上げます。'
+  },
+  decline: {
+    top: 'この度はお問い合わせいただきありがとうございます。\n\nせっかくお問合せいただいたにも関わらず今回依頼をお受けすることが出来かねます。',
+    bottom: 'また機会がございましたらお問い合わせいただけますと幸いです。\n\n何卒よろしくお願い申し上げます。'
+  }
+};
+
+const addons = {
+  portfolio: '実績掲載につきましては、公開可能な場合はご連絡いただけますと幸いです。',
+  revision: '修正は〇回まで無料で承っております。それ以上は別途修正料金をいただく場合がございます。',
+  deadline_notice: 'お振込みの確認後に制作を開始いたします。ご入金が遅れた場合、納期が変更となる場合がございます。'
+};
+
+// Before-phase button layouts per direction（差し込みゾーンに入るボタン）
+const beforeLayouts = {
+  accept: ['btn_accept_guide', 'btn_estimate', 'btn_quote_confirm'],
+  condition: ['btn_confirm_budget', 'btn_confirm_deadline', 'btn_required_template'],
+  decline: ['btn_decline_budget', 'btn_decline_deadline', 'btn_decline_schedule', 'btn_decline_other']
+};
+
+// ── STATE ──
+let state = {
+  phase: 'before',
+  direction: null,
+  activeButtons: new Set(),
+  activeAddons: new Set(),
+  varValues: {},
+  customReason: ''
+};
+
+// ── ELEMENTS ──
+const preview = document.getElementById('preview-textarea');
+const varArea = document.getElementById('var-area');
+const varInputsEl = document.getElementById('var-inputs');
+const beforeButtons = document.getElementById('before-buttons');
+const contentSectionBefore = document.getElementById('content-section-before');
+const customReasonArea = document.getElementById('custom-reason-area');
+const customReasonInput = document.getElementById('custom-reason-input');
+
+// ── HELPERS ──
+function buildPreview() {
+  const sw = state.direction && state.phase === 'before' ? sandwiches[state.direction] : null;
+
+  // 差し込みゾーンのテキストを収集
+  const insertParts = [];
+  state.activeButtons.forEach(btnId => {
+    const t = templates[btnId];
+    if (!t) return;
+    if (t.type === 'static') {
+      insertParts.push(t.text);
+    } else if (t.type === 'estimate') {
+      const estText = estBuildText();
+      if (estText) insertParts.push(estText);
+    } else if (t.type === 'input') {
+      if (state.customReason) insertParts.push(state.customReason);
+    } else if (t.type === 'variable') {
+      let txt = t.text;
+      if (t.variables) {
+        t.variables.forEach(v => {
+          const val = state.varValues[v.key] || `[${v.label}]`;
+          txt = txt.replace(new RegExp(`{{${v.key}}}`, 'g'), val);
+        });
+      }
+      insertParts.push(txt);
+    }
+  });
+
+  // 追加一文
+  state.activeAddons.forEach(addonId => {
+    if (addons[addonId]) insertParts.push(addons[addonId]);
+  });
+
+  if (sw) {
+    // サンドイッチ構造
+    const middle = insertParts.join('\n');
+    const parts = [sw.top];
+    if (middle) parts.push(middle);
+    parts.push(sw.bottom);
+    preview.value = parts.join('\n\n');
+  } else {
+    // 依頼中・完了フェーズ（従来通り積み上げ）
+    preview.value = insertParts.join('\n\n');
+  }
+}
+
+function buildVarArea() {
+  // Collect all variables from active buttons
+  const allVars = [];
+  state.activeButtons.forEach(btnId => {
+    const t = templates[btnId];
+    if (t && t.type === 'variable' && t.variables) {
+      t.variables.forEach(v => {
+        if (!allVars.find(x => x.key === v.key)) allVars.push(v);
+      });
+    }
+  });
+  if (allVars.length === 0) {
+    varArea.classList.remove('visible');
+    return;
+  }
+  varArea.classList.add('visible');
+  varInputsEl.innerHTML = '';
+  allVars.forEach(v => {
+    const row = document.createElement('div');
+    row.className = 'var-input-row';
+    const lbl = document.createElement('label');
+    lbl.className = 'var-input-label';
+    lbl.textContent = v.label;
+    const inp = document.createElement('input');
+    inp.type = 'text';
+    inp.className = 'var-input';
+    inp.placeholder = v.placeholder || '';
+    inp.value = state.varValues[v.key] || '';
+    inp.addEventListener('input', () => {
+      state.varValues[v.key] = inp.value;
+      buildPreview();
+    });
+    row.appendChild(lbl);
+    row.appendChild(inp);
+    varInputsEl.appendChild(row);
+  });
+}
+
+function renderBeforeButtons(dir) {
+  beforeButtons.innerHTML = '';
+  if (!dir) return;
+  const ids = beforeLayouts[dir] || [];
+  ids.forEach(btnId => {
+    const t = templates[btnId];
+    if (!t) return;
+    const btn = document.createElement('button');
+    btn.className = 'content-btn';
+    btn.dataset.btnid = btnId;
+    btn.textContent = t.label;
+    if (state.activeButtons.has(btnId)) btn.classList.add('active');
+    btn.addEventListener('click', () => toggleBeforeButton(btnId, btn));
+    beforeButtons.appendChild(btn);
+  });
+  // Show custom reason input if other is active
+  if (dir === 'decline' && state.activeButtons.has('btn_decline_other')) {
+    customReasonArea.classList.add('visible');
+  } else {
+    customReasonArea.classList.remove('visible');
+  }
+}
+
+function toggleBeforeButton(btnId, btnEl) {
+  if (state.activeButtons.has(btnId)) {
+    state.activeButtons.delete(btnId);
+    btnEl.classList.remove('active');
+    if (btnId === 'btn_decline_other') {
+      customReasonArea.classList.remove('visible');
+      state.customReason = '';
+    }
+    if (btnId === 'btn_estimate') {
+      document.getElementById('estimate-area').classList.remove('visible');
+    }
+  } else {
+    state.activeButtons.add(btnId);
+    btnEl.classList.add('active');
+    if (btnId === 'btn_decline_other') {
+      customReasonArea.classList.add('visible');
+    }
+    if (btnId === 'btn_estimate') {
+      const area = document.getElementById('estimate-area');
+      area.classList.add('visible');
+      if (estRows.length === 0) { estAddRow(false); estAddRow(false); }
+    }
+  }
+  buildVarArea();
+  buildPreview();
+}
+
+function switchPhase(phase) {
+  if (state.phase === phase) return;
+  // Full reset on phase change
+  fullReset(false);
+  state.phase = phase;
+  document.querySelectorAll('.phase-tab').forEach(t => t.classList.toggle('active', t.dataset.phase === phase));
+  document.getElementById('panel-before').style.display = phase === 'before' ? '' : 'none';
+  document.getElementById('panel-during').style.display = phase === 'during' ? '' : 'none';
+  document.getElementById('panel-done').style.display = phase === 'done' ? '' : 'none';
+}
+
+function fullReset(keepPhase = true) {
+  state.direction = null;
+  state.activeButtons = new Set();
+  state.activeAddons = new Set();
+  state.varValues = {};
+  state.customReason = '';
+  customReasonInput.value = '';
+  customReasonArea.classList.remove('visible');
+  contentSectionBefore.style.display = 'none';
+  beforeButtons.innerHTML = '';
+  varArea.classList.remove('visible');
+  varInputsEl.innerHTML = '';
+  // Reset estimate
+  estReset();
+  // Reset direction chips
+  document.querySelectorAll('.dir-chip').forEach(c => c.classList.remove('active'));
+  // Reset addon chips
+  document.querySelectorAll('.addon-chip').forEach(c => c.classList.remove('active'));
+  // Reset during/done buttons
+  document.querySelectorAll('#panel-during .content-btn, #panel-done .content-btn').forEach(b => b.classList.remove('active'));
+  preview.value = '';
+}
+
+// ── PHASE TABS ──
+document.querySelectorAll('.phase-tab').forEach(tab => {
+  tab.addEventListener('click', () => switchPhase(tab.dataset.phase));
+});
+
+// ── DIRECTION CHIPS ──
+document.querySelectorAll('.dir-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    const dir = chip.dataset.dir;
+    if (state.direction === dir) return;
+    state.direction = dir;
+    state.activeButtons = new Set();
+    state.varValues = {};
+    state.customReason = '';
+    customReasonInput.value = '';
+    document.querySelectorAll('.dir-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    contentSectionBefore.style.display = '';
+    renderBeforeButtons(dir);
+    buildVarArea();
+    buildPreview();
+  });
+});
+
+// ── DURING / DONE BUTTONS ──
+document.querySelectorAll('#panel-during .content-btn, #panel-done .content-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const btnId = btn.dataset.btnid;
+    if (state.activeButtons.has(btnId)) {
+      state.activeButtons.delete(btnId);
+      btn.classList.remove('active');
+    } else {
+      state.activeButtons.add(btnId);
+      btn.classList.add('active');
+    }
+    buildVarArea();
+    buildPreview();
+  });
+});
+
+// ── ADDON CHIPS ──
+document.querySelectorAll('.addon-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    const id = chip.dataset.addon;
+    if (state.activeAddons.has(id)) {
+      state.activeAddons.delete(id);
+      chip.classList.remove('active');
+    } else {
+      state.activeAddons.add(id);
+      chip.classList.add('active');
+    }
+    buildPreview();
+  });
+});
+
+// ── CUSTOM REASON INPUT ──
+customReasonInput.addEventListener('input', () => {
+  state.customReason = customReasonInput.value;
+  buildPreview();
+});
+
+// ── TONE ──
+document.querySelectorAll('.tone-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (btn.dataset.tone === 'warm') {
+      // Not implemented yet
+      btn.style.animation = 'none';
+      setTimeout(() => btn.style.animation = '', 100);
+      return;
+    }
+    document.querySelectorAll('.tone-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+// ── COPY ──
+document.getElementById('btn-copy').addEventListener('click', () => {
+  const text = preview.value;
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('btn-copy');
+    const orig = btn.textContent;
+    btn.textContent = 'コピーしました！';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+  });
+});
+
+// ── RESET ──
+document.getElementById('btn-reset').addEventListener('click', () => {
+  fullReset();
+});
+</script>
+</body>
+</html>
