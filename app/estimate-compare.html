@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>見積もりUI比較</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'BIZ UDGothic', 'Hiragino Sans', sans-serif; background: #F0ECE6; color: #2A2A2A; min-height: 100vh; padding: 16px; }
+
+  h1 { text-align: center; font-size: 1rem; color: #5A6A7A; margin-bottom: 16px; letter-spacing: 0.05em; }
+
+  .compare-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  @media (max-width: 640px) {
+    .compare-wrap { grid-template-columns: 1fr; }
+  }
+
+  .panel {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+  }
+  .panel-header {
+    padding: 12px 16px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .panel-a .panel-header { background: #3A6080; color: #fff; }
+  .panel-b .panel-header { background: #5A7A60; color: #fff; }
+  .badge { font-size: 0.7rem; background: rgba(255,255,255,0.25); padding: 2px 8px; border-radius: 99px; }
+
+  .panel-body { padding: 12px; }
+
+  /* ── 共通: 返信エリア風 ── */
+  .reply-area {
+    background: #F7F4EF;
+    border: 1px solid #DDD8D0;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 0.82rem;
+    color: #4A5A6A;
+    min-height: 90px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-all;
+    margin-bottom: 10px;
+  }
+  .reply-label { font-size: 0.72rem; color: #9AA5B0; margin-bottom: 4px; font-weight: 700; letter-spacing: 0.06em; }
+
+  /* ── A: ポップアップ ── */
+  .est-trigger-btn {
+    width: 100%;
+    padding: 10px;
+    background: #3A6080;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .est-trigger-btn:hover { background: #2C4A5E; }
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #fff;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 440px;
+    padding: 20px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1A3A52;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ── 共通: 見積テーブル ── */
+  .est-table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+  .est-table th {
+    background: #EEF2F5;
+    font-size: 0.72rem;
+    color: #6A7A8A;
+    padding: 6px 4px;
+    text-align: left;
+    font-weight: 700;
+  }
+  .est-table td { padding: 4px 3px; vertical-align: middle; }
+  .est-table input {
+    width: 100%;
+    border: 1px solid #D0D8E0;
+    border-radius: 6px;
+    padding: 6px 8px;
+    font-size: 0.82rem;
+    font-family: inherit;
+    background: #fff;
+    outline: none;
+  }
+  .est-table input:focus { border-color: #3A7CA5; box-shadow: 0 0 0 2px rgba(58,124,165,0.15); }
+  .est-table .col-name { width: 40%; }
+  .est-table .col-qty  { width: 15%; }
+  .est-table .col-price{ width: 28%; }
+  .est-table .col-sub  { width: 17%; text-align: right; font-size: 0.78rem; color: #3A6080; font-weight: 700; white-space: nowrap; }
+  .est-table .col-del  { width: 24px; }
+  .del-btn {
+    background: none;
+    border: none;
+    color: #B0BAC4;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 4px;
+    line-height: 1;
+  }
+  .del-btn:hover { color: #E05A5A; background: #FFF0F0; }
+  .tr-discount td input { color: #C05050; }
+  .tr-discount .col-sub { color: #C05050; }
+
+  .est-add-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .est-add-btn {
+    flex: 1;
+    padding: 6px;
+    border: 1.5px dashed #B0C4D0;
+    background: none;
+    border-radius: 7px;
+    font-size: 0.78rem;
+    color: #5A7A90;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .est-add-btn:hover { background: #F0F6FA; border-color: #3A7CA5; color: #3A7CA5; }
+
+  .est-total-row {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 4px;
+    border-top: 1.5px solid #DDE4EA;
+    margin-bottom: 10px;
+  }
+  .est-total-label { font-size: 0.78rem; color: #6A7A8A; font-weight: 700; }
+  .est-total-val { font-size: 1rem; font-weight: 700; color: #1A3A52; }
+
+  .est-note {
+    width: 100%;
+    border: 1px solid #D0D8E0;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 0.82rem;
+    font-family: inherit;
+    resize: vertical;
+    margin-bottom: 12px;
+    outline: none;
+    min-height: 60px;
+  }
+  .est-note:focus { border-color: #3A7CA5; box-shadow: 0 0 0 2px rgba(58,124,165,0.15); }
+
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+  .btn-cancel {
+    padding: 8px 16px;
+    border: 1.5px solid #D0D8E0;
+    background: #fff;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-family: inherit;
+    color: #6A7A8A;
+  }
+  .btn-cancel:hover { background: #F5F5F5; }
+  .btn-confirm {
+    padding: 8px 20px;
+    background: #3A6080;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .btn-confirm:hover { background: #2C4A5E; }
+
+  /* ── B: インライン ── */
+  .est-inline-wrap {
+    border: 1.5px solid #C8D8E4;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #F5F9FC;
+  }
+  .est-inline-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #3A6080;
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .copy-btn {
+    width: 100%;
+    padding: 9px;
+    background: #3A6080;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .copy-btn:hover { background: #2C4A5E; }
+
+  .note-label { font-size: 0.72rem; color: #6A7A8A; margin-bottom: 3px; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<h1>💴 見積もり入力UI 比較モック</h1>
+
+<div class="compare-wrap">
+
+  <!-- ===== A: ポップアップ ===== -->
+  <div class="panel panel-a">
+    <div class="panel-header">
+      <span>A｜ポップアップ入力</span>
+      <span class="badge">モーダルで入力</span>
+    </div>
+    <div class="panel-body">
+      <div class="reply-label">返信プレビュー</div>
+      <div class="reply-area" id="a-preview">（見積もりを入力すると反映されます）</div>
+      <button class="est-trigger-btn" onclick="openModal()">💴 見積もりを入力する ▶</button>
+    </div>
+  </div>
+
+  <!-- ===== B: インライン ===== -->
+  <div class="panel panel-b">
+    <div class="panel-header">
+      <span>B｜インライン入力</span>
+      <span class="badge">そのまま入力</span>
+    </div>
+    <div class="panel-body">
+      <div class="reply-label">返信プレビュー</div>
+      <div class="reply-area" id="b-preview">（見積もりを入力すると反映されます）</div>
+
+      <div class="est-inline-wrap">
+        <div class="est-inline-title">💴 見積もり内容</div>
+        <table class="est-table" id="b-table">
+          <thead>
+            <tr>
+              <th class="col-name">品目名</th>
+              <th class="col-qty">数量</th>
+              <th class="col-price">単価（円）</th>
+              <th class="col-sub">小計</th>
+              <th class="col-del"></th>
+            </tr>
+          </thead>
+          <tbody id="b-tbody"></tbody>
+        </table>
+        <div class="est-add-row">
+          <button class="est-add-btn" onclick="bAddRow(false)">＋ 品目を追加</button>
+          <button class="est-add-btn" onclick="bAddRow(true)" style="color:#C05050;border-color:#E0BABA;">－ 割引を追加</button>
+        </div>
+        <div class="est-total-row">
+          <span class="est-total-label">合計</span>
+          <span class="est-total-val" id="b-total">¥0</span>
+        </div>
+        <div class="note-label">備考</div>
+        <textarea class="est-note" id="b-note" rows="2" placeholder="例）修正2回まで込み。納期は約2週間予定。" oninput="bUpdatePreview()"></textarea>
+        <button class="copy-btn" onclick="bCopy()">📋 コピーする</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== モーダル（A用） ===== -->
+<div class="modal-overlay" id="modal-overlay" onclick="overlayClick(event)">
+  <div class="modal">
+    <div class="modal-title">💴 見積もり入力</div>
+    <table class="est-table">
+      <thead>
+        <tr>
+          <th class="col-name">品目名</th>
+          <th class="col-qty">数量</th>
+          <th class="col-price">単価（円）</th>
+          <th class="col-sub">小計</th>
+          <th class="col-del"></th>
+        </tr>
+      </thead>
+      <tbody id="a-tbody"></tbody>
+    </table>
+    <div class="est-add-row">
+      <button class="est-add-btn" onclick="aAddRow(false)">＋ 品目を追加</button>
+      <button class="est-add-btn" onclick="aAddRow(true)" style="color:#C05050;border-color:#E0BABA;">－ 割引を追加</button>
+    </div>
+    <div class="est-total-row">
+      <span class="est-total-label">合計</span>
+      <span class="est-total-val" id="a-total">¥0</span>
+    </div>
+    <div class="note-label">備考</div>
+    <textarea class="est-note" id="a-note" rows="2" placeholder="例）修正2回まで込み。納期は約2週間予定。" oninput="aUpdateTotal()"></textarea>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">キャンセル</button>
+      <button class="btn-confirm" onclick="aConfirm()">✔ 確定して反映</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── 共通ユーティリティ ──
+let uidCounter = 0;
+const uid = () => ++uidCounter;
+
+function calcSub(r) {
+  const q = parseFloat(r.qty) || 1;
+  const p = parseFloat(r.price);
+  if (isNaN(p)) return null;
+  return r.isDiscount ? -(Math.abs(p) * q) : p * q;
+}
+function fmtSub(r) {
+  const v = calcSub(r);
+  if (v === null) return '–';
+  return (v < 0 ? '-¥' : '¥') + Math.abs(Math.round(v)).toLocaleString();
+}
+function fmtTotal(rows) {
+  const t = rows.reduce((s, r) => s + (calcSub(r) ?? 0), 0);
+  return (t < 0 ? '-¥' : '¥') + Math.abs(Math.round(t)).toLocaleString();
+}
+function buildText(rows, note) {
+  const valid = rows.filter(r => r.name || r.price !== '');
+  if (!valid.length) return '（見積もりを入力すると反映されます）';
+  let lines = ['お見積りは下記となります。', ''];
+  const total = rows.reduce((s, r) => s + (calcSub(r) ?? 0), 0);
+  valid.forEach(r => {
+    const q = parseFloat(r.qty) || 1;
+    const sub = calcSub(r);
+    const subStr = sub === null ? '' : `　${fmtSub(r)}`;
+    lines.push(`・${r.name || '（品目名未入力）'}　×${q}${subStr}`);
+  });
+  lines.push('');
+  lines.push(`合計：${(total < 0 ? '-¥' : '¥') + Math.abs(Math.round(total)).toLocaleString()}`);
+  if (note && note.trim()) { lines.push(''); lines.push(note.trim()); }
+  return lines.join('\n');
+}
+function copyText(text) {
+  navigator.clipboard.writeText(text).then(() => showToast('コピーしました')).catch(() => {});
+}
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.textContent = msg;
+  Object.assign(t.style, {
+    position:'fixed', bottom:'24px', left:'50%', transform:'translateX(-50%)',
+    background:'#1A3A52', color:'#fff', padding:'8px 20px', borderRadius:'99px',
+    fontSize:'0.85rem', zIndex:'9999', pointerEvents:'none',
+    boxShadow:'0 4px 16px rgba(0,0,0,0.2)'
+  });
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 1800);
+}
+
+// ── A: ポップアップ ──
+let aRows = [];
+
+function aAddRow(isDiscount) {
+  aRows.push({ id: uid(), name: '', qty: '1', price: '', isDiscount });
+  aRender();
+}
+function aRemoveRow(id) {
+  aRows = aRows.filter(r => r.id !== id);
+  aRender();
+}
+
+// ★ 修正版: inputイベントはデータ更新＋合計のみ（DOM再生成しない）
+function aUpdateField(id, field, val) {
+  const r = aRows.find(r => r.id === id);
+  if (r) r[field] = val;
+  aUpdateTotal();
+}
+function aUpdateTotal() {
+  const totalEl = document.getElementById('a-total');
+  if (totalEl) totalEl.textContent = fmtTotal(aRows);
+  // 小計セルだけ更新
+  aRows.forEach(r => {
+    const el = document.getElementById('a-sub-' + r.id);
+    if (el) el.textContent = fmtSub(r);
+  });
+}
+function aRender() {
+  const tbody = document.getElementById('a-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  aRows.forEach(r => {
+    const tr = document.createElement('tr');
+    if (r.isDiscount) tr.className = 'tr-discount';
+    tr.innerHTML = `
+      <td class="col-name"><input value="${r.name.replace(/"/g,'&quot;')}" placeholder="${r.isDiscount?'割引名':'品目名'}" oninput="aUpdateField(${r.id},'name',this.value)"></td>
+      <td class="col-qty"><input value="${r.qty}" type="number" min="0" style="text-align:center" oninput="aUpdateField(${r.id},'qty',this.value)"></td>
+      <td class="col-price"><input value="${r.price}" type="number" min="0" placeholder="例）30000" style="text-align:right" oninput="aUpdateField(${r.id},'price',this.value)"></td>
+      <td class="col-sub" id="a-sub-${r.id}">${fmtSub(r)}</td>
+      <td class="col-del"><button class="del-btn" onclick="aRemoveRow(${r.id})">×</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  aUpdateTotal();
+}
+function openModal() {
+  if (!aRows.length) aAddRow(false);
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+function overlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+function aConfirm() {
+  const note = document.getElementById('a-note').value;
+  document.getElementById('a-preview').textContent = buildText(aRows, note);
+  closeModal();
+  showToast('見積もりを反映しました');
+}
+
+// ── B: インライン（修正版） ──
+let bRows = [];
+
+function bAddRow(isDiscount) {
+  bRows.push({ id: uid(), name: '', qty: '1', price: '', isDiscount });
+  bRender();
+}
+function bRemoveRow(id) {
+  bRows = bRows.filter(r => r.id !== id);
+  bRender();
+}
+
+// ★ 修正版: DOM再生成せず小計・合計・プレビューのみ更新
+function bUpdateField(id, field, val) {
+  const r = bRows.find(r => r.id === id);
+  if (r) r[field] = val;
+  bUpdateTotals();
+}
+function bUpdateTotals() {
+  const totalEl = document.getElementById('b-total');
+  if (totalEl) totalEl.textContent = fmtTotal(bRows);
+  bRows.forEach(r => {
+    const el = document.getElementById('b-sub-' + r.id);
+    if (el) el.textContent = fmtSub(r);
+  });
+  bUpdatePreview();
+}
+function bUpdatePreview() {
+  const note = document.getElementById('b-note')?.value || '';
+  document.getElementById('b-preview').textContent = buildText(bRows, note);
+}
+function bRender() {
+  const tbody = document.getElementById('b-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  bRows.forEach(r => {
+    const tr = document.createElement('tr');
+    if (r.isDiscount) tr.className = 'tr-discount';
+    tr.innerHTML = `
+      <td class="col-name"><input value="${r.name.replace(/"/g,'&quot;')}" placeholder="${r.isDiscount?'割引名':'品目名'}" oninput="bUpdateField(${r.id},'name',this.value)"></td>
+      <td class="col-qty"><input value="${r.qty}" type="number" min="0" style="text-align:center" oninput="bUpdateField(${r.id},'qty',this.value)"></td>
+      <td class="col-price"><input value="${r.price}" type="number" min="0" placeholder="例）30000" style="text-align:right" oninput="bUpdateField(${r.id},'price',this.value)"></td>
+      <td class="col-sub" id="b-sub-${r.id}">${fmtSub(r)}</td>
+      <td class="col-del"><button class="del-btn" onclick="bRemoveRow(${r.id})">×</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  bUpdateTotals();
+}
+function bCopy() {
+  const note = document.getElementById('b-note')?.value || '';
+  copyText(buildText(bRows, note));
+}
+
+// 初期行
+aAddRow(false);
+bAddRow(false);
+</script>
+</body>
+</html>
