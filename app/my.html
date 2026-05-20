@@ -639,6 +639,86 @@
   }
   .est-note-input:focus { border-color: var(--accent); }
   .est-note-input::placeholder { color: #BBCAD4; }
+
+  /* ── 見積もりポップアップ ── */
+  .est-open-btn {
+    width: 100%;
+    padding: 9px 12px;
+    background: var(--accent-light);
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'BIZ UDGothic', sans-serif;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .est-open-btn:hover { background: #D0E6F5; }
+  .est-summary {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    line-height: 1.6;
+  }
+  .est-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 800;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .est-modal-overlay.open { display: flex; }
+  .est-modal {
+    background: var(--white);
+    border-radius: 14px;
+    width: 100%;
+    max-width: 460px;
+    padding: 20px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .est-modal-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--deep);
+    margin-bottom: 14px;
+  }
+  .est-modal-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 12px;
+  }
+  .est-btn-cancel {
+    padding: 8px 16px;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    border-radius: 7px;
+    font-size: 12px;
+    font-family: 'BIZ UDGothic', sans-serif;
+    color: var(--text-muted);
+    cursor: pointer;
+  }
+  .est-btn-confirm {
+    padding: 8px 20px;
+    background: var(--brand);
+    color: var(--white);
+    border: none;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'BIZ UDGothic', sans-serif;
+    cursor: pointer;
+  }
+  .est-btn-confirm:hover { background: var(--deep); }
 </style>
 </head>
 <body>
@@ -682,31 +762,8 @@
         <div class="content-buttons" id="before-buttons"></div>
         <!-- estimate area -->
         <div class="estimate-area" id="estimate-area">
-          <div class="estimate-area-title">💴 見積もり内容</div>
-          <table class="est-table-wrap">
-            <thead>
-              <tr>
-                <th>品目</th>
-                <th>数量</th>
-                <th>単価（円）</th>
-                <th>小計</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="est-body"></tbody>
-          </table>
-          <div class="est-add-row">
-            <button class="est-btn-add" onclick="estAddRow(false)">＋ 行を追加</button>
-            <button class="est-btn-add discount" onclick="estAddRow(true)">－ 割引行を追加</button>
-          </div>
-          <div class="est-total-row">
-            <span class="est-total-label">合計</span>
-            <span class="est-total-amount" id="est-total">¥0</span>
-          </div>
-          <div>
-            <div class="est-note-label">補足・備考</div>
-            <textarea class="est-note-input" id="est-note" rows="2" placeholder="例）修正は2回まで込みです。納期は約2週間を予定しております。" oninput="buildPreview()"></textarea>
-          </div>
+          <button class="est-open-btn" onclick="estOpenModal()">💴 見積もりを入力する ▶</button>
+          <div class="est-summary" id="est-summary"></div>
         </div>
 
         <!-- custom reason input -->
@@ -821,7 +878,7 @@ let estIdCounter = 0;
 
 function estAddRow(isDiscount) {
   const id = ++estIdCounter;
-  estRows.push({ id, name: '', qty: '', price: '', isDiscount });
+  estRows.push({ id, name: '', qty: '1', price: '', isDiscount });
   estRender();
 }
 
@@ -830,10 +887,39 @@ function estRemoveRow(id) {
   estRender();
 }
 
+// フリーズ修正: DOM再生成せず小計・合計のみ更新
 function estUpdateRow(id, field, val) {
   const r = estRows.find(r => r.id === id);
   if (r) r[field] = val;
-  estRender();
+  estRows.forEach(r => {
+    const el = document.getElementById('est-sub-' + r.id);
+    if (el) el.textContent = estFormatSubtotal(r);
+  });
+  const total = estRows.reduce((s, r) => s + estCalcSubtotalNum(r), 0);
+  const totalEl = document.getElementById('est-total');
+  if (totalEl) totalEl.textContent = (total < 0 ? '-¥' : '¥') + Math.abs(Math.round(total)).toLocaleString();
+}
+
+function estOpenModal() {
+  if (!estRows.length) estAddRow(false);
+  document.getElementById('est-modal-overlay').classList.add('open');
+}
+
+function estCloseModal() {
+  document.getElementById('est-modal-overlay').classList.remove('open');
+}
+
+function estConfirm() {
+  const total = estRows.reduce((s, r) => s + estCalcSubtotalNum(r), 0);
+  const validRows = estRows.filter(r => r.name || r.price !== '');
+  const summaryEl = document.getElementById('est-summary');
+  if (summaryEl) {
+    summaryEl.textContent = validRows.length
+      ? `${validRows.length}件 合計 ${(total < 0 ? '-¥' : '¥') + Math.abs(Math.round(total)).toLocaleString()}`
+      : '';
+  }
+  estCloseModal();
+  buildPreview();
 }
 
 function estCalcSubtotalNum(r) {
@@ -862,7 +948,7 @@ function estRender() {
       <td><input placeholder="${r.isDiscount ? '割引・値引き名' : '品目名'}" value="${r.name.replace(/"/g, '&quot;')}" oninput="estUpdateRow(${r.id},'name',this.value)"></td>
       <td><input placeholder="${r.isDiscount ? '-' : '1'}" value="${r.qty}" oninput="estUpdateRow(${r.id},'qty',this.value)" style="text-align:center" type="number" min="0"></td>
       <td><input placeholder="例）30000" value="${r.price}" oninput="estUpdateRow(${r.id},'price',this.value)" style="text-align:right" type="number" min="0"></td>
-      <td class="est-subtotal${r.isDiscount ? ' minus' : ''}">${estFormatSubtotal(r)}</td>
+      <td class="est-subtotal${r.isDiscount ? ' minus' : ''}" id="est-sub-${r.id}">${estFormatSubtotal(r)}</td>
       <td><button class="est-btn-del" onclick="estRemoveRow(${r.id})" aria-label="削除">×</button></td>
     `;
     tbody.appendChild(tr);
@@ -905,6 +991,9 @@ function estReset() {
   if (totalEl) totalEl.textContent = '¥0';
   const note = document.getElementById('est-note');
   if (note) note.value = '';
+  const summaryEl = document.getElementById('est-summary');
+  if (summaryEl) summaryEl.textContent = '';
+  estCloseModal();
   document.getElementById('estimate-area').classList.remove('visible');
 }
 
@@ -1332,5 +1421,37 @@ document.getElementById('btn-reset').addEventListener('click', () => {
   fullReset();
 });
 </script>
+<!-- 見積もりモーダル -->
+<div class="est-modal-overlay" id="est-modal-overlay">
+  <div class="est-modal">
+    <div class="est-modal-title">💴 見積もり入力</div>
+    <table class="est-table-wrap">
+      <thead>
+        <tr>
+          <th>品目</th>
+          <th>数量</th>
+          <th>単価（円）</th>
+          <th>小計</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="est-body"></tbody>
+    </table>
+    <div class="est-add-row">
+      <button class="est-btn-add" onclick="estAddRow(false)">＋ 品目を追加</button>
+      <button class="est-btn-add discount" onclick="estAddRow(true)">－ 割引を追加</button>
+    </div>
+    <div class="est-total-row">
+      <span class="est-total-label">合計</span>
+      <span class="est-total-amount" id="est-total">¥0</span>
+    </div>
+    <div class="est-note-label">補足・備考</div>
+    <textarea class="est-note-input" id="est-note" rows="2" placeholder="例）修正は2回まで込みです。納期は約2週間を予定しております。"></textarea>
+    <div class="est-modal-actions">
+      <button class="est-btn-cancel" onclick="estCloseModal()">キャンセル</button>
+      <button class="est-btn-confirm" onclick="estConfirm()">✔ 確定して反映</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
