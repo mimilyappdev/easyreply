@@ -731,6 +731,61 @@
     cursor: pointer;
   }
   .est-btn-confirm:hover { background: var(--deep); }
+
+  /* ── スマホ タブ切替（600px以下のみ） ── */
+  .sp-tab-bar {
+    display: none;
+  }
+  @media (max-width: 600px) {
+    .sp-tab-bar {
+      display: flex;
+      background: var(--white);
+      border-bottom: 1.5px solid var(--border);
+      flex-shrink: 0;
+    }
+    .sp-tab-btn {
+      flex: 1;
+      padding: 12px 8px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: 'BIZ UDGothic', sans-serif;
+      border: none;
+      background: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 2.5px solid transparent;
+      margin-bottom: -1.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .sp-tab-btn.active {
+      color: var(--deep);
+      border-bottom-color: var(--accept);
+    }
+    .main {
+      flex-direction: column;
+      padding: 12px;
+      gap: 0;
+    }
+    .left-panel {
+      width: 100%;
+      display: none;
+    }
+    .left-panel.sp-active {
+      display: flex;
+    }
+    .right-panel {
+      display: none;
+    }
+    .right-panel.sp-active {
+      display: flex;
+    }
+    #preview-textarea {
+      height: 260px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -747,9 +802,14 @@
 </header>
 <div class="gold-line"></div>
 
+<div class="sp-tab-bar">
+  <button class="sp-tab-btn active" onclick="spSwitchTab('left')">📋 テンプレ選択</button>
+  <button class="sp-tab-btn" onclick="spSwitchTab('right')">✉️ プレビュー</button>
+</div>
+
 <div class="main">
   <!-- LEFT -->
-  <div class="left-panel">
+  <div class="left-panel sp-active">
 
     <div class="section-card">
       <div class="section-label">フェーズ</div>
@@ -843,7 +903,7 @@
   </div>
 
   <!-- RIGHT -->
-  <div class="right-panel">
+  <div class="right-panel" id="sp-right-panel">
 
     <div class="tone-row">
       <button class="tone-btn warm" data-tone="warm">Warm</button>
@@ -1434,6 +1494,24 @@ document.getElementById('btn-copy').addEventListener('click', () => {
 document.getElementById('btn-reset').addEventListener('click', () => {
   fullReset();
 });
+
+// ── スマホ タブ切替 ──
+function spSwitchTab(tab) {
+  const left = document.querySelector('.left-panel');
+  const right = document.getElementById('sp-right-panel');
+  const btns = document.querySelectorAll('.sp-tab-btn');
+  if (tab === 'left') {
+    left.classList.add('sp-active');
+    right.classList.remove('sp-active');
+    btns[0].classList.add('active');
+    btns[1].classList.remove('active');
+  } else {
+    right.classList.add('sp-active');
+    left.classList.remove('sp-active');
+    btns[1].classList.add('active');
+    btns[0].classList.remove('active');
+  }
+}
 </script>
 <!-- 見積もりモーダル -->
 <div class="est-modal-overlay" id="est-modal-overlay">
