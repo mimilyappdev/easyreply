@@ -1,0 +1,47 @@
+{
+  "app": {
+    "name": "EasyReply",
+    "tagline": "Quick Reply Templates"
+  },
+  "nav": {
+    "settings": "Settings",
+    "export": "Export",
+    "back": "← Top"
+  },
+  "phase": {
+    "label": "Phase"
+  },
+  "direction": {
+    "label": "Reply Pattern",
+    "desc": "Select how you want to reply"
+  },
+  "button": {
+    "copy": "Copy",
+    "copied": "Copied!",
+    "add_phase": "+ Add Phase",
+    "add_direction": "+ Add Content",
+    "add_button": "+ Add Button",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "preview": {
+    "placeholder": "Select a button to preview text here"
+  },
+  "unlock": {
+    "title": "Unlock with Pro",
+    "message": "Unlimited saves & additions with Pro",
+    "cta": "Get Pro"
+  },
+  "trial": {
+    "save_limit": "Trial: up to 3 saves",
+    "phase_limit": "Trial: up to 1 phase",
+    "direction_limit": "Trial: up to 1 direction"
+  },
+  "storage": {
+    "export_success": "Exported successfully",
+    "import_success": "Imported successfully",
+    "reset_confirm": "Reset all data?"
+  }
+}

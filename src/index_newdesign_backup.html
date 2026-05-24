@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2C4A5E">
+<title>EasyReply（ラクリプ）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tilt+Warp&family=BIZ+UDGothic:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<header id="app-header">
+  <div class="header-inner">
+    <a class="logo" href="../">EasyReply</a>
+    <div class="header-actions">
+      <button id="btn-lang" class="icon-btn" title="言語切替">JP</button>
+      <button id="btn-export" class="icon-btn" data-i18n="nav.export">エクスポート</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="sidebar">
+    <div class="section-label" data-i18n="phase.label">フェーズ</div>
+    <div id="phase-tabs" class="phase-tabs"></div>
+
+    <div class="section-label" data-i18n="direction.label">返答の方向</div>
+    <div id="direction-chips" class="direction-chips"></div>
+
+    <div id="button-list" class="button-list"></div>
+
+    <!-- Pro: add buttons -->
+    <button id="btn-add-button" class="add-btn" style="display:none" data-i18n="button.add_button">+ ボタンを追加</button>
+
+    <!-- Pro: add phase / direction -->
+    <div id="pro-add-controls" class="pro-add-controls" style="display:none">
+      <button id="btn-add-phase" class="add-btn secondary" data-i18n="button.add_phase">+ フェーズを追加</button>
+      <button id="btn-add-direction" class="add-btn secondary" data-i18n="button.add_direction">+ Directionを追加</button>
+    </div>
+  </div>
+
+  <div class="preview-pane">
+    <textarea id="preview-textarea" class="preview-textarea" readonly placeholder="ボタンを選ぶとここにテキストが表示されます"></textarea>
+    <button id="btn-copy" class="copy-btn" data-i18n="button.copy">コピー</button>
+  </div>
+</main>
+
+<!-- Modal: Add / Edit -->
+<div id="modal-edit" class="modal-overlay" hidden>
+  <div class="modal">
+    <h2 id="modal-title">ボタンを追加</h2>
+    <label>ラベル
+      <input id="modal-label" type="text" placeholder="ボタン名">
+    </label>
+    <label>テキスト
+      <textarea id="modal-text" rows="6" placeholder="返信テキスト"></textarea>
+    </label>
+    <div class="modal-actions">
+      <button id="modal-cancel" class="btn-secondary" data-i18n="button.cancel">キャンセル</button>
+      <button id="modal-save" class="btn-primary" data-i18n="button.save">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Unlock -->
+<div id="modal-unlock" class="modal-overlay" hidden>
+  <div class="modal">
+    <div class="unlock-icon">🔓</div>
+    <h2 data-i18n="unlock.title">Pro版で解放</h2>
+    <p data-i18n="unlock.message">保存・追加し放題はPro版へ</p>
+    <div class="modal-actions">
+      <button id="unlock-cancel" class="btn-secondary" data-i18n="button.cancel">キャンセル</button>
+      <a id="unlock-cta" href="#" class="btn-primary" data-i18n="unlock.cta">Pro版を見る</a>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="./main.js"></script>
+</body>
+</html>

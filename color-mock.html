@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>マイカラー モック</title>
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDGothic:wght@400;700&family=Tilt+Warp&display=swap" rel="stylesheet">
+<style>
+:root {
+  --seed-bg:      #1A1F40;
+  --seed-surface: #2E3460;
+  --seed-ui:      #252A55;
+  --seed-accent:  #8A90CC;
+  --seed-text:    #E4E6F8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'BIZ UDGothic', sans-serif;
+  background: #12121e;
+  color: #ddd;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── LEFT PANEL ── */
+.picker-panel {
+  width: 300px;
+  flex-shrink: 0;
+  background: #1a1a2c;
+  border-right: 1px solid #2a2a40;
+  padding: 24px 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.panel-title { font-size: 11px; letter-spacing: 0.12em; color: #888; margin-bottom: 20px; }
+.seed-row { margin-bottom: 16px; }
+.seed-label { font-size: 11px; color: #999; margin-bottom: 6px; letter-spacing: 0.04em; }
+.seed-sub { font-size: 9px; color: #666; margin-bottom: 5px; line-height: 1.5; }
+.seed-input-row { display: flex; align-items: center; gap: 8px; }
+input[type="color"] {
+  width: 44px; height: 44px;
+  border: none; border-radius: 8px;
+  cursor: pointer; padding: 3px;
+  background: #252535; flex-shrink: 0;
+}
+.hex-input {
+  flex: 1; padding: 10px 12px;
+  background: #0d0d1a;
+  border: 1px solid #2a2a40; border-radius: 8px;
+  color: #eee; font-size: 13px;
+  font-family: monospace; letter-spacing: 0.1em;
+  transition: border-color 0.15s;
+}
+.hex-input:focus { outline: none; border-color: var(--seed-accent); }
+.divider { height: 1px; background: #2a2a40; margin: 20px 0; }
+.derived-title { font-size: 11px; color: #666; margin-bottom: 12px; letter-spacing: 0.08em; }
+.swatch-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.swatch-item { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.swatch-box { width: 100%; aspect-ratio: 1; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); }
+.swatch-name { font-size: 8px; color: #666; text-align: center; }
+
+/* ── PREVIEW ── */
+.preview-panel {
+  flex: 1; padding: 24px;
+  overflow-y: auto;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.preview-title { font-size: 11px; color: #666; letter-spacing: 0.1em; }
+.app-frame {
+  border-radius: 12px; overflow: hidden;
+  border: 1px solid #2a2a40;
+  flex: 1; display: flex; flex-direction: column;
+}
+
+/* ── MINI APP ── */
+.m-header {
+  background: var(--seed-surface);
+  height: 44px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 16px; flex-shrink: 0;
+}
+.m-logo { font-family: 'Tilt Warp', cursive; font-size: 15px; color: var(--seed-text); }
+.m-logo-sub { font-size: 9px; color: color-mix(in srgb, var(--seed-text), var(--seed-bg) 55%); margin-left: 6px; font-family: 'BIZ UDGothic', sans-serif; }
+.m-actions { display: flex; gap: 5px; }
+.m-btn {
+  height: 28px; padding: 0 9px;
+  background: var(--seed-ui);
+  border-radius: 7px; font-size: 10px;
+  color: color-mix(in srgb, var(--seed-text), transparent 20%);
+  display: flex; align-items: center;
+}
+.m-gold {
+  height: 3px;
+  background: linear-gradient(90deg, var(--seed-accent), color-mix(in srgb, var(--seed-accent), white 30%), var(--seed-accent));
+  flex-shrink: 0;
+}
+.m-body {
+  display: flex; flex: 1; min-height: 320px;
+  background: var(--seed-bg);
+}
+.m-sidebar {
+  width: 180px; flex-shrink: 0;
+  background: var(--seed-ui);
+  border-right: 1px solid color-mix(in srgb, var(--seed-bg), white 15%);
+  padding: 14px 10px;
+}
+.m-section-label {
+  font-size: 9px;
+  color: color-mix(in srgb, var(--seed-text), var(--seed-bg) 45%);
+  letter-spacing: 0.08em; margin-bottom: 6px;
+}
+.m-phase-btn {
+  width: 100%; padding: 7px 10px;
+  border-radius: 6px; font-size: 10px; margin-bottom: 4px;
+  border: 1px solid color-mix(in srgb, var(--seed-bg), white 15%);
+  color: color-mix(in srgb, var(--seed-text), var(--seed-bg) 35%);
+  background: transparent; text-align: left;
+  font-family: inherit; cursor: default;
+}
+.m-phase-btn.active {
+  background: var(--seed-surface);
+  color: var(--seed-text);
+  border-color: var(--seed-surface);
+}
+.m-chips { display: flex; gap: 5px; margin: 10px 0 8px; }
+.m-chip {
+  padding: 4px 10px; border-radius: 20px; font-size: 9px;
+  border: 1px solid color-mix(in srgb, var(--seed-bg), white 15%);
+  color: color-mix(in srgb, var(--seed-text), var(--seed-bg) 40%);
+  cursor: default;
+}
+.m-chip.accept {
+  background: color-mix(in srgb, var(--seed-accent), var(--seed-bg) 75%);
+  border-color: var(--seed-accent);
+  color: var(--seed-accent);
+}
+.m-content-btn {
+  width: 100%; padding: 8px 10px; border-radius: 6px;
+  font-size: 10px; margin-bottom: 3px;
+  border: 1px solid color-mix(in srgb, var(--seed-bg), white 15%);
+  background: color-mix(in srgb, var(--seed-ui), var(--seed-bg) 50%);
+  color: var(--seed-text); text-align: left;
+  font-family: inherit; cursor: default;
+}
+.m-content-btn.active {
+  border-color: var(--seed-accent);
+  background: color-mix(in srgb, var(--seed-accent), var(--seed-bg) 80%);
+}
+.m-main {
+  flex: 1; padding: 14px 12px;
+  background: var(--seed-bg);
+  display: flex; flex-direction: column;
+}
+.m-preview-header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
+}
+.m-preview-label {
+  font-size: 9px;
+  color: color-mix(in srgb, var(--seed-text), var(--seed-bg) 45%);
+  letter-spacing: 0.05em;
+}
+.m-tone-toggle { display: flex; gap: 4px; }
+.m-tone-btn {
+  padding: 2px 8px; border-radius: 20px; font-size: 9px;
+  border: 1px solid color-mix(in srgb, var(--seed-bg), white 15%);
+  color: color-mix(in srgb, var(--seed-text), var(--seed-bg) 40%);
+  background: transparent; cursor: default;
+}
+.m-tone-btn.formal.active { background: var(--seed-ui); color: var(--seed-text); border-color: var(--seed-ui); }
+.m-tone-btn.warm.active   { background: var(--seed-accent); color: #fff; border-color: var(--seed-accent); }
+.m-textarea {
+  flex: 1;
+  background: var(--seed-surface);
+  border: 1px solid color-mix(in srgb, var(--seed-bg), white 15%);
+  border-radius: 8px; padding: 12px;
+  font-size: 10px; color: var(--seed-text);
+  line-height: 1.7; resize: none;
+  font-family: inherit; min-height: 120px;
+}
+.m-copy-btn {
+  margin-top: 10px; padding: 8px 20px;
+  background: var(--seed-ui); color: var(--seed-text);
+  border: none; border-radius: 8px; font-size: 11px;
+  cursor: default; font-family: inherit; align-self: flex-start;
+}
+</style>
+</head>
+<body>
+
+<div class="picker-panel">
+  <div class="panel-title">🎨 マイカラー設定</div>
+
+  <div class="seed-row">
+    <div class="seed-label">背景ベース</div>
+    <div class="seed-sub">ページ背景</div>
+    <div class="seed-input-row">
+      <input type="color" id="pick-bg" value="#1A1F40">
+      <input type="text" class="hex-input" id="hex-bg" value="#1A1F40" maxlength="7">
+    </div>
+  </div>
+
+  <div class="seed-row">
+    <div class="seed-label">サーフェス</div>
+    <div class="seed-sub">ヘッダー・フェーズ・返答パターン・プレビュー背景</div>
+    <div class="seed-input-row">
+      <input type="color" id="pick-surface" value="#2E3460">
+      <input type="text" class="hex-input" id="hex-surface" value="#2E3460" maxlength="7">
+    </div>
+  </div>
+
+  <div class="seed-row">
+    <div class="seed-label">UI</div>
+    <div class="seed-sub">サイドバー・JP・編集・設定・コピー・Formal</div>
+    <div class="seed-input-row">
+      <input type="color" id="pick-ui" value="#252A55">
+      <input type="text" class="hex-input" id="hex-ui" value="#252A55" maxlength="7">
+    </div>
+  </div>
+
+  <div class="seed-row">
+    <div class="seed-label">アクセント</div>
+    <div class="seed-sub">アクセント・受ける・Warm・PRO枠</div>
+    <div class="seed-input-row">
+      <input type="color" id="pick-accent" value="#8A90CC">
+      <input type="text" class="hex-input" id="hex-accent" value="#8A90CC" maxlength="7">
+    </div>
+  </div>
+
+  <div class="seed-row">
+    <div class="seed-label">テキスト</div>
+    <div class="seed-sub">本文テキスト</div>
+    <div class="seed-input-row">
+      <input type="color" id="pick-text" value="#E4E6F8">
+      <input type="text" class="hex-input" id="hex-text" value="#E4E6F8" maxlength="7">
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="derived-title">自動派生カラー</div>
+  <div class="swatch-grid" id="swatch-grid"></div>
+</div>
+
+<div class="preview-panel">
+  <div class="preview-title">LIVE PREVIEW</div>
+  <div class="app-frame">
+    <div class="m-header">
+      <div>
+        <span class="m-logo">EasyReply</span>
+        <span class="m-logo-sub">ラクリプ</span>
+      </div>
+      <div class="m-actions">
+        <div class="m-btn">JP</div>
+        <div class="m-btn">✎ 編集</div>
+        <div class="m-btn">⚙</div>
+      </div>
+    </div>
+    <div class="m-gold"></div>
+    <div class="m-body">
+      <div class="m-sidebar">
+        <div class="m-section-label">フェーズ</div>
+        <button class="m-phase-btn active">依頼前</button>
+        <button class="m-phase-btn">依頼中</button>
+        <button class="m-phase-btn">完了</button>
+        <div class="m-section-label" style="margin-top:10px">返答パターン</div>
+        <div class="m-chips">
+          <div class="m-chip accept">受ける</div>
+          <div class="m-chip">断る</div>
+        </div>
+        <button class="m-content-btn">受諾・詳細確認</button>
+        <button class="m-content-btn active">予算確認</button>
+        <button class="m-content-btn">納期確認</button>
+        <button class="m-content-btn">必要事項テンプレ</button>
+      </div>
+      <div class="m-main">
+        <div class="m-preview-header">
+          <div class="m-preview-label">返信プレビュー</div>
+          <div class="m-tone-toggle">
+            <div class="m-tone-btn formal active">Formal</div>
+            <div class="m-tone-btn warm">Warm</div>
+          </div>
+        </div>
+        <textarea class="m-textarea" readonly>ご希望のご予算をお知らせいただけますでしょうか。</textarea>
+        <button class="m-copy-btn">コピー</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const seeds = [
+  { id: 'bg',      var: '--seed-bg',      label: '背景ベース' },
+  { id: 'surface', var: '--seed-surface', label: 'サーフェス' },
+  { id: 'ui',      var: '--seed-ui',      label: 'UI' },
+  { id: 'accent',  var: '--seed-accent',  label: 'アクセント' },
+  { id: 'text',    var: '--seed-text',    label: 'テキスト' },
+]
+
+const derived = [
+  { name: 'border',    bg: 'color-mix(in srgb, var(--seed-bg), white 18%)' },
+  { name: 'muted',     bg: 'color-mix(in srgb, var(--seed-text), var(--seed-bg) 40%)' },
+  { name: 'deep',      bg: 'color-mix(in srgb, var(--seed-accent), white 30%)' },
+  { name: 'acc-lt',    bg: 'color-mix(in srgb, var(--seed-accent), var(--seed-bg) 80%)' },
+  { name: 'accept-lt', bg: 'color-mix(in srgb, var(--seed-accent), var(--seed-bg) 75%)' },
+  { name: 'decline-lt',bg: 'color-mix(in srgb, var(--seed-bg), var(--seed-accent) 5%)' },
+  { name: 'premium-lt',bg: 'color-mix(in srgb, var(--seed-accent), var(--seed-bg) 80%)' },
+]
+
+function renderSwatches() {
+  document.getElementById('swatch-grid').innerHTML = derived.map(d => `
+    <div class="swatch-item">
+      <div class="swatch-box" style="background:${d.bg}"></div>
+      <div class="swatch-name">${d.name}</div>
+    </div>
+  `).join('')
+}
+
+seeds.forEach(({ id, var: v }) => {
+  const picker = document.getElementById(`pick-${id}`)
+  const hex    = document.getElementById(`hex-${id}`)
+
+  picker.addEventListener('input', () => {
+    document.documentElement.style.setProperty(v, picker.value)
+    hex.value = picker.value
+    renderSwatches()
+  })
+
+  hex.addEventListener('input', () => {
+    if (/^#[0-9A-Fa-f]{6}$/.test(hex.value)) {
+      document.documentElement.style.setProperty(v, hex.value)
+      picker.value = hex.value
+      renderSwatches()
+    }
+  })
+})
+
+renderSwatches()
+</script>
+</body>
+</html>

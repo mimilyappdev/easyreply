@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2C4A5E">
+<title>EasyReply（ラクリプ）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tilt+Warp&family=BIZ+UDGothic:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <a class="logo" href="../">EasyReply</a>
+    <span class="logo-sub">ラクリプ</span>
+  </div>
+  <div class="header-actions">
+    <button id="btn-lang" class="icon-btn" title="言語切替">JP</button>
+    <button id="btn-edit-mode" class="icon-btn" title="編集モード">✎ 編集</button>
+    <button id="btn-settings" class="icon-btn" title="設定">⚙</button>
+  </div>
+</header>
+<div class="gold-line"></div>
+
+<div class="main">
+
+  <!-- LEFT PANEL -->
+  <div class="left-panel sp-active" id="sp-left-panel">
+
+    <div class="section-card">
+      <div class="section-label" data-i18n="phase.label">フェーズ</div>
+      <div id="phase-tabs" class="phase-tabs"></div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-label" data-i18n="direction.label">返答パターン</div>
+      <div class="section-desc" data-i18n="direction.desc">どのような返答をするか選んでください</div>
+      <div id="direction-chips" class="direction-chips"></div>
+    </div>
+
+    <div class="section-card">
+      <div id="button-list" class="button-list"></div>
+      <button id="btn-add-button" class="add-btn" style="display:none" data-i18n="button.add_button">+ ボタンを追加</button>
+    </div>
+
+    <div id="pro-add-controls" class="pro-add-controls" style="display:none">
+      <button id="btn-add-phase" class="add-btn" data-i18n="button.add_phase">+ フェーズを追加</button>
+      <button id="btn-add-direction" class="add-btn" data-i18n="button.add_direction">+ 内容を追加する</button>
+    </div>
+
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel" id="sp-right-panel">
+
+    <div class="preview-wrap">
+      <div class="preview-header">
+        <div class="preview-label">返信プレビュー（直接編集できます）</div>
+        <div class="tone-toggle">
+          <button id="tone-formal" class="tone-btn active">Formal</button>
+          <button id="tone-warm" class="tone-btn">Warm</button>
+        </div>
+      </div>
+      <textarea id="preview-textarea" class="preview-textarea" placeholder="左のパネルからボタンを選ぶと、ここに文章が表示されます。&#10;&#10;複数のボタンを選ぶと積み上げて表示されます。"></textarea>
+    </div>
+
+    <div class="action-row">
+      <button id="btn-copy" class="copy-btn" data-i18n="button.copy">コピー</button>
+    </div>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../" class="footer-link">TOP へ戻る</a>
+  <span class="footer-sep">|</span>
+  <a href="#" class="footer-link">Mimily アプリ一覧</a>
+</footer>
+
+<!-- Bottom Nav (mobile) -->
+<nav class="bottom-nav">
+  <button class="bnav-item active" data-sp-tab="left">
+    <span class="bnav-icon">📋</span>
+    <span class="bnav-label">テンプレ</span>
+  </button>
+  <button class="bnav-item" data-sp-tab="right">
+    <span class="bnav-icon">✉️</span>
+    <span class="bnav-label">プレビュー</span>
+  </button>
+  <button class="bnav-item" id="bnav-settings">
+    <span class="bnav-icon">⚙️</span>
+    <span class="bnav-label">設定</span>
+  </button>
+</nav>
+
+<!-- Modal: Add / Edit -->
+<div id="modal-edit" class="modal-overlay" hidden>
+  <div class="modal">
+    <h2 id="modal-title">ボタンを追加</h2>
+    <label>ラベル
+      <input id="modal-label" type="text" placeholder="ボタン名">
+    </label>
+    <label>テキスト
+      <textarea id="modal-text" rows="6" placeholder="返信テキスト"></textarea>
+    </label>
+    <div class="modal-actions">
+      <button id="modal-cancel" class="btn-secondary" data-i18n="button.cancel">キャンセル</button>
+      <button id="modal-save" class="btn-primary" data-i18n="button.save">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Unlock -->
+<div id="modal-unlock" class="modal-overlay" hidden>
+  <div class="modal">
+    <div class="unlock-icon">🔓</div>
+    <h2 data-i18n="unlock.title">Pro版で解放</h2>
+    <p data-i18n="unlock.message">保存・追加し放題はPro版へ</p>
+    <div class="modal-actions">
+      <button id="unlock-cancel" class="btn-secondary" data-i18n="button.cancel">キャンセル</button>
+      <a id="unlock-cta" href="#" class="btn-primary" data-i18n="unlock.cta">Pro版を見る</a>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Settings -->
+<div id="modal-settings" class="modal-overlay" hidden>
+  <div class="modal modal--settings">
+    <h2>設定</h2>
+
+    <!-- テーマカラー -->
+    <div class="settings-section">
+      <div class="settings-label">テーマカラー</div>
+      <div class="theme-list" id="theme-list">
+        <button class="theme-opt active" data-theme="default">
+          <div class="theme-preview" style="background:linear-gradient(135deg,#2C4A5E 50%,#F5F1EB 50%)"></div>
+          <span>デフォルト</span>
+        </button>
+        <button class="theme-opt" data-theme="dark">
+          <div class="theme-preview" style="background:linear-gradient(135deg,#0e133a 50%,#22274e 50%)"></div>
+          <span>ダーク</span>
+        </button>
+        <button class="theme-opt" data-theme="mycolor">
+          <div class="theme-preview" id="mc-swatch" style="background:linear-gradient(135deg,#151d5b 50%,#22274e 50%)"></div>
+          <span>マイカラー</span>
+        </button>
+      </div>
+
+      <!-- My Color Picker -->
+      <div class="mycolor-block">
+        <div class="mycolor-block-header">
+          <span class="mycolor-block-title">🎨 カラーをカスタマイズ</span>
+          <span class="mycolor-hint">マイカラー選択時に適用</span>
+        </div>
+        <div id="mycolor-seeds-ui"></div>
+      </div>
+    </div>
+
+    <div class="settings-divider"></div>
+
+    <!-- データ -->
+    <div class="settings-section">
+      <div class="settings-label">データ</div>
+      <button id="settings-export" class="settings-btn">📤 エクスポート</button>
+      <div class="settings-pro-block">
+        <div class="settings-pro-header">
+          <span class="pro-badge">PRO</span>
+          <span class="settings-pro-title">📥 インポート</span>
+        </div>
+        <p class="settings-pro-desc">JSONファイルからデータを復元できます</p>
+      </div>
+      <button id="settings-reset" class="settings-btn settings-btn--danger">🗑 リセット</button>
+    </div>
+
+    <div class="modal-actions">
+      <button id="modal-settings-close" class="btn-secondary">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="./main.js"></script>
+</body>
+</html>

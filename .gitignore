@@ -1,0 +1,6 @@
+node_modules/
+dist/
+*.backup.*
+app/my_backup_*.html
+src_backup_*/
+.claude/
