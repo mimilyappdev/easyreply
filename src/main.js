@@ -18,6 +18,9 @@ let currentDirectionId = null
 let selectedButtonId = null
 let editTarget = null // { type: 'button'|'phase'|'direction', phaseId, directionId, buttonId }
 let currentTone = localStorage.getItem('er_tone') || 'formal'
+let dlUrl = ''
+let dlPassword = ''
+let previewBase = ''
 
 // Trial counters (memory only)
 const trialCount = { saves: 0, phases: 0, directions: 0 }
@@ -176,8 +179,21 @@ function renderButtons() {
 function showPreview(btn) {
   const textarea = document.getElementById('preview-textarea')
   const src = (currentTone === 'warm' && btn.textWarm) ? btn.textWarm : btn.text
-  textarea.value = tData(src)
+  previewBase = tData(src)
+  updatePreview()
   textarea.removeAttribute('readonly')
+}
+
+function updatePreview() {
+  const textarea = document.getElementById('preview-textarea')
+  let text = previewBase
+  if (dlUrl || dlPassword) {
+    const parts = []
+    if (dlUrl) parts.push(`【ダウンロードURL】\n${dlUrl}`)
+    if (dlPassword) parts.push(`【パスワード】\n${dlPassword}`)
+    text = text ? text + '\n\n' + parts.join('\n') : parts.join('\n')
+  }
+  textarea.value = text
 }
 
 function setTone(tone) {
@@ -620,6 +636,43 @@ document.getElementById('btn-copy').addEventListener('click', () => {
       btn.textContent = t('button.copy')
     }, 1800)
   })
+})
+
+// DL area (PC inline)
+document.getElementById('dl-url').addEventListener('input', (e) => {
+  dlUrl = e.target.value.trim()
+  document.getElementById('modal-dl-url').value = dlUrl
+  updatePreview()
+  updateDlBtn()
+})
+document.getElementById('dl-pw').addEventListener('input', (e) => {
+  dlPassword = e.target.value.trim()
+  document.getElementById('modal-dl-pw').value = dlPassword
+  updatePreview()
+  updateDlBtn()
+})
+
+// DL modal (mobile)
+function closeDlModal() {
+  dlUrl = document.getElementById('modal-dl-url').value.trim()
+  dlPassword = document.getElementById('modal-dl-pw').value.trim()
+  document.getElementById('dl-url').value = dlUrl
+  document.getElementById('dl-pw').value = dlPassword
+  document.getElementById('modal-dl').setAttribute('hidden', '')
+  updatePreview()
+  updateDlBtn()
+}
+function updateDlBtn() {
+  document.getElementById('btn-dl-open').classList.toggle('has-data', !!(dlUrl || dlPassword))
+}
+document.getElementById('btn-dl-open').addEventListener('click', () => {
+  document.getElementById('modal-dl-url').value = dlUrl
+  document.getElementById('modal-dl-pw').value = dlPassword
+  document.getElementById('modal-dl').removeAttribute('hidden')
+})
+document.getElementById('modal-dl-close').addEventListener('click', closeDlModal)
+document.getElementById('modal-dl').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeDlModal()
 })
 
 // ── BOTTOM NAV TAB SWITCHING ─────────────────────

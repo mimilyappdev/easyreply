@@ -364,6 +364,56 @@ body.edit-mode .content-btn.active .btn-actions { display: flex; }
 .copy-btn:hover { background: var(--deep); }
 .copy-btn.copied { background: var(--accept); }
 
+/* ── DL BUTTON (mobile only) ── */
+.dl-btn {
+  padding: 11px 16px;
+  background: var(--bg);
+  color: var(--muted);
+  border: 1.5px solid var(--border);
+  border-radius: 9px;
+  font-family: 'BIZ UDGothic', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s;
+  display: none;
+}
+.dl-btn:hover { border-color: var(--accent); color: var(--accent); }
+.dl-btn.has-data { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+
+/* ── DL AREA (PC inline) ── */
+.dl-area {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.dl-area-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.dl-input-row { display: flex; flex-direction: column; gap: 4px; }
+.dl-field-label { font-size: 11px; font-weight: 700; color: var(--muted); }
+.dl-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  font-family: 'BIZ UDGothic', sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  background: var(--bg);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.dl-input:focus { border-color: var(--accent); }
+
 /* ── MODAL (共通) ── */
 .modal-overlay {
   position: fixed;
@@ -613,6 +663,8 @@ body.edit-mode .content-btn.active .btn-actions { display: flex; }
   .right-panel.sp-active { display: flex; }
   .preview-textarea { min-height: 260px; }
   .site-footer { padding-bottom: 72px; }
+  .dl-area { display: none; }
+  .dl-btn { display: block; }
 
   .bottom-nav {
     display: block;

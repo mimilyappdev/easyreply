@@ -68,6 +68,19 @@
 
     <div class="action-row">
       <button id="btn-copy" class="copy-btn" data-i18n="button.copy">コピー</button>
+      <button id="btn-dl-open" class="dl-btn">DLリンク</button>
+    </div>
+
+    <div class="dl-area" id="dl-area">
+      <div class="dl-area-label">DLリンク・パスワード</div>
+      <div class="dl-input-row">
+        <div class="dl-field-label">ダウンロードURL</div>
+        <input class="dl-input" id="dl-url" type="url" placeholder="https://gigafile.nu/...">
+      </div>
+      <div class="dl-input-row">
+        <div class="dl-field-label">パスワード</div>
+        <input class="dl-input" id="dl-pw" type="text" placeholder="解凍パスワードなど">
+      </div>
     </div>
 
   </div>
@@ -176,6 +189,22 @@
 
     <div class="modal-actions">
       <button id="modal-settings-close" class="btn-secondary">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: DL Link -->
+<div id="modal-dl" class="modal-overlay" hidden>
+  <div class="modal">
+    <h2>DLリンク・パスワード</h2>
+    <label>ダウンロードURL
+      <input id="modal-dl-url" type="url" placeholder="https://gigafile.nu/...">
+    </label>
+    <label>パスワード
+      <input id="modal-dl-pw" type="text" placeholder="解凍パスワードなど">
+    </label>
+    <div class="modal-actions">
+      <button id="modal-dl-close" class="btn-primary">OK</button>
     </div>
   </div>
 </div>
