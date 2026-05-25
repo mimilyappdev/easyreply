@@ -51,8 +51,19 @@ header {
 }
 .header-left {
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+.logo-row {
+  display: flex;
   align-items: baseline;
   gap: 10px;
+}
+.logo-tagline {
+  font-size: 10px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.04em;
 }
 .logo {
   font-family: 'Tilt Warp', cursive;
@@ -665,6 +676,7 @@ body.edit-mode .content-btn.active .btn-actions { display: flex; }
   .site-footer { padding-bottom: 72px; }
   .dl-area { display: none; }
   .dl-btn { display: block; }
+  .logo-tagline { display: none; }
 
   .bottom-nav {
     display: block;

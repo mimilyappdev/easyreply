@@ -1,7 +1,8 @@
 {
   "app": {
     "name": "EasyReply",
-    "tagline": "Quick Reply Templates"
+    "tagline": "Quick Reply Templates",
+    "catchcopy": "Your words. Your way."
   },
   "nav": {
     "settings": "Settings",

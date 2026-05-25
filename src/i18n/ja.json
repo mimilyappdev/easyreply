@@ -1,7 +1,8 @@
 {
   "app": {
     "name": "EasyReply",
-    "tagline": "ラクリプ"
+    "tagline": "ラクリプ",
+    "catchcopy": "返信を、迷わず。自分の言葉で。"
   },
   "nav": {
     "settings": "設定",

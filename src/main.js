@@ -417,10 +417,10 @@ document.getElementById('btn-edit-mode').addEventListener('click', () => {
 })
 
 // Lang toggle
-document.getElementById('btn-lang').addEventListener('click', () => {
+document.getElementById('btn-lang').addEventListener('click', async () => {
   const next = lang() === 'ja' ? 'en' : 'ja'
   localStorage.setItem('er_lang', next)
-  i18next.changeLanguage(next)
+  await i18next.changeLanguage(next)
   renderAll()
 })
 
