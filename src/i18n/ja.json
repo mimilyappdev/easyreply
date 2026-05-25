@@ -42,6 +42,18 @@
     "phase_limit": "フェーズ追加は1個まで（お試し）",
     "direction_limit": "Direction追加は1個まで（お試し）"
   },
+  "mycolor": {
+    "bg_name": "背景ベース",
+    "bg_hint": "ページ背景",
+    "surface_name": "サーフェス",
+    "surface_hint": "ヘッダー・プレビュー背景",
+    "ui_name": "UI",
+    "ui_hint": "サイドバー・ボタン類",
+    "accent_name": "アクセント",
+    "accent_hint": "受ける・Warm・強調色",
+    "text_name": "テキスト",
+    "text_hint": "本文テキスト"
+  },
   "settings": {
     "title": "設定",
     "theme": "テーマカラー",

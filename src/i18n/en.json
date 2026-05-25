@@ -42,6 +42,18 @@
     "phase_limit": "Trial: up to 1 phase",
     "direction_limit": "Trial: up to 1 direction"
   },
+  "mycolor": {
+    "bg_name": "Background",
+    "bg_hint": "Page background",
+    "surface_name": "Surface",
+    "surface_hint": "Header & preview area",
+    "ui_name": "UI",
+    "ui_hint": "Sidebar & buttons",
+    "accent_name": "Accent",
+    "accent_hint": "Accept / Warm / highlights",
+    "text_name": "Text",
+    "text_hint": "Body text"
+  },
   "settings": {
     "title": "Settings",
     "theme": "Theme Color",

@@ -262,11 +262,11 @@ const genId = (prefix) => `${prefix}_${Date.now()}`
 // ── MY COLOR ─────────────────────────────────────
 const MC_SEEDS = ['bg', 'surface', 'ui', 'accent', 'text']
 const MC_LABELS = {
-  bg:      { name: '背景ベース', hint: 'ページ背景' },
-  surface: { name: 'サーフェス', hint: 'ヘッダー・プレビュー背景' },
-  ui:      { name: 'UI',        hint: 'サイドバー・ボタン類' },
-  accent:  { name: 'アクセント', hint: '受ける・Warm・強調色' },
-  text:    { name: 'テキスト',   hint: '本文テキスト' },
+  bg:      { nameKey: 'mycolor.bg_name',      hintKey: 'mycolor.bg_hint' },
+  surface: { nameKey: 'mycolor.surface_name', hintKey: 'mycolor.surface_hint' },
+  ui:      { nameKey: 'mycolor.ui_name',      hintKey: 'mycolor.ui_hint' },
+  accent:  { nameKey: 'mycolor.accent_name',  hintKey: 'mycolor.accent_hint' },
+  text:    { nameKey: 'mycolor.text_name',    hintKey: 'mycolor.text_hint' },
 }
 const MC_DEFAULT = { bg: '#22274e', surface: '#0e133a', ui: '#151d5b', accent: '#656cb3', text: '#b0981c' }
 let myColorSeeds = JSON.parse(localStorage.getItem('er_mycolor') || 'null') || { ...MC_DEFAULT }
@@ -314,11 +314,11 @@ function initMyColorUI() {
   if (!container) return
   container.innerHTML = ''
   MC_SEEDS.forEach(id => {
-    const { name, hint } = MC_LABELS[id]
+    const { nameKey, hintKey } = MC_LABELS[id]
     const row = document.createElement('div')
     row.className = 'mc-seed-row'
     row.innerHTML = `
-      <div class="mc-seed-label">${name}<span class="mc-seed-hint">${hint}</span></div>
+      <div class="mc-seed-label"><span data-i18n="${nameKey}"></span><span class="mc-seed-hint" data-i18n="${hintKey}"></span></div>
       <div class="mc-seed-input-row">
         <input type="color" id="mc-pick-${id}" value="${myColorSeeds[id]}">
         <input type="text" id="mc-hex-${id}" class="mc-hex-input" value="${myColorSeeds[id]}" maxlength="7">
