@@ -142,10 +142,10 @@
 
   /* PLANS */
   .plans { background: var(--slate); padding: 104px 48px; }
-  .plans-inner { max-width: 900px; margin: 0 auto; }
+  .plans-inner { max-width: 1060px; margin: 0 auto; }
   .plans-title { font-family: 'Kaisei Opti', serif; font-size: 38px; color: var(--white); text-align: center; margin-bottom: 8px; }
   .plans-sub { font-size: 14px; color: rgba(255,255,255,0.55); text-align: center; margin-bottom: 60px; }
-  .plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+  .plan-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; align-items: start; }
   .plan { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); border-radius: 16px; padding: 32px 28px; }
   .plan.pro { background: var(--white); border: 2px solid var(--gold); position: relative; }
   .plan-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--gold); color: white; font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 20px; letter-spacing: 0.05em; white-space: nowrap; }
@@ -386,8 +386,8 @@
 <section class="plans">
   <div class="plans-inner">
     <p class="eyebrow" style="text-align:center;">Plans</p>
-    <h2 class="plans-title">シンプルな2プラン</h2>
-    <p class="plans-sub">まずは無料から。使い続けたくなったらPROへ。</p>
+    <h2 class="plans-title">3つのプラン</h2>
+    <p class="plans-sub">まずは無料から。使い続けたくなったら、好みのプランへ。</p>
     <div class="plan-grid">
 
       <div class="plan">
@@ -396,11 +396,13 @@
         <p class="plan-note">ずっと無料</p>
         <ul class="plan-items">
           <li class="pi"><span class="ck">✓</span>全テンプレ使い放題</li>
-          <li class="pi"><span class="ck">✓</span>3フェーズ対応</li>
+          <li class="pi"><span class="ck">✓</span>3フェーズ対応（依頼前・依頼中・完了）</li>
           <li class="pi"><span class="ck">✓</span>見積もり作成</li>
-          <li class="pi"><span class="na">—</span>お気に入り保存（2件まで）</li>
-          <li class="pi"><span class="na">—</span>クラウドバックアップ</li>
-          <li class="pi"><span class="na">—</span>テンプレ文言カスタマイズ</li>
+          <li class="pi"><span class="ck">✓</span>返答パターン 3件まで追加</li>
+          <li class="pi"><span class="ck">✓</span><span>データエクスポート<small>手動バックアップ</small></span></li>
+          <li class="pi"><span class="na">—</span>屋号・SNS・DLリンク保存</li>
+          <li class="pi"><span class="na">—</span>フェーズ・ボタン追加（無制限）</li>
+          <li class="pi"><span class="na">—</span>データインポート・自動保存</li>
         </ul>
         <a href="./app/" class="btn-free">無料で始める</a>
       </div>
@@ -409,18 +411,32 @@
         <div class="plan-badge">おすすめ</div>
         <p class="plan-name">PRO</p>
         <p class="plan-price" style="font-size:32px;color:var(--muted);">準備中</p>
-        <p class="plan-note">近日公開予定</p>
+        <p class="plan-note">買い切り · 近日公開</p>
         <ul class="plan-items">
-          <li class="pi"><span class="ck">✓</span>FREEの全機能</li>
-          <li class="pi"><span class="ck">✓</span>お気に入り無制限保存</li>
-          <li class="pi">
-            <span class="ck">✓</span>
-            <span>クラウドバックアップ<small>機種変・誤削除からデータを守る</small></span>
-          </li>
-          <li class="pi"><span class="ck">✓</span>テンプレ文言カスタマイズ</li>
-          <li class="pi"><span class="ck">✓</span>屋号・SNSリンク設定</li>
+          <li class="pi"><span class="ck">✓</span>全テンプレ使い放題</li>
+          <li class="pi"><span class="ck">✓</span>3フェーズ対応 / 見積もり作成</li>
+          <li class="pi"><span class="ck">✓</span>返答パターン・フェーズ・ボタン 無制限追加</li>
+          <li class="pi"><span class="ck">✓</span><span>屋号・SNSリンク保存<small>テンプレに自動差し込み</small></span></li>
+          <li class="pi"><span class="ck">✓</span><span>DLリンク・パスワード保存<small>毎回入力不要</small></span></li>
+          <li class="pi"><span class="ck">✓</span>マイカラー 2色保存</li>
+          <li class="pi"><span class="ck">✓</span><span>データインポート<small>1クリック完全復元</small></span></li>
+          <li class="pi"><span class="ck">✓</span><span>自動保存<small>閉じるとき自動バックアップ</small></span></li>
         </ul>
         <div class="btn-soon">近日公開</div>
+      </div>
+
+      <div class="plan" style="border-color:rgba(139,165,181,0.4);position:relative;">
+        <div class="plan-badge" style="background:var(--sky);">☁️ クラウド版</div>
+        <p class="plan-name">CREATECLOUD</p>
+        <p class="plan-price">¥???</p>
+        <p class="plan-note">月額 · 準備中</p>
+        <ul class="plan-items">
+          <li class="pi"><span class="ck">✓</span>Proの全機能</li>
+          <li class="pi"><span class="ck">✓</span><span><strong>Googleログイン</strong><small>端末問わず同じデータで使える</small></span></li>
+          <li class="pi"><span class="ck">✓</span><span><strong>クラウド自動保存</strong><small>バックアップ操作不要</small></span></li>
+          <li class="pi"><span class="ck">✓</span><span><strong>3アプリ連携</strong><small>EasyReply / MiteOrder / SchedulEX</small></span></li>
+        </ul>
+        <div class="btn-soon">準備中</div>
       </div>
 
     </div>
