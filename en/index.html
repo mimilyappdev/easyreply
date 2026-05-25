@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EasyReply（ラクリプ）— クリエイターの返信をラクに</title>
-<meta name="description" content="ご依頼の受諾・確認・お断り・振込連絡まで。クリエイターの頻出返信をすべてカバーするテンプレ管理ツール。登録不要、無料で使えます。">
+<title>EasyReply — Reply Templates for Freelance Creators</title>
+<meta name="description" content="From accepting commissions to final delivery — EasyReply covers every reply freelance creators need. No sign-up. Free to use.">
+<meta property="og:title" content="EasyReply — Reply Templates for Freelance Creators">
+<meta property="og:description" content="Stop writing the same replies from scratch. EasyReply has every message covered.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tilt+Warp&family=Kaisei+Opti:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -44,6 +46,9 @@
   }
   .hd-logo { font-family: 'Tilt Warp', cursive; font-size: 22px; color: var(--slate); }
   .hd-kana { font-size: 11px; color: var(--muted); margin-left: 8px; }
+  .hd-right { display: flex; align-items: center; gap: 16px; }
+  .hd-lang { font-size: 12px; color: var(--muted); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; transition: color 0.15s; }
+  .hd-lang:hover { color: var(--slate); }
   .btn-nav {
     padding: 9px 24px; background: var(--slate); color: var(--white);
     border: none; border-radius: 8px;
@@ -116,7 +121,6 @@
   .mk-acts { display: flex; gap: 5px; align-items: center; }
   .mk-copy { padding: 5px 14px; background: var(--slate); color: white; border-radius: 6px; font-size: 9px; font-weight: 700; }
   .mk-reset { padding: 5px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 9px; color: var(--muted); background: white; }
-  .mk-fav { margin-left: auto; padding: 5px 10px; background: var(--gold-lt); color: #9A7020; border: 1px solid #E0C060; border-radius: 6px; font-size: 9px; font-weight: 700; }
 
   /* PAIN */
   .pain { background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 88px 48px; }
@@ -216,9 +220,9 @@
     <span class="hd-logo">EasyReply</span>
     <span class="hd-kana">ラクリプ</span>
   </div>
-  <div style="display:flex;align-items:center;gap:16px;">
-    <a href="./en/" style="font-size:12px;color:var(--muted);border:1px solid var(--border);border-radius:6px;padding:4px 10px;transition:color 0.15s;" onmouseover="this.style.color='var(--slate)'" onmouseout="this.style.color='var(--muted)'">English</a>
-    <a href="./app/" class="btn-nav">無料で使う →</a>
+  <div class="hd-right">
+    <a href="../" class="hd-lang">日本語</a>
+    <a href="../dist/" class="btn-nav">Start free →</a>
   </div>
 </header>
 
@@ -226,42 +230,42 @@
 <section class="hero">
   <div>
     <p class="eyebrow">For Creators</p>
-    <h1>考えなくても、<br>返信できる。</h1>
+    <h1>Reply without<br>hesitation.</h1>
     <p class="hero-desc">
-      ご依頼の受諾・条件確認・お断り・振込連絡まで。<br>
-      クリエイターの「頻出返信」をすべてカバーする<br>
-      テンプレ管理ツールです。
+      From accepting commissions to sending final deliverables —<br>
+      EasyReply covers every reply freelance creators need.<br>
+      No sign-up. Free to use.
     </p>
     <div class="cta-group">
-      <a href="./app/" class="btn-primary">無料で使い始める →</a>
-      <span class="cta-note">登録不要 · ブラウザで即使用</span>
+      <a href="../dist/" class="btn-primary">Start for free →</a>
+      <span class="cta-note">No account needed · Works in your browser</span>
     </div>
   </div>
 
   <div class="mockup">
     <div class="mk-hd">
       <span class="mk-hd-logo">EasyReply</span>
-      <span class="mk-hd-kana">ラクリプ</span>
+      <span class="mk-hd-kana">Your words. Your way.</span>
     </div>
     <div class="mk-gold"></div>
     <div class="mk-body">
       <div class="mk-l">
-        <div class="mk-lbl">フェーズ</div>
+        <div class="mk-lbl">PHASE</div>
         <div class="mk-phases">
-          <div class="mk-ph on">依頼前</div>
-          <div class="mk-ph">依頼中</div>
-          <div class="mk-ph">完了</div>
+          <div class="mk-ph on">Before</div>
+          <div class="mk-ph">During</div>
+          <div class="mk-ph">Done</div>
         </div>
-        <div class="mk-lbl" style="margin-top:4px;">返答の方向</div>
+        <div class="mk-lbl" style="margin-top:4px;">REPLY TYPE</div>
         <div class="mk-dirs">
-          <div class="mk-dir a">受ける</div>
-          <div class="mk-dir b">確認</div>
-          <div class="mk-dir c">断る</div>
+          <div class="mk-dir a">Accept</div>
+          <div class="mk-dir b">Confirm</div>
+          <div class="mk-dir c">Decline</div>
         </div>
-        <div class="mk-lbl" style="margin-top:4px;">差し込む内容</div>
-        <div class="mk-btn on">✓ 受諾・見積案内</div>
-        <div class="mk-btn">振込先連絡</div>
-        <div class="mk-btn">見積もり提示</div>
+        <div class="mk-lbl" style="margin-top:4px;">TEMPLATE</div>
+        <div class="mk-btn on">✓ Accept & Confirm</div>
+        <div class="mk-btn">Payment Info</div>
+        <div class="mk-btn">Send Estimate</div>
       </div>
       <div class="mk-r">
         <div class="mk-tones">
@@ -269,15 +273,13 @@
           <div class="mk-tone formal">Formal</div>
         </div>
         <div class="mk-prev">
-          この度はお問合せいただきありがとうございます。<br>
-          SeventhWorksです。<br><br>
-          頂戴しました内容からお見積もりを作成いたしますので少々お待ちくださいませ。<br><br>
-          どうぞよろしくお願い申し上げます。
+          Thank you for your inquiry.<br>
+          I will review the details and get back to you shortly.<br><br>
+          Please allow me a little time to respond — I appreciate your patience.
         </div>
         <div class="mk-acts">
-          <div class="mk-copy">コピー</div>
-          <div class="mk-reset">全リセット</div>
-          <div class="mk-fav">お気に入り ♥</div>
+          <div class="mk-copy">Copy</div>
+          <div class="mk-reset">Reset</div>
         </div>
       </div>
     </div>
@@ -288,22 +290,22 @@
 <section class="pain">
   <div class="pain-inner">
     <p class="eyebrow" style="text-align:center;">Problem</p>
-    <h2 class="sec-title">こんな返信に、<br>時間を取られていませんか？</h2>
+    <h2 class="sec-title">Sound familiar?</h2>
     <div class="pain-grid">
       <div class="pain-card">
         <div class="pain-icon">💭</div>
-        <p class="pain-head">言葉が出てこない</p>
-        <p class="pain-body">丁寧に書きたいのに、毎回どう返せばいいか悩んで時間が溶けてしまう。</p>
+        <p class="pain-head">Words don't come easy</p>
+        <p class="pain-body">You want to reply professionally, but staring at a blank message drains time you should be spending on your work.</p>
       </div>
       <div class="pain-card">
         <div class="pain-icon">📋</div>
-        <p class="pain-head">同じ文章を何度も書く</p>
-        <p class="pain-body">「振込先連絡」「ラフ確認」「断り文句」— ほぼ同じのに毎回ゼロから書いている。</p>
+        <p class="pain-head">Writing the same thing, again</p>
+        <p class="pain-body">Payment details, rough draft check, polite declines — nearly identical every time, yet written from scratch every time.</p>
       </div>
       <div class="pain-card">
         <div class="pain-icon">😰</div>
-        <p class="pain-head">断るのが苦手</p>
-        <p class="pain-body">予算・納期が合わない依頼でも、うまい断り方が思いつかず返信が遅れてしまう。</p>
+        <p class="pain-head">Saying no is hard</p>
+        <p class="pain-body">When the budget or deadline doesn't work, finding the right words to decline gracefully stalls your reply for hours.</p>
       </div>
     </div>
   </div>
@@ -312,72 +314,72 @@
 <!-- FEATURES -->
 <section class="features">
   <p class="eyebrow" style="text-align:center;">How it works</p>
-  <h2 class="sec-title">3フェーズで、すべての返信を網羅</h2>
+  <h2 class="sec-title">3 phases. Every reply covered.</h2>
 
   <div class="feat-list">
 
     <div class="feat-row">
       <div>
-        <p class="feat-eye">Phase 01 — 依頼前</p>
-        <h3 class="feat-head">受ける・確認・断る、<br>方向を選ぶだけ。</h3>
+        <p class="feat-eye">Phase 01 — Before the Commission</p>
+        <h3 class="feat-head">Accept, clarify, or decline —<br>just pick a direction.</h3>
         <p class="feat-body">
-          受ける場合は見積もりを作成しながらそのままテキストに差し込み。断る場合も「予算・納期・スケジュール・その他」から理由を選ぶだけで、失礼のないお断り文が組み上がります。
+          Accepting? Your estimate slots right into the message. Declining? Choose a reason — budget, deadline, schedule, or other — and a polite, professional refusal builds itself.
         </p>
       </div>
       <div class="feat-vis">
         <div style="display:flex;gap:6px;margin-bottom:14px;">
-          <span style="flex:1;padding:9px 4px;background:var(--gold-lt);color:#9A7020;border-radius:8px;text-align:center;font-weight:700;font-size:12px;">受ける</span>
-          <span style="flex:1;padding:9px 4px;background:var(--slate-lt);color:var(--slate);border-radius:8px;text-align:center;font-weight:700;font-size:12px;">確認して受ける</span>
-          <span style="flex:1;padding:9px 4px;background:#EDEDED;color:var(--muted);border-radius:8px;text-align:center;font-weight:700;font-size:12px;">断る</span>
+          <span style="flex:1;padding:9px 4px;background:var(--gold-lt);color:#9A7020;border-radius:8px;text-align:center;font-weight:700;font-size:12px;">Accept</span>
+          <span style="flex:1;padding:9px 4px;background:var(--slate-lt);color:var(--slate);border-radius:8px;text-align:center;font-weight:700;font-size:12px;">Confirm first</span>
+          <span style="flex:1;padding:9px 4px;background:#EDEDED;color:var(--muted);border-radius:8px;text-align:center;font-weight:700;font-size:12px;">Decline</span>
         </div>
         <div style="background:white;border-radius:10px;padding:14px;font-size:12px;line-height:1.8;color:var(--ink);border:1.5px dashed var(--border);">
-          この度はお問合せいただきありがとうございます。<br>SeventhWorksです。<br><br>
-          ご予算を教えていただけないでしょうか。<br><br>
-          どうぞよろしくお願い申し上げます。
+          Thank you for your inquiry.<br>
+          Could you please share your budget for this project?<br><br>
+          I look forward to hearing from you.
         </div>
       </div>
     </div>
 
     <div class="feat-row rev">
       <div>
-        <p class="feat-eye">Phase 02 — 依頼中</p>
-        <h3 class="feat-head">制作の流れに沿った<br>テンプレが揃っている。</h3>
+        <p class="feat-eye">Phase 02 — In Progress</p>
+        <h3 class="feat-head">Templates for every step<br>of production.</h3>
         <p class="feat-body">
-          制作開始・ラフ確認・修正対応・振込依頼まで。制作の進行に合わせてボタンを押すだけで、プロらしい丁寧なやりとりができます。
+          From kickoff to rough draft review to revision replies — press a button at each stage and send a polished, professional message every time.
         </p>
       </div>
       <div class="feat-vis" style="display:flex;flex-direction:column;gap:7px;">
-        <div style="font-size:10px;font-weight:700;color:var(--sky);letter-spacing:0.08em;">振込後着手</div>
-        <div style="background:white;border:1px solid var(--border);border-radius:7px;padding:9px 12px;font-size:13px;">制作開始連絡</div>
-        <div style="font-size:10px;font-weight:700;color:var(--sky);letter-spacing:0.08em;margin-top:4px;">ラフ</div>
-        <div style="background:white;border:1.5px solid var(--sky);border-radius:7px;padding:9px 12px;font-size:13px;color:var(--slate);font-weight:700;">✓ ラフ確認</div>
-        <div style="background:white;border:1px solid var(--border);border-radius:7px;padding:9px 12px;font-size:13px;">ラフ確認後返信・修正あり</div>
-        <div style="font-size:10px;font-weight:700;color:var(--sky);letter-spacing:0.08em;margin-top:4px;">制作物・振込</div>
-        <div style="background:white;border:1px solid var(--border);border-radius:7px;padding:9px 12px;font-size:13px;">制作完了・振込依頼</div>
+        <div style="font-size:10px;font-weight:700;color:var(--sky);letter-spacing:0.08em;">After payment</div>
+        <div style="background:white;border:1px solid var(--border);border-radius:7px;padding:9px 12px;font-size:13px;">Start production</div>
+        <div style="font-size:10px;font-weight:700;color:var(--sky);letter-spacing:0.08em;margin-top:4px;">Rough draft</div>
+        <div style="background:white;border:1.5px solid var(--sky);border-radius:7px;padding:9px 12px;font-size:13px;color:var(--slate);font-weight:700;">✓ Send rough draft</div>
+        <div style="background:white;border:1px solid var(--border);border-radius:7px;padding:9px 12px;font-size:13px;">Revision reply</div>
+        <div style="font-size:10px;font-weight:700;color:var(--sky);letter-spacing:0.08em;margin-top:4px;">Final</div>
+        <div style="background:white;border:1px solid var(--border);border-radius:7px;padding:9px 12px;font-size:13px;">Final check & delivery</div>
       </div>
     </div>
 
     <div class="feat-row">
       <div>
-        <p class="feat-eye">Phase 03 — 完了</p>
-        <h3 class="feat-head">URLとパスワードを入れるだけで<br>納品連絡が完成。</h3>
+        <p class="feat-eye">Phase 03 — Delivery</p>
+        <h3 class="feat-head">Drop in the URL and password.<br>Done.</h3>
         <p class="feat-body">
-          変数フィールドにダウンロードURLとパスワードを入力するだけ。ポートフォリオ掲載への案内文も自動で含まれます。
+          Enter your download link and password, and the delivery message writes itself. Works with WeTransfer, Google Drive, MEGA — anywhere you share files.
         </p>
       </div>
       <div class="feat-vis" style="display:flex;flex-direction:column;gap:10px;">
         <div>
-          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">ダウンロードURL</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">Download URL</div>
           <div style="background:white;border:1.5px solid var(--sky);border-radius:7px;padding:8px 12px;font-size:12px;color:var(--ink);">https://drive.google.com/...</div>
         </div>
         <div>
-          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">パスワード</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">Password</div>
           <div style="background:white;border:1.5px solid var(--sky);border-radius:7px;padding:8px 12px;font-size:12px;color:var(--ink);">delivery_pass</div>
         </div>
         <div style="background:white;border-radius:10px;padding:12px;font-size:11px;line-height:1.8;color:var(--ink);border:1.5px dashed var(--border);">
-          制作物を納品いたします。<br>
-          【ダウンロードURL】<br>https://drive.google.com/...<br>
-          【パスワード】delivery_pass
+          Here's your delivery!<br>
+          【Download URL】<br>https://drive.google.com/...<br>
+          【Password】delivery_pass
         </div>
       </div>
     </div>
@@ -389,57 +391,57 @@
 <section class="plans">
   <div class="plans-inner">
     <p class="eyebrow" style="text-align:center;">Plans</p>
-    <h2 class="plans-title">3つのプラン</h2>
-    <p class="plans-sub">まずは無料から。使い続けたくなったら、好みのプランへ。</p>
+    <h2 class="plans-title">3 Plans</h2>
+    <p class="plans-sub">Start free. Upgrade when you're ready.</p>
     <div class="plan-grid">
 
       <div class="plan">
         <p class="plan-name">FREE</p>
-        <p class="plan-price">¥0</p>
-        <p class="plan-note">ずっと無料</p>
+        <p class="plan-price">$0</p>
+        <p class="plan-note">Free forever</p>
         <ul class="plan-items">
-          <li class="pi"><span class="ck">✓</span>全テンプレ使い放題</li>
-          <li class="pi"><span class="ck">✓</span>3フェーズ対応（依頼前・依頼中・完了）</li>
-          <li class="pi"><span class="ck">✓</span>見積もり作成</li>
-          <li class="pi"><span class="ck">✓</span>返答パターン 3件まで追加</li>
-          <li class="pi"><span class="ck">✓</span><span>データエクスポート<small>手動バックアップ</small></span></li>
-          <li class="pi"><span class="na">—</span>屋号・SNS・DLリンク保存</li>
-          <li class="pi"><span class="na">—</span>フェーズ・ボタン追加（無制限）</li>
-          <li class="pi"><span class="na">—</span>データインポート・自動保存</li>
+          <li class="pi"><span class="ck">✓</span>All templates, unlimited use</li>
+          <li class="pi"><span class="ck">✓</span>3 phases (Before / In Progress / Done)</li>
+          <li class="pi"><span class="ck">✓</span>Estimate builder</li>
+          <li class="pi"><span class="ck">✓</span>Up to 3 reply patterns</li>
+          <li class="pi"><span class="ck">✓</span><span>Data export<small>Manual backup</small></span></li>
+          <li class="pi"><span class="na">—</span>Business name / SNS / DL link storage</li>
+          <li class="pi"><span class="na">—</span>Unlimited phases &amp; buttons</li>
+          <li class="pi"><span class="na">—</span>Import &amp; auto-save</li>
         </ul>
-        <a href="./app/" class="btn-free">無料で始める</a>
+        <a href="../dist/" class="btn-free">Start for free</a>
       </div>
 
       <div class="plan pro">
-        <div class="plan-badge">おすすめ</div>
+        <div class="plan-badge">Recommended</div>
         <p class="plan-name">PRO</p>
-        <p class="plan-price" style="font-size:32px;color:var(--muted);">準備中</p>
-        <p class="plan-note">買い切り · 近日公開</p>
+        <p class="plan-price" style="font-size:32px;color:var(--muted);">Coming soon</p>
+        <p class="plan-note">One-time purchase · Launching soon</p>
         <ul class="plan-items">
-          <li class="pi"><span class="ck">✓</span>全テンプレ使い放題</li>
-          <li class="pi"><span class="ck">✓</span>3フェーズ対応 / 見積もり作成</li>
-          <li class="pi"><span class="ck">✓</span>返答パターン・フェーズ・ボタン 無制限追加</li>
-          <li class="pi"><span class="ck">✓</span><span>屋号・SNSリンク保存<small>テンプレに自動差し込み</small></span></li>
-          <li class="pi"><span class="ck">✓</span><span>DLリンク・パスワード保存<small>毎回入力不要</small></span></li>
-          <li class="pi"><span class="ck">✓</span>マイカラー 2色保存</li>
-          <li class="pi"><span class="ck">✓</span><span>データインポート<small>1クリック完全復元</small></span></li>
-          <li class="pi"><span class="ck">✓</span><span>自動保存<small>閉じるとき自動バックアップ</small></span></li>
+          <li class="pi"><span class="ck">✓</span>All templates, unlimited use</li>
+          <li class="pi"><span class="ck">✓</span>3 phases / Estimate builder</li>
+          <li class="pi"><span class="ck">✓</span>Unlimited reply patterns, phases &amp; buttons</li>
+          <li class="pi"><span class="ck">✓</span><span>Business name &amp; SNS link storage<small>Auto-inserted into templates</small></span></li>
+          <li class="pi"><span class="ck">✓</span><span>DL link &amp; password storage<small>No re-entry needed</small></span></li>
+          <li class="pi"><span class="ck">✓</span>2 custom color schemes</li>
+          <li class="pi"><span class="ck">✓</span><span>Data import<small>1-click full restore</small></span></li>
+          <li class="pi"><span class="ck">✓</span><span>Auto-save<small>Backs up automatically on close</small></span></li>
         </ul>
-        <div class="btn-soon">近日公開</div>
+        <div class="btn-soon">Coming soon</div>
       </div>
 
       <div class="plan" style="border-color:rgba(139,165,181,0.4);position:relative;">
-        <div class="plan-badge" style="background:var(--sky);">☁️ クラウド版</div>
+        <div class="plan-badge" style="background:var(--sky);">☁️ Cloud</div>
         <p class="plan-name">CREATECLOUD</p>
-        <p class="plan-price">¥???</p>
-        <p class="plan-note">月額 · 準備中</p>
+        <p class="plan-price">$???</p>
+        <p class="plan-note">Monthly · Coming soon</p>
         <ul class="plan-items">
-          <li class="pi"><span class="ck">✓</span>Proの全機能</li>
-          <li class="pi"><span class="ck">✓</span><span><strong>Googleログイン</strong><small>端末問わず同じデータで使える</small></span></li>
-          <li class="pi"><span class="ck">✓</span><span><strong>クラウド自動保存</strong><small>バックアップ操作不要</small></span></li>
-          <li class="pi"><span class="ck">✓</span><span><strong>3アプリ連携</strong><small>EasyReply / MiteOrder / SchedulEX</small></span></li>
+          <li class="pi"><span class="ck">✓</span>Everything in Pro</li>
+          <li class="pi"><span class="ck">✓</span><span><strong>Google login</strong><small>Same data across all your devices</small></span></li>
+          <li class="pi"><span class="ck">✓</span><span><strong>Cloud auto-save</strong><small>No manual backup needed</small></span></li>
+          <li class="pi"><span class="ck">✓</span><span><strong>3-app suite</strong><small>EasyReply / MiteOrder / SchedulEX</small></span></li>
         </ul>
-        <div class="btn-soon">準備中</div>
+        <div class="btn-soon">Coming soon</div>
       </div>
 
     </div>
@@ -449,9 +451,9 @@
 <!-- FOOTER CTA -->
 <section class="fcta">
   <p class="eyebrow">Get started</p>
-  <h2 class="fcta-title">返信に悩む時間を、<br>制作に使おう。</h2>
-  <p class="fcta-sub">登録不要。ブラウザですぐ使えます。</p>
-  <a href="./app/" class="btn-primary">無料で使い始める →</a>
+  <h2 class="fcta-title">Stop writing replies.<br>Start creating.</h2>
+  <p class="fcta-sub">No sign-up. Runs entirely in your browser.</p>
+  <a href="../dist/" class="btn-primary">Start for free →</a>
 </section>
 
 <!-- FOOTER -->
@@ -461,9 +463,9 @@
     <span class="ft-by">by Mimily</span>
   </div>
   <div class="ft-links">
-    <a href="#" class="ft-link">利用規約</a>
-    <a href="#" class="ft-link">プライバシーポリシー</a>
-    <a href="https://mimilyappdev.github.io/" class="ft-link">Mimilyアプリ一覧</a>
+    <a href="#" class="ft-link">Terms of Use</a>
+    <a href="#" class="ft-link">Privacy Policy</a>
+    <a href="https://mimilyappdev.github.io/" class="ft-link">More Mimily apps</a>
   </div>
   <p class="ft-copy">© 2025 Mimily</p>
 </footer>
