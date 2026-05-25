@@ -18,7 +18,7 @@
   </div>
   <div class="header-actions">
     <button id="btn-lang" class="icon-btn" title="言語切替">JP</button>
-    <button id="btn-edit-mode" class="icon-btn" title="編集モード">✎ 編集</button>
+    <button id="btn-edit-mode" class="icon-btn" title="編集モード" data-i18n="button.edit_mode">✎ 編集</button>
     <button id="btn-settings" class="icon-btn" title="設定">⚙</button>
   </div>
 </header>
@@ -57,29 +57,29 @@
 
     <div class="preview-wrap">
       <div class="preview-header">
-        <div class="preview-label">返信プレビュー（直接編集できます）</div>
+        <div class="preview-label" data-i18n="preview.label">返信プレビュー（直接編集できます）</div>
         <div class="tone-toggle">
           <button id="tone-formal" class="tone-btn active">Formal</button>
           <button id="tone-warm" class="tone-btn">Warm</button>
         </div>
       </div>
-      <textarea id="preview-textarea" class="preview-textarea" placeholder="左のパネルからボタンを選ぶと、ここに文章が表示されます。&#10;&#10;複数のボタンを選ぶと積み上げて表示されます。"></textarea>
+      <textarea id="preview-textarea" class="preview-textarea" data-i18n-placeholder="preview.placeholder" placeholder="左のパネルからボタンを選ぶと、ここに文章が表示されます。&#10;&#10;複数のボタンを選ぶと積み上げて表示されます。"></textarea>
     </div>
 
     <div class="action-row">
       <button id="btn-copy" class="copy-btn" data-i18n="button.copy">コピー</button>
-      <button id="btn-dl-open" class="dl-btn">DLリンク</button>
+      <button id="btn-dl-open" class="dl-btn" data-i18n="dl.button">DLリンク</button>
     </div>
 
     <div class="dl-area" id="dl-area">
-      <div class="dl-area-label">DLリンク・パスワード</div>
+      <div class="dl-area-label" data-i18n="dl.label">DLリンク・パスワード</div>
       <div class="dl-input-row">
-        <div class="dl-field-label">ダウンロードURL</div>
-        <input class="dl-input" id="dl-url" type="url" placeholder="https://gigafile.nu/...">
+        <div class="dl-field-label" data-i18n="dl.url">ダウンロードURL</div>
+        <input class="dl-input" id="dl-url" type="url" placeholder="https://gigafile.nu/..." data-i18n-placeholder="dl.url_placeholder">
       </div>
       <div class="dl-input-row">
-        <div class="dl-field-label">パスワード</div>
-        <input class="dl-input" id="dl-pw" type="text" placeholder="解凍パスワードなど">
+        <div class="dl-field-label" data-i18n="dl.password">パスワード</div>
+        <input class="dl-input" id="dl-pw" type="text" placeholder="解凍パスワードなど" data-i18n-placeholder="dl.password_placeholder">
       </div>
     </div>
 
@@ -141,31 +141,31 @@
 <!-- Modal: Settings -->
 <div id="modal-settings" class="modal-overlay" hidden>
   <div class="modal modal--settings">
-    <h2>設定</h2>
+    <h2 data-i18n="settings.title">設定</h2>
 
     <!-- テーマカラー -->
     <div class="settings-section">
-      <div class="settings-label">テーマカラー</div>
+      <div class="settings-label" data-i18n="settings.theme">テーマカラー</div>
       <div class="theme-list" id="theme-list">
         <button class="theme-opt active" data-theme="default">
           <div class="theme-preview" style="background:linear-gradient(135deg,#2C4A5E 50%,#F5F1EB 50%)"></div>
-          <span>デフォルト</span>
+          <span data-i18n="settings.theme_default">デフォルト</span>
         </button>
         <button class="theme-opt" data-theme="dark">
           <div class="theme-preview" style="background:linear-gradient(135deg,#0e133a 50%,#22274e 50%)"></div>
-          <span>ダーク</span>
+          <span data-i18n="settings.theme_dark">ダーク</span>
         </button>
         <button class="theme-opt" data-theme="mycolor">
           <div class="theme-preview" id="mc-swatch" style="background:linear-gradient(135deg,#151d5b 50%,#22274e 50%)"></div>
-          <span>マイカラー</span>
+          <span data-i18n="settings.theme_mycolor">マイカラー</span>
         </button>
       </div>
 
       <!-- My Color Picker -->
       <div class="mycolor-block">
         <div class="mycolor-block-header">
-          <span class="mycolor-block-title">🎨 カラーをカスタマイズ</span>
-          <span class="mycolor-hint">マイカラー選択時に適用</span>
+          <span class="mycolor-block-title" data-i18n="settings.mycolor_title">🎨 カラーをカスタマイズ</span>
+          <span class="mycolor-hint" data-i18n="settings.mycolor_hint">マイカラー選択時に適用</span>
         </div>
         <div id="mycolor-seeds-ui"></div>
       </div>
@@ -175,20 +175,20 @@
 
     <!-- データ -->
     <div class="settings-section">
-      <div class="settings-label">データ</div>
-      <button id="settings-export" class="settings-btn">📤 エクスポート</button>
+      <div class="settings-label" data-i18n="settings.data">データ</div>
+      <button id="settings-export" class="settings-btn" data-i18n="settings.export">📤 エクスポート</button>
       <div class="settings-pro-block">
         <div class="settings-pro-header">
           <span class="pro-badge">PRO</span>
-          <span class="settings-pro-title">📥 インポート</span>
+          <span class="settings-pro-title" data-i18n="settings.import">📥 インポート</span>
         </div>
-        <p class="settings-pro-desc">JSONファイルからデータを復元できます</p>
+        <p class="settings-pro-desc" data-i18n="settings.import_desc">JSONファイルからデータを復元できます</p>
       </div>
-      <button id="settings-reset" class="settings-btn settings-btn--danger">🗑 リセット</button>
+      <button id="settings-reset" class="settings-btn settings-btn--danger" data-i18n="settings.reset">🗑 リセット</button>
     </div>
 
     <div class="modal-actions">
-      <button id="modal-settings-close" class="btn-secondary">閉じる</button>
+      <button id="modal-settings-close" class="btn-secondary" data-i18n="settings.close">閉じる</button>
     </div>
   </div>
 </div>
@@ -196,12 +196,12 @@
 <!-- Modal: DL Link -->
 <div id="modal-dl" class="modal-overlay" hidden>
   <div class="modal">
-    <h2>DLリンク・パスワード</h2>
-    <label>ダウンロードURL
-      <input id="modal-dl-url" type="url" placeholder="https://gigafile.nu/...">
+    <h2 data-i18n="dl.label">DLリンク・パスワード</h2>
+    <label><span data-i18n="dl.url">ダウンロードURL</span>
+      <input id="modal-dl-url" type="url" placeholder="https://gigafile.nu/..." data-i18n-placeholder="dl.url_placeholder">
     </label>
-    <label>パスワード
-      <input id="modal-dl-pw" type="text" placeholder="解凍パスワードなど">
+    <label><span data-i18n="dl.password">パスワード</span>
+      <input id="modal-dl-pw" type="text" placeholder="解凍パスワードなど" data-i18n-placeholder="dl.password_placeholder">
     </label>
     <div class="modal-actions">
       <button id="modal-dl-close" class="btn-primary">OK</button>

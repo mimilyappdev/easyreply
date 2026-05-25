@@ -21,13 +21,15 @@
     "add_phase": "+ フェーズを追加",
     "add_direction": "+ 内容を追加する",
     "add_button": "+ ボタンを追加",
+    "edit_mode": "✎ 編集",
     "edit": "編集",
     "delete": "削除",
     "save": "保存",
     "cancel": "キャンセル"
   },
   "preview": {
-    "placeholder": "ボタンを選ぶとここにテキストが表示されます"
+    "label": "返信プレビュー（直接編集できます）",
+    "placeholder": "左のパネルからボタンを選ぶと、ここに文章が表示されます。\n\n複数のボタンを選ぶと積み上げて表示されます。"
   },
   "unlock": {
     "title": "Pro版で解放",
@@ -38,6 +40,29 @@
     "save_limit": "保存は3件まで（お試し）",
     "phase_limit": "フェーズ追加は1個まで（お試し）",
     "direction_limit": "Direction追加は1個まで（お試し）"
+  },
+  "settings": {
+    "title": "設定",
+    "theme": "テーマカラー",
+    "theme_default": "デフォルト",
+    "theme_dark": "ダーク",
+    "theme_mycolor": "マイカラー",
+    "mycolor_title": "🎨 カラーをカスタマイズ",
+    "mycolor_hint": "マイカラー選択時に適用",
+    "data": "データ",
+    "export": "📤 エクスポート",
+    "import": "📥 インポート",
+    "import_desc": "JSONファイルからデータを復元できます",
+    "reset": "🗑 リセット",
+    "close": "閉じる"
+  },
+  "dl": {
+    "button": "DLリンク",
+    "label": "DLリンク・パスワード",
+    "url": "ダウンロードURL",
+    "url_placeholder": "https://gigafile.nu/...",
+    "password": "パスワード",
+    "password_placeholder": "解凍パスワードなど"
   },
   "storage": {
     "export_success": "エクスポートしました",

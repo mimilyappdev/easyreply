@@ -21,13 +21,15 @@
     "add_phase": "+ Add Phase",
     "add_direction": "+ Add Content",
     "add_button": "+ Add Button",
+    "edit_mode": "✎ Edit",
     "edit": "Edit",
     "delete": "Delete",
     "save": "Save",
     "cancel": "Cancel"
   },
   "preview": {
-    "placeholder": "Select a button to preview text here"
+    "label": "Reply Preview (editable)",
+    "placeholder": "Select a button on the left to preview your reply here.\n\nSelect multiple to combine them."
   },
   "unlock": {
     "title": "Unlock with Pro",
@@ -38,6 +40,29 @@
     "save_limit": "Trial: up to 3 saves",
     "phase_limit": "Trial: up to 1 phase",
     "direction_limit": "Trial: up to 1 direction"
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": "Theme Color",
+    "theme_default": "Default",
+    "theme_dark": "Dark",
+    "theme_mycolor": "My Color",
+    "mycolor_title": "🎨 Customize Colors",
+    "mycolor_hint": "Applied when My Color is selected",
+    "data": "Data",
+    "export": "📤 Export",
+    "import": "📥 Import",
+    "import_desc": "Restore your data from a JSON file",
+    "reset": "🗑 Reset",
+    "close": "Close"
+  },
+  "dl": {
+    "button": "DL Link",
+    "label": "DL Link & Password",
+    "url": "Download URL",
+    "url_placeholder": "https://wetransfer.com/...",
+    "password": "Password",
+    "password_placeholder": "Extraction password, etc."
   },
   "storage": {
     "export_success": "Exported successfully",

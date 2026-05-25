@@ -214,6 +214,11 @@ function applyI18n() {
     const translated = t(key)
     if (translated) el.textContent = translated
   })
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.dataset.i18nPlaceholder
+    const translated = t(key)
+    if (translated) el.placeholder = translated
+  })
   document.getElementById('btn-lang').textContent = lang() === 'ja' ? 'EN' : 'JP'
   document.documentElement.lang = lang()
 }
