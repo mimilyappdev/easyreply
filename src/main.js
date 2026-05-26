@@ -269,7 +269,16 @@ const MC_LABELS = {
   text:    { nameKey: 'mycolor.text_name',    hintKey: 'mycolor.text_hint' },
 }
 const MC_DEFAULT = { bg: '#22274e', surface: '#0e133a', ui: '#151d5b', accent: '#656cb3', text: '#b0981c' }
-let myColorSeeds = JSON.parse(localStorage.getItem('er_mycolor') || 'null') || { ...MC_DEFAULT }
+// migrate legacy single-slot key
+if (localStorage.getItem('er_mycolor') && !localStorage.getItem('er_mycolor_1')) {
+  localStorage.setItem('er_mycolor_1', localStorage.getItem('er_mycolor'))
+}
+let activeSlot = 1
+const myColorSlots = {
+  1: JSON.parse(localStorage.getItem('er_mycolor_1') || 'null') || { ...MC_DEFAULT },
+  2: JSON.parse(localStorage.getItem('er_mycolor_2') || 'null') || { ...MC_DEFAULT },
+}
+let myColorSeeds = myColorSlots[activeSlot]
 
 function mixHex(c1, c2, t) {
   const n = s => parseInt(s, 16)
@@ -305,14 +314,37 @@ function seedsToVars(s) {
 }
 
 function updateMyColorSwatch() {
-  const el = document.getElementById('mc-swatch')
-  if (el) el.style.background = `linear-gradient(135deg,${myColorSeeds.surface} 50%,${myColorSeeds.bg} 50%)`
+  ;[1, 2].forEach(n => {
+    const el = document.getElementById(`mc-swatch-${n}`)
+    if (el) el.style.background = `linear-gradient(90deg,${myColorSlots[n].surface} 45%,${myColorSlots[n].bg} 45%)`
+  })
 }
 
 function initMyColorUI() {
   const container = document.getElementById('mycolor-seeds-ui')
   if (!container) return
   container.innerHTML = ''
+
+  // slot tabs
+  const tabs = document.createElement('div')
+  tabs.className = 'mc-slot-tabs'
+  ;[1, 2].forEach(n => {
+    const btn = document.createElement('button')
+    btn.className = 'mc-slot-tab' + (n === activeSlot ? ' active' : '')
+    btn.dataset.slot = n
+    btn.setAttribute('data-i18n', `settings.mycolor_slot${n}`)
+    tabs.appendChild(btn)
+  })
+  container.appendChild(tabs)
+  tabs.addEventListener('click', (e) => {
+    const btn = e.target.closest('.mc-slot-tab')
+    if (!btn) return
+    activeSlot = +btn.dataset.slot
+    myColorSeeds = myColorSlots[activeSlot]
+    initMyColorUI()
+    applyI18n()
+  })
+
   MC_SEEDS.forEach(id => {
     const { nameKey, hintKey } = MC_LABELS[id]
     const row = document.createElement('div')
@@ -331,16 +363,18 @@ function initMyColorUI() {
     picker.addEventListener('input', () => {
       myColorSeeds[id] = picker.value
       hexIn.value = picker.value
-      localStorage.setItem('er_mycolor', JSON.stringify(myColorSeeds))
-      if (localStorage.getItem('er_theme') === 'mycolor') applyTheme('mycolor')
+      localStorage.setItem('er_mycolor_' + activeSlot, JSON.stringify(myColorSeeds))
+      const theme = localStorage.getItem('er_theme')
+      if (theme === 'mycolor1' || theme === 'mycolor2') applyTheme(theme)
       updateMyColorSwatch()
     })
     hexIn.addEventListener('input', () => {
       if (/^#[0-9A-Fa-f]{6}$/.test(hexIn.value)) {
         myColorSeeds[id] = hexIn.value
         picker.value = hexIn.value
-        localStorage.setItem('er_mycolor', JSON.stringify(myColorSeeds))
-        if (localStorage.getItem('er_theme') === 'mycolor') applyTheme('mycolor')
+        localStorage.setItem('er_mycolor_' + activeSlot, JSON.stringify(myColorSeeds))
+        const theme = localStorage.getItem('er_theme')
+        if (theme === 'mycolor1' || theme === 'mycolor2') applyTheme(theme)
         updateMyColorSwatch()
       }
     })
@@ -389,8 +423,9 @@ const DEFAULT_VARS = {
 function applyTheme(id) {
   const root = document.documentElement
   Object.entries(DEFAULT_VARS).forEach(([k, v]) => root.style.setProperty(k, v))
-  if (id === 'mycolor') {
-    Object.entries(seedsToVars(myColorSeeds)).forEach(([k, v]) => root.style.setProperty(k, v))
+  if (id === 'mycolor1' || id === 'mycolor2') {
+    const slot = id === 'mycolor1' ? 1 : 2
+    Object.entries(seedsToVars(myColorSlots[slot])).forEach(([k, v]) => root.style.setProperty(k, v))
   } else {
     Object.entries(THEME_VARS[id] || {}).forEach(([k, v]) => root.style.setProperty(k, v))
   }

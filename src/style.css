@@ -513,31 +513,32 @@ body.edit-mode .content-btn.active .btn-actions { display: flex; }
 .settings-divider { height: 1px; background: var(--border); margin: 12px 0; }
 
 /* テーマリスト */
-.theme-list { display: flex; gap: 8px; }
+.theme-list { display: flex; flex-direction: column; gap: 6px; }
 .theme-opt {
-  flex: 1;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding: 10px 8px;
-  border: 2px solid var(--border);
-  border-radius: 10px;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
   background: var(--bg);
   cursor: pointer;
   font-size: 11px;
   font-weight: 700;
   color: var(--muted);
   transition: all 0.15s;
+  text-align: left;
 }
 .theme-opt:hover { border-color: var(--accent); color: var(--accent); }
 .theme-opt.active { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
 .theme-preview {
-  width: 48px;
-  height: 30px;
-  border-radius: 6px;
+  width: 30px;
+  height: 18px;
+  border-radius: 4px;
   border: 1px solid var(--border);
+  flex-shrink: 0;
 }
+.theme-opt span { flex: 1; }
 
 /* PRO block */
 .settings-pro-block {
@@ -598,6 +599,15 @@ body.edit-mode .content-btn.active .btn-actions { display: flex; }
 }
 .mycolor-block-title { font-size: 12px; font-weight: 700; color: var(--text); }
 .mycolor-hint { font-size: 10px; color: var(--muted); }
+.mc-slot-tabs { display: flex; gap: 6px; margin-bottom: 10px; }
+.mc-slot-tab {
+  flex: 1; padding: 6px 8px;
+  font-size: 11px; font-weight: 700;
+  border: 1.5px solid var(--border); border-radius: 6px;
+  background: var(--bg); color: var(--muted);
+  cursor: pointer; transition: all 0.15s;
+}
+.mc-slot-tab.active { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
 .mc-seed-row { margin-bottom: 8px; }
 .mc-seed-label { font-size: 10px; font-weight: 700; color: var(--muted); margin-bottom: 4px; }
 .mc-seed-hint { font-weight: 400; font-size: 9px; opacity: 0.7; margin-left: 4px; }
