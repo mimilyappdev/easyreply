@@ -7,10 +7,10 @@ import { defaultData } from './data/defaultData.js'
 // 'free' | 'trial' | 'pro'
 const MODE = 'pro'
 
-const TRIAL_LIMITS = { saves: 3, phases: 1, directions: 1 }
+const TRIAL_LIMITS = { saves: 0, phases: 0, directions: 3 }
 
 // ── STATE ─────────────────────────────────────────
-const storage = MODE === 'trial' ? sessionStorage : localStorage
+const storage = localStorage
 
 let appData = null
 let currentPhaseId = null
