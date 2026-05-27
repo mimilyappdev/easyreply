@@ -190,12 +190,16 @@
     <div class="settings-section">
       <div class="settings-label" data-i18n="settings.data">データ</div>
       <button id="settings-export" class="settings-btn" data-i18n="settings.export">📤 エクスポート</button>
-      <div class="settings-pro-block">
+      <div id="import-locked" class="settings-pro-block">
         <div class="settings-pro-header">
           <span class="pro-badge">PRO</span>
           <span class="settings-pro-title" data-i18n="settings.import">📥 インポート</span>
         </div>
         <p class="settings-pro-desc" data-i18n="settings.import_desc">JSONファイルからデータを復元できます</p>
+      </div>
+      <div id="import-unlocked" hidden>
+        <input type="file" id="settings-import-input" accept=".json" style="display:none">
+        <button id="settings-import" class="settings-btn" data-i18n="settings.import">📥 インポート</button>
       </div>
       <button id="settings-reset" class="settings-btn settings-btn--danger" data-i18n="settings.reset">🗑 リセット</button>
     </div>

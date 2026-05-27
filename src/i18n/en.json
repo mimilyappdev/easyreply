@@ -89,6 +89,8 @@
   "storage": {
     "export_success": "Exported successfully",
     "import_success": "Imported successfully",
+    "import_confirm": "Overwrite current data and restore?",
+    "import_error": "Failed to load. Please select an EasyReply backup file.",
     "reset_confirm": "Reset all data?"
   }
 }

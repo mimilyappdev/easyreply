@@ -89,6 +89,8 @@
   "storage": {
     "export_success": "エクスポートしました",
     "import_success": "インポートしました",
+    "import_confirm": "現在のデータを上書きして復元しますか？",
+    "import_error": "読み込みに失敗しました。EasyReplyのバックアップファイルを選択してください。",
     "reset_confirm": "すべてのデータをリセットしますか？"
   }
 }

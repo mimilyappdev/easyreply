@@ -440,6 +440,9 @@ function applyTheme(id) {
 
 // ── SETTINGS MODAL ───────────────────────────────
 function openSettings() {
+  const isPro = MODE === 'pro'
+  document.getElementById('import-locked').hidden = isPro
+  document.getElementById('import-unlocked').hidden = !isPro
   document.getElementById('modal-settings').hidden = false
 }
 function closeSettings() {
@@ -487,9 +490,32 @@ document.getElementById('settings-export').addEventListener('click', () => {
   a.click()
 })
 
+// Import (settings modal)
+document.getElementById('settings-import').addEventListener('click', () => {
+  document.getElementById('settings-import-input').click()
+})
+document.getElementById('settings-import-input').addEventListener('change', (e) => {
+  const file = e.target.files[0]
+  if (!file) return
+  const reader = new FileReader()
+  reader.onload = (ev) => {
+    try {
+      const data = JSON.parse(ev.target.result)
+      if (!data.phases) throw new Error('invalid')
+      if (!confirm(t('storage.import_confirm'))) return
+      storage.setItem('er_data', JSON.stringify(data))
+      location.reload()
+    } catch {
+      alert(t('storage.import_error'))
+    }
+  }
+  reader.readAsText(file)
+  e.target.value = ''
+})
+
 // Reset (settings modal)
 document.getElementById('settings-reset').addEventListener('click', () => {
-  if (!confirm('全データをデフォルトに戻しますか？\n（カスタマイズした内容はすべて消えます）')) return
+  if (!confirm(t('storage.reset_confirm'))) return
   storage.removeItem('er_data')
   location.reload()
 })
