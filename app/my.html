@@ -928,6 +928,18 @@
       <button class="btn-favorite">お気に入りに保存 ♥<span class="premium-badge">PRO</span></button>
     </div>
 
+    <div class="var-area visible" id="dl-area">
+      <div class="var-area-title">📎 ファイル送付（任意）</div>
+      <div class="var-input-row">
+        <label class="var-input-label">ダウンロードURL</label>
+        <input type="text" class="var-input" id="dl-url-input" placeholder="https://gigafile.nu/...">
+      </div>
+      <div class="var-input-row">
+        <label class="var-input-label">パスワード</label>
+        <input type="text" class="var-input" id="dl-pw-input" placeholder="パスワードを入力">
+      </div>
+    </div>
+
     <!-- Favorites -->
     <div class="favorites-section">
       <div class="favorites-header">⭐ お気に入り返信</div>
@@ -1223,6 +1235,8 @@ let state = {
   varValues: {},
   customReason: ''
 };
+let dlUrl = '';
+let dlPassword = '';
 
 // ── ELEMENTS ──
 const preview = document.getElementById('preview-textarea');
@@ -1276,6 +1290,19 @@ function buildPreview() {
   } else {
     // 依頼中・完了フェーズ（従来通り積み上げ）
     preview.value = insertParts.join('\n\n');
+  }
+
+  // DLリンク・パスワードを末尾に追加
+  if (dlUrl || dlPassword) {
+    const dlParts = [];
+    if (dlUrl) dlParts.push(`【ダウンロードURL】\n${dlUrl}`);
+    if (dlPassword) dlParts.push(`【パスワード】\n${dlPassword}`);
+    const dlText = dlParts.join('\n');
+    if (preview.value) {
+      preview.value += '\n\n' + dlText;
+    } else {
+      preview.value = dlText;
+    }
   }
 }
 
@@ -1399,6 +1426,7 @@ function fullReset(keepPhase = true) {
   // Reset during/done buttons
   document.querySelectorAll('#panel-during .content-btn, #panel-done .content-btn').forEach(b => b.classList.remove('active'));
   preview.value = '';
+  // DLエリアはリセットしない（フェーズをまたいで使うため）
 }
 
 // ── PHASE TABS ──
@@ -1492,6 +1520,16 @@ document.getElementById('btn-copy').addEventListener('click', () => {
 // ── RESET ──
 document.getElementById('btn-reset').addEventListener('click', () => {
   fullReset();
+});
+
+// ── DL AREA ──
+document.getElementById('dl-url-input').addEventListener('input', (e) => {
+  dlUrl = e.target.value;
+  buildPreview();
+});
+document.getElementById('dl-pw-input').addEventListener('input', (e) => {
+  dlPassword = e.target.value;
+  buildPreview();
 });
 
 // ── スマホ タブ切替 ──
