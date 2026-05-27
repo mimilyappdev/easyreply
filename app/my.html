@@ -886,6 +886,10 @@
           <button class="content-btn" data-btnid="btn_payment_request">制作完了・振込依頼</button>
         </div>
       </div>
+      <div class="section-card" id="custom-section-during" style="display:none;margin-top:10px;">
+        <div class="section-label">カスタム</div>
+        <div class="content-buttons" id="custom-btns-during"></div>
+      </div>
     </div>
 
     <!-- 完了 panel -->
@@ -896,6 +900,10 @@
           <button class="content-btn" data-btnid="btn_delivery_no_payment">納品＆完了連絡（振込なし）</button>
           <button class="content-btn" data-btnid="btn_delivery_with_payment">納品＆完了連絡（振込あり）</button>
         </div>
+      </div>
+      <div class="section-card" id="custom-section-done" style="display:none;margin-top:10px;">
+        <div class="section-label">カスタム</div>
+        <div class="content-buttons" id="custom-btns-done"></div>
       </div>
     </div>
 
@@ -1238,6 +1246,12 @@ let state = {
 let dlUrl = '';
 let dlPassword = '';
 
+// ── CUSTOM BUTTONS ──
+let customButtons = JSON.parse(localStorage.getItem('er_custom_buttons') || '[]');
+function saveCustomButtons() {
+  localStorage.setItem('er_custom_buttons', JSON.stringify(customButtons));
+}
+
 // ── ELEMENTS ──
 const preview = document.getElementById('preview-textarea');
 const varArea = document.getElementById('var-area');
@@ -1255,7 +1269,11 @@ function buildPreview() {
   const insertParts = [];
   state.activeButtons.forEach(btnId => {
     const t = templates[btnId];
-    if (!t) return;
+    if (!t) {
+      const cb = customButtons.find(b => b.id === btnId);
+      if (cb) insertParts.push(cb.text);
+      return;
+    }
     if (t.type === 'static') {
       insertParts.push(t.text);
     } else if (t.type === 'estimate') {
@@ -1359,6 +1377,19 @@ function renderBeforeButtons(dir) {
     btn.addEventListener('click', () => toggleBeforeButton(btnId, btn));
     beforeButtons.appendChild(btn);
   });
+  customButtons.filter(b => b.phase === 'before' && b.direction === dir).forEach(b => {
+    const btn = document.createElement('button');
+    btn.className = 'content-btn';
+    btn.dataset.btnid = b.id;
+    btn.textContent = b.label;
+    if (state.activeButtons.has(b.id)) btn.classList.add('active');
+    btn.addEventListener('click', () => {
+      if (state.activeButtons.has(b.id)) { state.activeButtons.delete(b.id); btn.classList.remove('active'); }
+      else { state.activeButtons.add(b.id); btn.classList.add('active'); }
+      buildPreview();
+    });
+    beforeButtons.appendChild(btn);
+  });
   // Show custom reason input if other is active
   if (dir === 'decline' && state.activeButtons.has('btn_decline_other')) {
     customReasonArea.classList.add('visible');
@@ -1452,6 +1483,31 @@ document.querySelectorAll('.dir-chip').forEach(chip => {
     buildPreview();
   });
 });
+
+// ── CUSTOM BUTTON RENDER ──
+function renderCustomButtonsPanel(phase) {
+  const wrap = document.getElementById('custom-btns-' + phase);
+  const section = document.getElementById('custom-section-' + phase);
+  if (!wrap || !section) return;
+  const relevant = customButtons.filter(b => b.phase === phase);
+  section.style.display = relevant.length ? '' : 'none';
+  wrap.innerHTML = '';
+  relevant.forEach(b => {
+    const btn = document.createElement('button');
+    btn.className = 'content-btn';
+    btn.dataset.btnid = b.id;
+    btn.textContent = b.label;
+    if (state.activeButtons.has(b.id)) btn.classList.add('active');
+    btn.addEventListener('click', () => {
+      if (state.activeButtons.has(b.id)) { state.activeButtons.delete(b.id); btn.classList.remove('active'); }
+      else { state.activeButtons.add(b.id); btn.classList.add('active'); }
+      buildPreview();
+    });
+    wrap.appendChild(btn);
+  });
+}
+renderCustomButtonsPanel('during');
+renderCustomButtonsPanel('done');
 
 // ── DURING / DONE BUTTONS ──
 document.querySelectorAll('#panel-during .content-btn, #panel-done .content-btn').forEach(btn => {
