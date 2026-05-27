@@ -80,6 +80,12 @@
     "password": "パスワード",
     "password_placeholder": "解凍パスワードなど"
   },
+  "modal": {
+    "label": "ラベル",
+    "label_en": "ラベル（EN）",
+    "text": "テキスト",
+    "text_en": "テキスト（EN）"
+  },
   "storage": {
     "export_success": "エクスポートしました",
     "import_success": "インポートしました",

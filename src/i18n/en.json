@@ -80,6 +80,12 @@
     "password": "Password",
     "password_placeholder": "Extraction password, etc."
   },
+  "modal": {
+    "label": "Label",
+    "label_en": "Label (EN)",
+    "text": "Text",
+    "text_en": "Text (EN)"
+  },
   "storage": {
     "export_success": "Exported successfully",
     "import_success": "Imported successfully",

@@ -115,11 +115,17 @@
 <div id="modal-edit" class="modal-overlay" hidden>
   <div class="modal">
     <h2 id="modal-title">ボタンを追加</h2>
-    <label>ラベル
+    <label data-i18n="modal.label">ラベル
       <input id="modal-label" type="text" placeholder="ボタン名">
     </label>
-    <label>テキスト
-      <textarea id="modal-text" rows="6" placeholder="返信テキスト"></textarea>
+    <label data-i18n="modal.label_en">Label (EN)
+      <input id="modal-label-en" type="text" placeholder="Button name in English">
+    </label>
+    <label id="modal-text-row" data-i18n="modal.text">テキスト
+      <textarea id="modal-text" rows="5" placeholder="返信テキスト"></textarea>
+    </label>
+    <label id="modal-text-en-row" data-i18n="modal.text_en">Text (EN)
+      <textarea id="modal-text-en" rows="5" placeholder="Reply text in English"></textarea>
     </label>
     <div class="modal-actions">
       <button id="modal-cancel" class="btn-secondary" data-i18n="button.cancel">キャンセル</button>

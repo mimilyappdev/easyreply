@@ -224,10 +224,14 @@ function applyI18n() {
 }
 
 // ── MODAL: EDIT ───────────────────────────────────
-function openEditModal({ title, label = '', text = '', onSave }) {
+function openEditModal({ title, label = '', labelEn = '', text = '', textEn = '', hasText = false, onSave }) {
   document.getElementById('modal-title').textContent = title
   document.getElementById('modal-label').value = label
+  document.getElementById('modal-label-en').value = labelEn
   document.getElementById('modal-text').value = text
+  document.getElementById('modal-text-en').value = textEn
+  document.getElementById('modal-text-row').hidden = !hasText
+  document.getElementById('modal-text-en-row').hidden = !hasText
   document.getElementById('modal-edit').hidden = false
   editTarget = { onSave }
 }
@@ -495,14 +499,15 @@ document.getElementById('btn-add-button').addEventListener('click', () => {
   if (!checkTrialLimit('saves')) return
   openEditModal({
     title: t('button.add_button'),
-    onSave: ({ label, text }) => {
+    hasText: true,
+    onSave: ({ label, labelEn, text, textEn }) => {
       const dir = getDirection(currentPhaseId, currentDirectionId)
       if (!dir) return
       dir.buttons.push({
         id: genId('custom'),
-        label: { ja: label, en: '' },
+        label: { ja: label, en: labelEn },
         type: 'static',
-        text: { ja: text, en: '' }
+        text: { ja: text, en: textEn }
       })
       if (MODE === 'trial') trialCount.saves++
       saveData()
@@ -516,10 +521,10 @@ document.getElementById('btn-add-phase').addEventListener('click', () => {
   if (!checkTrialLimit('phases')) return
   openEditModal({
     title: t('button.add_phase'),
-    onSave: ({ label }) => {
+    onSave: ({ label, labelEn }) => {
       const newPhase = {
         id: genId('phase'),
-        label: { ja: label, en: '' },
+        label: { ja: label, en: labelEn },
         directions: [{
           id: genId('dir'),
           label: { ja: '方向1', en: 'Direction 1' },
@@ -541,10 +546,10 @@ document.getElementById('btn-add-direction').addEventListener('click', () => {
   if (!checkTrialLimit('directions')) return
   openEditModal({
     title: t('button.add_direction'),
-    onSave: ({ label }) => {
+    onSave: ({ label, labelEn }) => {
       const phase = getPhase(currentPhaseId)
       if (!phase) return
-      const newDir = { id: genId('dir'), label: { ja: label, en: '' }, buttons: [] }
+      const newDir = { id: genId('dir'), label: { ja: label, en: labelEn }, buttons: [] }
       phase.directions.push(newDir)
       currentDirectionId = newDir.id
       if (MODE === 'trial') trialCount.directions++
@@ -565,16 +570,19 @@ document.addEventListener('click', (e) => {
     if (!btn) return
     openEditModal({
       title: '編集',
-      label: tData(btn.label),
-      text: tData(btn.text),
-      onSave: ({ label, text }) => {
+      label: btn.label?.ja || '',
+      labelEn: btn.label?.en || '',
+      text: btn.text?.ja || '',
+      textEn: btn.text?.en || '',
+      hasText: true,
+      onSave: ({ label, labelEn, text, textEn }) => {
         if (MODE === 'trial' && !btn._edited) {
           if (!checkTrialLimit('saves')) return
           btn._edited = true
           trialCount.saves++
         }
-        btn.label[lang()] = label
-        btn.text[lang()] = text
+        btn.label = { ja: label, en: labelEn }
+        btn.text = { ja: text, en: textEn }
         saveData()
         renderButtons()
         if (selectedButtonId === id) showPreview(btn)
@@ -620,9 +628,10 @@ document.addEventListener('click', (e) => {
     if (!phase) return
     openEditModal({
       title: 'フェーズを編集',
-      label: tData(phase.label),
-      onSave: ({ label }) => {
-        phase.label[lang()] = label
+      label: phase.label?.ja || '',
+      labelEn: phase.label?.en || '',
+      onSave: ({ label, labelEn }) => {
+        phase.label = { ja: label, en: labelEn }
         saveData()
         renderPhaseTabs()
       }
@@ -645,9 +654,11 @@ document.addEventListener('click', (e) => {
 // Modal save
 document.getElementById('modal-save').addEventListener('click', () => {
   const label = document.getElementById('modal-label').value.trim()
+  const labelEn = document.getElementById('modal-label-en').value.trim()
   const text = document.getElementById('modal-text').value
+  const textEn = document.getElementById('modal-text-en').value
   if (!label) return
-  editTarget?.onSave({ label, text })
+  editTarget?.onSave({ label, labelEn, text, textEn })
   closeEditModal()
 })
 
