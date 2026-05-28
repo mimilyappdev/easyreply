@@ -443,6 +443,18 @@ function openSettings() {
   const isPro = MODE === 'pro'
   document.getElementById('import-locked').hidden = isPro
   document.getElementById('import-unlocked').hidden = !isPro
+  document.querySelector('.mycolor-block').hidden = !isPro
+  document.querySelectorAll('.theme-opt[data-theme^="mycolor"]').forEach(btn => {
+    const existing = btn.querySelector('.pro-badge')
+    if (!isPro && !existing) {
+      const badge = document.createElement('span')
+      badge.className = 'pro-badge'
+      badge.textContent = 'PRO'
+      btn.appendChild(badge)
+    } else if (isPro && existing) {
+      existing.remove()
+    }
+  })
   document.getElementById('modal-settings').hidden = false
 }
 function closeSettings() {
@@ -477,7 +489,12 @@ document.getElementById('modal-settings').addEventListener('click', (e) => {
 // Theme select
 document.getElementById('theme-list').addEventListener('click', (e) => {
   const opt = e.target.closest('.theme-opt')
-  if (opt) applyTheme(opt.dataset.theme)
+  if (!opt) return
+  if (MODE !== 'pro' && (opt.dataset.theme === 'mycolor1' || opt.dataset.theme === 'mycolor2')) {
+    openUnlockModal('mycolor')
+    return
+  }
+  applyTheme(opt.dataset.theme)
 })
 
 // Export (settings modal)
