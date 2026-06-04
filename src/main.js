@@ -189,8 +189,8 @@ function updatePreview() {
   let text = previewBase
   if (dlUrl || dlPassword) {
     const parts = []
-    if (dlUrl) parts.push(`【ダウンロードURL】\n${dlUrl}`)
-    if (dlPassword) parts.push(`【パスワード】\n${dlPassword}`)
+    if (dlUrl) parts.push(`【${t('dl.url')}】\n${dlUrl}`)
+    if (dlPassword) parts.push(`【${t('dl.password')}】\n${dlPassword}`)
     text = text ? text + '\n\n' + parts.join('\n') : parts.join('\n')
   }
   textarea.value = text
