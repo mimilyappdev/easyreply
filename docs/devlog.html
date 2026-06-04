@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EasyReply devlog</title>
+<style>
+  body { font-family: 'BIZ UDGothic', sans-serif; background: #F5F1EB; color: #2A2A2A; max-width: 800px; margin: 0 auto; padding: 32px 16px; }
+  h1 { font-size: 1.4rem; color: #1A3A52; border-bottom: 3px solid #3A6080; padding-bottom: 8px; }
+  .entry { background: #fff; border-radius: 8px; padding: 20px 24px; margin-bottom: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .date { font-size: 0.8rem; color: #7A8A96; margin-bottom: 4px; }
+  .title { font-size: 1.1rem; font-weight: 700; color: #1A3A52; margin-bottom: 16px; }
+  .section { margin-bottom: 12px; }
+  .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; color: #3A7CA5; text-transform: uppercase; margin-bottom: 4px; }
+  ul { margin: 4px 0 0 0; padding-left: 20px; }
+  li { margin-bottom: 4px; font-size: 0.9rem; line-height: 1.6; }
+  .item.warn { color: #8B6914; }
+  .item.warn::marker { content: "⚠ "; }
+  .item.done::marker { content: "✅ "; }
+  .item.todo::marker { content: "□ "; }
+  code { background: #EEF2F5; padding: 1px 5px; border-radius: 3px; font-size: 0.85em; }
+</style>
+</head>
+<body>
+<h1>EasyReply devlog</h1>
+
+<!-- ============================================================ -->
+<div class="entry">
+  <div class="date">2026-06-05</div>
+  <div class="title">バックアップ整理・app本番差し替え・EN翻訳バグ修正・JP/ENスタンドアローンデータ作成</div>
+
+  <div class="section">
+    <div class="section-label">やったこと</div>
+    <ul>
+      <li class="item done">バックアップファイルに <code>_readme.txt</code> を作成（各ファイルの内容・日付・注意点を記載）</li>
+      <li class="item done"><code>npm run build</code> → <code>dist/index.html</code> を <code>app/index.html</code> にコピー（「準備中」ページを本番アプリに差し替え）</li>
+      <li class="item done">今日のローカルバックアップ: <code>app/my_backup_20260605.html</code></li>
+      <li class="item done">EN翻訳チェック実施 → DLリンクラベルのi18n漏れを発見・修正</li>
+      <li class="item done"><code>main.js</code> L192-193: <code>【ダウンロードURL】</code> → <code>【${t('dl.url')}】</code> に修正（EN切替時も英語表示に）</li>
+      <li class="item done"><code>src/data/defaultData_ja.js</code> 作成（JP専用スタンドアローン用。label/text/textWarmをjaのみ）</li>
+      <li class="item done"><code>src/data/defaultData_en.js</code> 作成（EN専用スタンドアローン用。label/text/textWarmをenのみ）</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-label">検討・確認したこと</div>
+    <ul>
+      <li class="item done">全バックアップファイルのEN翻訳を全量チェック → <code>defaultData.js</code> は全ボタンにja/en両対応済み確認</li>
+      <li class="item done">サンドイッチ構造（出だし・結びの固定文）の実装有無を確認 → <strong>未実装</strong>（ボタン単体テキストのみ）</li>
+      <li class="item done"><code>i18n/en.json</code> 全キーを確認 → 漏れなし</li>
+      <li class="item done">ビルド確認: <code>npm run build</code> 2回とも通過（101KB singlefile）</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-label">却下・見送り</div>
+    <ul>
+      <li class="item warn"><code>dist/index.html</code> のgitコミット → <code>.gitignore</code> で除外されているため対象外（正しい）</li>
+      <li class="item warn">スタンドアローンHTML本体の作成 → 明日に持ち越し。データファイルだけ先行作成</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-label">残タスク</div>
+    <ul>
+      <li class="item todo">スタンドアローンHTML作成: JP版（<code>defaultData_ja.js</code> 使用・i18nextなし）</li>
+      <li class="item todo">スタンドアローンHTML作成: EN版（<code>defaultData_en.js</code> 使用・i18nextなし）</li>
+      <li class="item todo">Booth配布用ZIPに同梱（アプリ本体 + <code>booth_terms.txt</code>）</li>
+      <li class="item todo">Free/Proゲート整備: <code>TRIAL_LIMITS</code> 値更新・<code>MODE='free'</code> で動作確認</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-label">コミット</div>
+    <ul>
+      <li>feat: app/index.htmlを本番アプリに差し替え・バックアップ説明txt追加</li>
+      <li>fix/data: DLリンクラベルをi18n化・JP/ENスタンドアローンデータ追加</li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>
