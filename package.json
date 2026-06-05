@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "vite src",
     "build": "vite build",
+    "build:ja": "vite build --config vite.config_ja.js",
+    "build:en": "vite build --config vite.config_en.js",
     "preview": "vite preview"
   },
   "dependencies": {

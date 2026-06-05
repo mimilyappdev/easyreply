@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2C4A5E">
+<title>EasyReply</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tilt+Warp&family=BIZ+UDGothic:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="logo-row">
+      <span class="logo">EasyReply</span>
+    </div>
+    <span class="logo-tagline" data-i18n="app.catchcopy">Your words. Your way.</span>
+  </div>
+  <div class="header-actions">
+    <button id="btn-lang" class="icon-btn" title="Language" style="display:none">EN</button>
+    <button id="btn-edit-mode" class="icon-btn" title="Edit mode" data-i18n="button.edit_mode">✎ Edit</button>
+    <button id="btn-settings" class="icon-btn" title="Settings">⚙</button>
+  </div>
+</header>
+<div class="gold-line"></div>
+
+<div class="main">
+
+  <!-- LEFT PANEL -->
+  <div class="left-panel sp-active" id="sp-left-panel">
+
+    <div class="section-card">
+      <div class="section-label" data-i18n="phase.label">Phase</div>
+      <div id="phase-tabs" class="phase-tabs"></div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-label" data-i18n="direction.label">Reply Pattern</div>
+      <div class="section-desc" data-i18n="direction.desc">Select how you want to reply</div>
+      <div id="direction-chips" class="direction-chips"></div>
+    </div>
+
+    <div class="section-card">
+      <div id="button-list" class="button-list"></div>
+      <button id="btn-add-button" class="add-btn" style="display:none" data-i18n="button.add_button">+ Add Button</button>
+    </div>
+
+    <div id="pro-add-controls" class="pro-add-controls" style="display:none">
+      <button id="btn-add-phase" class="add-btn" data-i18n="button.add_phase">+ Add Phase</button>
+      <button id="btn-add-direction" class="add-btn" data-i18n="button.add_direction">+ Add Content</button>
+    </div>
+
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel" id="sp-right-panel">
+
+    <div class="preview-wrap">
+      <div class="preview-header">
+        <div class="preview-label" data-i18n="preview.label">Reply Preview (editable)</div>
+        <div class="tone-toggle">
+          <button id="tone-formal" class="tone-btn active">Formal</button>
+          <button id="tone-warm" class="tone-btn">Warm</button>
+        </div>
+      </div>
+      <textarea id="preview-textarea" class="preview-textarea" data-i18n-placeholder="preview.placeholder" placeholder="Select a button on the left to preview your reply here.&#10;&#10;Select multiple to combine them."></textarea>
+    </div>
+
+    <div class="action-row">
+      <button id="btn-copy" class="copy-btn" data-i18n="button.copy">Copy</button>
+      <button id="btn-dl-open" class="dl-btn" data-i18n="dl.button">DL Link</button>
+    </div>
+
+    <div class="dl-area" id="dl-area">
+      <div class="dl-area-label" data-i18n="dl.label">DL Link &amp; Password</div>
+      <div class="dl-input-row">
+        <div class="dl-field-label" data-i18n="dl.url">Download URL</div>
+        <input class="dl-input" id="dl-url" type="url" placeholder="https://wetransfer.com/..." data-i18n-placeholder="dl.url_placeholder">
+      </div>
+      <div class="dl-input-row">
+        <div class="dl-field-label" data-i18n="dl.password">Password</div>
+        <input class="dl-input" id="dl-pw" type="text" placeholder="Extraction password, etc." data-i18n-placeholder="dl.password_placeholder">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="https://mimilyappdev.github.io/" class="footer-link" target="_blank">Mimily Apps</a>
+</footer>
+
+<!-- Bottom Nav (mobile) -->
+<nav class="bottom-nav">
+  <button class="bnav-item active" data-sp-tab="left">
+    <span class="bnav-icon">📋</span>
+    <span class="bnav-label">Templates</span>
+  </button>
+  <button class="bnav-item" data-sp-tab="right">
+    <span class="bnav-icon">✉️</span>
+    <span class="bnav-label">Preview</span>
+  </button>
+  <button class="bnav-item" id="bnav-settings">
+    <span class="bnav-icon">⚙️</span>
+    <span class="bnav-label">Settings</span>
+  </button>
+</nav>
+
+<!-- Modal: Add / Edit -->
+<div id="modal-edit" class="modal-overlay" hidden>
+  <div class="modal">
+    <h2 id="modal-title">Add Button</h2>
+    <label data-i18n="modal.label">Label
+      <input id="modal-label" type="text" placeholder="Button name">
+    </label>
+    <label style="display:none">
+      <input id="modal-label-en" type="text">
+    </label>
+    <label id="modal-text-row" data-i18n="modal.text">Text
+      <textarea id="modal-text" rows="5" placeholder="Reply text"></textarea>
+    </label>
+    <label id="modal-text-en-row" style="display:none">
+      <textarea id="modal-text-en" rows="5"></textarea>
+    </label>
+    <div class="modal-actions">
+      <button id="modal-cancel" class="btn-secondary" data-i18n="button.cancel">Cancel</button>
+      <button id="modal-save" class="btn-primary" data-i18n="button.save">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Unlock -->
+<div id="modal-unlock" class="modal-overlay" hidden>
+  <div class="modal">
+    <div class="unlock-icon">🔓</div>
+    <h2 data-i18n="unlock.title">Unlock with Pro</h2>
+    <p data-i18n="unlock.message">Unlimited saves &amp; additions with Pro</p>
+    <div class="modal-actions">
+      <button id="unlock-cancel" class="btn-secondary" data-i18n="button.cancel">Cancel</button>
+      <a id="unlock-cta" href="#" class="btn-primary" data-i18n="unlock.cta">Get Pro</a>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Settings -->
+<div id="modal-settings" class="modal-overlay" hidden>
+  <div class="modal modal--settings">
+    <h2 data-i18n="settings.title">Settings</h2>
+
+    <div class="settings-section">
+      <div class="settings-label" data-i18n="settings.theme">Theme Color</div>
+      <div class="theme-list" id="theme-list">
+        <button class="theme-opt active" data-theme="default">
+          <div class="theme-preview" style="background:linear-gradient(90deg,#2C4A5E 45%,#F5F1EB 45%)"></div>
+          <span data-i18n="settings.theme_default">Default</span>
+        </button>
+        <button class="theme-opt" data-theme="dark">
+          <div class="theme-preview" style="background:linear-gradient(90deg,#0e133a 45%,#22274e 45%)"></div>
+          <span data-i18n="settings.theme_dark">Dark</span>
+        </button>
+        <button class="theme-opt" data-theme="mycolor1">
+          <div class="theme-preview" id="mc-swatch-1" style="background:linear-gradient(90deg,#0e133a 45%,#22274e 45%)"></div>
+          <span data-i18n="settings.theme_mycolor1">My Color ①</span>
+        </button>
+        <button class="theme-opt" data-theme="mycolor2">
+          <div class="theme-preview" id="mc-swatch-2" style="background:linear-gradient(90deg,#0e133a 45%,#22274e 45%)"></div>
+          <span data-i18n="settings.theme_mycolor2">My Color ②</span>
+        </button>
+      </div>
+
+      <div class="mycolor-block">
+        <div class="mycolor-block-header">
+          <span class="mycolor-block-title" data-i18n="settings.mycolor_title">🎨 Customize Colors</span>
+          <span class="mycolor-hint" data-i18n="settings.mycolor_hint">Applied when My Color is selected</span>
+        </div>
+        <div id="mycolor-seeds-ui"></div>
+      </div>
+    </div>
+
+    <div class="settings-divider"></div>
+
+    <div class="settings-section">
+      <div class="settings-label" data-i18n="settings.data">Data</div>
+      <button id="settings-export" class="settings-btn" data-i18n="settings.export">📤 Export</button>
+      <div id="import-locked" class="settings-pro-block">
+        <div class="settings-pro-header">
+          <span class="pro-badge">PRO</span>
+          <span class="settings-pro-title" data-i18n="settings.import">📥 Import</span>
+        </div>
+        <p class="settings-pro-desc" data-i18n="settings.import_desc">Restore your data from a JSON file</p>
+      </div>
+      <div id="import-unlocked" hidden>
+        <input type="file" id="settings-import-input" accept=".json" style="display:none">
+        <button id="settings-import" class="settings-btn" data-i18n="settings.import">📥 Import</button>
+      </div>
+      <button id="settings-reset" class="settings-btn settings-btn--danger" data-i18n="settings.reset">🗑 Reset</button>
+    </div>
+
+    <div class="modal-actions">
+      <button id="modal-settings-close" class="btn-secondary" data-i18n="settings.close">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: DL Link -->
+<div id="modal-dl" class="modal-overlay" hidden>
+  <div class="modal">
+    <h2 data-i18n="dl.label">DL Link &amp; Password</h2>
+    <label><span data-i18n="dl.url">Download URL</span>
+      <input id="modal-dl-url" type="url" placeholder="https://wetransfer.com/..." data-i18n-placeholder="dl.url_placeholder">
+    </label>
+    <label><span data-i18n="dl.password">Password</span>
+      <input id="modal-dl-pw" type="text" placeholder="Extraction password, etc." data-i18n-placeholder="dl.password_placeholder">
+    </label>
+    <div class="modal-actions">
+      <button id="modal-dl-close" class="btn-primary">OK</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="./main_en.js"></script>
+</body>
+</html>
