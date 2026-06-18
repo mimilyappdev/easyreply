@@ -5,7 +5,7 @@ import { defaultData } from './data/defaultData.js'
 
 // ── MODE ──────────────────────────────────────────
 // 'free' | 'trial' | 'pro'
-const MODE = 'pro'
+const MODE = 'trial'
 
 const TRIAL_LIMITS = { saves: 0, phases: 0, directions: 3 }
 
@@ -107,9 +107,6 @@ function renderPhaseTabs() {
     el.appendChild(btn)
   })
 
-  // Pro add controls
-  const proControls = document.getElementById('pro-add-controls')
-  if (MODE === 'pro') proControls.style.display = 'flex'
 }
 
 function renderDirectionChips() {
@@ -122,14 +119,30 @@ function renderDirectionChips() {
   phase.directions.forEach(dir => {
     const btn = document.createElement('button')
     btn.className = 'dir-chip ' + dir.id + (dir.id === currentDirectionId ? ' active' : '')
-    btn.textContent = tData(dir.label)
-    btn.addEventListener('click', () => {
+
+    const labelEl = document.createElement('span')
+    labelEl.textContent = tData(dir.label)
+    btn.appendChild(labelEl)
+
+    if (MODE === 'pro' || MODE === 'trial') {
+      const actions = document.createElement('span')
+      actions.className = 'dir-actions'
+      actions.innerHTML = `
+        <button class="tab-action-btn" data-action="edit-direction" data-id="${dir.id}">✎</button>
+        <button class="tab-action-btn delete" data-action="delete-direction" data-id="${dir.id}">✕</button>
+      `
+      btn.appendChild(actions)
+    }
+
+    btn.addEventListener('click', (e) => {
+      if (e.target.dataset.action) return
       currentDirectionId = dir.id
       selectedButtonId = null
       renderButtons()
     })
     el.appendChild(btn)
   })
+
 }
 
 function renderButtons() {
@@ -171,9 +184,6 @@ function renderButtons() {
     el.appendChild(item)
   })
 
-  // Add button (Pro)
-  const addBtn = document.getElementById('btn-add-button')
-  addBtn.style.display = (MODE === 'pro' || MODE === 'trial') ? 'block' : 'none'
 }
 
 function showPreview(btn) {
@@ -182,6 +192,7 @@ function showPreview(btn) {
   previewBase = tData(src)
   updatePreview()
   textarea.removeAttribute('readonly')
+  document.getElementById('btn-save-template').disabled = false
 }
 
 function updatePreview() {
@@ -212,7 +223,13 @@ function applyI18n() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n
     const translated = t(key)
-    if (translated) el.textContent = translated
+    if (!translated) return
+    if (el.children.length === 0) {
+      el.textContent = translated
+    } else {
+      const textNode = [...el.childNodes].find(n => n.nodeType === Node.TEXT_NODE)
+      if (textNode) textNode.textContent = translated
+    }
   })
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const key = el.dataset.i18nPlaceholder
@@ -224,12 +241,16 @@ function applyI18n() {
 }
 
 // ── MODAL: EDIT ───────────────────────────────────
-function openEditModal({ title, label = '', labelEn = '', text = '', textEn = '', hasText = false, onSave }) {
+function openEditModal({ title, label = '', labelEn = '', dirLabel = '', dirLabelEn = '', text = '', textEn = '', hasText = false, hasDirection = false, onSave }) {
   document.getElementById('modal-title').textContent = title
   document.getElementById('modal-label').value = label
   document.getElementById('modal-label-en').value = labelEn
+  document.getElementById('modal-dir-label').value = dirLabel
+  document.getElementById('modal-dir-label-en').value = dirLabelEn
   document.getElementById('modal-text').value = text
   document.getElementById('modal-text-en').value = textEn
+  document.getElementById('modal-dir-row').hidden = !hasDirection
+  document.getElementById('modal-dir-en-row').hidden = !hasDirection
   document.getElementById('modal-text-row').hidden = !hasText
   document.getElementById('modal-text-en-row').hidden = !hasText
   document.getElementById('modal-edit').hidden = false
@@ -564,13 +585,14 @@ document.getElementById('btn-add-phase').addEventListener('click', () => {
   if (!checkTrialLimit('phases')) return
   openEditModal({
     title: t('button.add_phase'),
-    onSave: ({ label, labelEn }) => {
+    hasDirection: true,
+    onSave: ({ label, labelEn, dirLabel, dirLabelEn }) => {
       const newPhase = {
         id: genId('phase'),
         label: { ja: label, en: labelEn },
         directions: [{
           id: genId('dir'),
-          label: { ja: '方向1', en: 'Direction 1' },
+          label: { ja: dirLabel || '方向1', en: dirLabelEn || 'Direction 1' },
           buttons: []
         }]
       }
@@ -666,6 +688,36 @@ document.addEventListener('click', (e) => {
     renderButtons()
   }
 
+  if (action === 'edit-direction') {
+    const phase = getPhase(currentPhaseId)
+    if (!phase) return
+    const dir = phase.directions.find(d => d.id === id)
+    if (!dir) return
+    openEditModal({
+      title: '方向を編集',
+      label: dir.label?.ja || '',
+      labelEn: dir.label?.en || '',
+      onSave: ({ label, labelEn }) => {
+        dir.label = { ja: label, en: labelEn }
+        saveData()
+        renderDirectionChips()
+      }
+    })
+  }
+
+  if (action === 'delete-direction') {
+    const phase = getPhase(currentPhaseId)
+    if (!phase || phase.directions.length <= 1) return
+    if (!confirm('この方向を削除しますか？')) return
+    phase.directions = phase.directions.filter(d => d.id !== id)
+    if (currentDirectionId === id) {
+      currentDirectionId = phase.directions[0].id
+      selectedButtonId = null
+    }
+    saveData()
+    renderAll()
+  }
+
   if (action === 'edit-phase') {
     const phase = getPhase(id)
     if (!phase) return
@@ -698,10 +750,12 @@ document.addEventListener('click', (e) => {
 document.getElementById('modal-save').addEventListener('click', () => {
   const label = document.getElementById('modal-label').value.trim()
   const labelEn = document.getElementById('modal-label-en').value.trim()
+  const dirLabel = document.getElementById('modal-dir-label').value.trim()
+  const dirLabelEn = document.getElementById('modal-dir-label-en').value.trim()
   const text = document.getElementById('modal-text').value
   const textEn = document.getElementById('modal-text-en').value
   if (!label) return
-  editTarget?.onSave({ label, labelEn, text, textEn })
+  editTarget?.onSave({ label, labelEn, dirLabel, dirLabelEn, text, textEn })
   closeEditModal()
 })
 
@@ -715,6 +769,27 @@ document.getElementById('modal-edit').addEventListener('click', (e) => {
 document.getElementById('unlock-cancel').addEventListener('click', closeUnlockModal)
 document.getElementById('modal-unlock').addEventListener('click', (e) => {
   if (e.target === e.currentTarget) closeUnlockModal()
+})
+
+// Save as template
+document.getElementById('btn-save-template').addEventListener('click', () => {
+  if (!selectedButtonId) return
+  const btn = getButton(currentPhaseId, currentDirectionId, selectedButtonId)
+  if (!btn) return
+  const text = document.getElementById('preview-textarea').value
+  const l = lang()
+  const target = currentTone === 'warm' ? 'textWarm' : 'text'
+  if (typeof btn[target] === 'object') {
+    btn[target][l] = text
+  } else {
+    btn[target] = { ja: text, en: text }
+    btn[target][l] = text
+  }
+  saveData()
+  const saveBtn = document.getElementById('btn-save-template')
+  const orig = saveBtn.textContent
+  saveBtn.textContent = t('button.save_template_done')
+  setTimeout(() => { saveBtn.textContent = orig }, 1800)
 })
 
 // Copy

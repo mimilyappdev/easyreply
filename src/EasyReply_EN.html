@@ -34,22 +34,19 @@
     <div class="section-card">
       <div class="section-label" data-i18n="phase.label">Phase</div>
       <div id="phase-tabs" class="phase-tabs"></div>
+      <button id="btn-add-phase" class="add-btn" data-i18n="button.add_phase">+ Add Phase</button>
     </div>
 
     <div class="section-card">
       <div class="section-label" data-i18n="direction.label">Reply Pattern</div>
       <div class="section-desc" data-i18n="direction.desc">Select how you want to reply</div>
       <div id="direction-chips" class="direction-chips"></div>
+      <button id="btn-add-direction" class="add-btn" data-i18n="button.add_direction">+ Add Direction</button>
     </div>
 
     <div class="section-card">
       <div id="button-list" class="button-list"></div>
-      <button id="btn-add-button" class="add-btn" style="display:none" data-i18n="button.add_button">+ Add Button</button>
-    </div>
-
-    <div id="pro-add-controls" class="pro-add-controls" style="display:none">
-      <button id="btn-add-phase" class="add-btn" data-i18n="button.add_phase">+ Add Phase</button>
-      <button id="btn-add-direction" class="add-btn" data-i18n="button.add_direction">+ Add Content</button>
+      <button id="btn-add-button" class="add-btn" data-i18n="button.add_button">+ Add Button</button>
     </div>
 
   </div>
@@ -71,6 +68,9 @@
     <div class="action-row">
       <button id="btn-copy" class="copy-btn" data-i18n="button.copy">Copy</button>
       <button id="btn-dl-open" class="dl-btn" data-i18n="dl.button">DL Link</button>
+    </div>
+    <div class="save-template-row">
+      <button id="btn-save-template" class="save-template-btn" disabled data-i18n="button.save_template">Save Template</button>
     </div>
 
     <div class="dl-area" id="dl-area">
@@ -117,6 +117,12 @@
     </label>
     <label style="display:none">
       <input id="modal-label-en" type="text">
+    </label>
+    <label id="modal-dir-row" data-i18n="modal.direction">Direction name
+      <input id="modal-dir-label" type="text" placeholder="e.g. Accept / Decline">
+    </label>
+    <label style="display:none">
+      <input id="modal-dir-label-en" type="text">
     </label>
     <label id="modal-text-row" data-i18n="modal.text">Text
       <textarea id="modal-text" rows="5" placeholder="Reply text"></textarea>

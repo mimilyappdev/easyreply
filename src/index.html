@@ -35,22 +35,19 @@
     <div class="section-card">
       <div class="section-label" data-i18n="phase.label">フェーズ</div>
       <div id="phase-tabs" class="phase-tabs"></div>
+      <button id="btn-add-phase" class="add-btn" data-i18n="button.add_phase">+ フェーズを追加</button>
     </div>
 
     <div class="section-card">
       <div class="section-label" data-i18n="direction.label">返答パターン</div>
       <div class="section-desc" data-i18n="direction.desc">どのような返答をするか選んでください</div>
       <div id="direction-chips" class="direction-chips"></div>
+      <button id="btn-add-direction" class="add-btn" data-i18n="button.add_direction">+ 方向を追加</button>
     </div>
 
     <div class="section-card">
       <div id="button-list" class="button-list"></div>
-      <button id="btn-add-button" class="add-btn" style="display:none" data-i18n="button.add_button">+ ボタンを追加</button>
-    </div>
-
-    <div id="pro-add-controls" class="pro-add-controls" style="display:none">
-      <button id="btn-add-phase" class="add-btn" data-i18n="button.add_phase">+ フェーズを追加</button>
-      <button id="btn-add-direction" class="add-btn" data-i18n="button.add_direction">+ 内容を追加する</button>
+      <button id="btn-add-button" class="add-btn" data-i18n="button.add_button">+ ボタンを追加</button>
     </div>
 
   </div>
@@ -72,6 +69,9 @@
     <div class="action-row">
       <button id="btn-copy" class="copy-btn" data-i18n="button.copy">コピー</button>
       <button id="btn-dl-open" class="dl-btn" data-i18n="dl.button">DLリンク</button>
+    </div>
+    <div class="save-template-row">
+      <button id="btn-save-template" class="save-template-btn" disabled data-i18n="button.save_template">テンプレ保存</button>
     </div>
 
     <div class="dl-area" id="dl-area">
@@ -120,6 +120,12 @@
     </label>
     <label data-i18n="modal.label_en">Label (EN)
       <input id="modal-label-en" type="text" placeholder="Button name in English">
+    </label>
+    <label id="modal-dir-row" data-i18n="modal.direction">方向名
+      <input id="modal-dir-label" type="text" placeholder="受ける / 断る など">
+    </label>
+    <label id="modal-dir-en-row" data-i18n="modal.direction_en">Direction (EN)
+      <input id="modal-dir-label-en" type="text" placeholder="e.g. Accept / Decline">
     </label>
     <label id="modal-text-row" data-i18n="modal.text">テキスト
       <textarea id="modal-text" rows="5" placeholder="返信テキスト"></textarea>

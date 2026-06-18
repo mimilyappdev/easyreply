@@ -144,11 +144,12 @@ header {
 /* ── PHASE TABS ── */
 .phase-tabs {
   display: flex;
+  flex-direction: column;
   gap: 6px;
 }
 .phase-tab {
-  flex: 1;
-  padding: 9px 4px;
+  width: 100%;
+  padding: 9px 12px;
   border: 1.5px solid var(--sidebar-border);
   background: var(--white);
   border-radius: var(--radius);
@@ -158,10 +159,10 @@ header {
   color: var(--muted);
   cursor: pointer;
   transition: all 0.18s;
-  text-align: center;
+  text-align: left;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 4px;
 }
 .phase-tab:hover { border-color: var(--accent); color: var(--accent); }
@@ -184,6 +185,9 @@ body.edit-mode .phase-tab.active .tab-actions { display: flex; }
   padding: 1px 3px;
 }
 .tab-action-btn:hover { opacity: 1; }
+.dir-chip .dir-actions { display: none; gap: 2px; margin-left: 4px; }
+body.edit-mode .dir-chip:hover .dir-actions,
+body.edit-mode .dir-chip.active .dir-actions { display: flex; }
 
 /* ── DIRECTION CHIPS ── */
 .direction-chips {
@@ -260,15 +264,6 @@ body.edit-mode .phase-tab.active .tab-actions { display: flex; }
   color: var(--accent);
   font-weight: 700;
 }
-.content-btn.active::after {
-  content: '✓';
-  position: absolute;
-  right: 36px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--accent);
-  font-size: 13px;
-}
 .btn-label { flex: 1; }
 .btn-actions { display: none; gap: 4px; flex-shrink: 0; }
 body.edit-mode .content-btn:hover .btn-actions,
@@ -288,6 +283,7 @@ body.edit-mode .content-btn.active .btn-actions { display: flex; }
 
 /* ── ADD BUTTONS ── */
 .add-btn {
+  display: none;
   width: 100%;
   padding: 8px 14px;
   border-radius: var(--radius);
@@ -300,8 +296,10 @@ body.edit-mode .content-btn.active .btn-actions { display: flex; }
   transition: 0.15s;
   text-align: left;
   font-family: 'BIZ UDGothic', sans-serif;
+  margin-top: 8px;
 }
 .add-btn:hover { border-color: var(--accent); color: var(--accent); }
+body.edit-mode .add-btn { display: block; }
 .pro-add-controls { display: flex; flex-direction: column; gap: 4px; }
 
 /* ── RIGHT PANEL ── */
@@ -360,6 +358,21 @@ body.edit-mode .content-btn.active .btn-actions { display: flex; }
 .preview-textarea::placeholder { color: #BBCAD4; }
 
 .action-row { display: flex; gap: 10px; align-items: center; }
+.save-template-row { margin-top: 6px; }
+.save-template-btn {
+  width: 100%;
+  padding: 8px 14px;
+  background: none;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.save-template-btn:hover:not(:disabled) { background: var(--accent-light); }
+.save-template-btn:disabled { opacity: 0.35; cursor: default; }
 .copy-btn {
   padding: 11px 28px;
   background: var(--header-bg);
@@ -457,6 +470,7 @@ body.edit-mode .content-btn.active .btn-actions { display: flex; }
   font-weight: 700;
   color: var(--muted);
 }
+.modal label[hidden] { display: none; }
 .modal input, .modal textarea {
   padding: 10px 12px;
   border: 1.5px solid var(--border);

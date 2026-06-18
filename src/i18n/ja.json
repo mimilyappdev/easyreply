@@ -20,13 +20,15 @@
     "copy": "コピー",
     "copied": "コピーしました",
     "add_phase": "+ フェーズを追加",
-    "add_direction": "+ 内容を追加する",
+    "add_direction": "+ 方向を追加",
     "add_button": "+ ボタンを追加",
     "edit_mode": "✎ 編集",
     "edit": "編集",
     "delete": "削除",
     "save": "保存",
-    "cancel": "キャンセル"
+    "cancel": "キャンセル",
+    "save_template": "テンプレ保存",
+    "save_template_done": "保存しました ✓"
   },
   "preview": {
     "label": "返信プレビュー（直接編集できます）",
@@ -83,6 +85,8 @@
   "modal": {
     "label": "ラベル",
     "label_en": "ラベル（EN）",
+    "direction": "方向名",
+    "direction_en": "方向名（EN）",
     "text": "テキスト",
     "text_en": "テキスト（EN）"
   },

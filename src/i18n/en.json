@@ -20,13 +20,15 @@
     "copy": "Copy",
     "copied": "Copied!",
     "add_phase": "+ Add Phase",
-    "add_direction": "+ Add Content",
+    "add_direction": "+ Add Direction",
     "add_button": "+ Add Button",
     "edit_mode": "✎ Edit",
     "edit": "Edit",
     "delete": "Delete",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "save_template": "Save as Template",
+    "save_template_done": "Saved ✓"
   },
   "preview": {
     "label": "Reply Preview (editable)",
@@ -83,6 +85,8 @@
   "modal": {
     "label": "Label",
     "label_en": "Label (EN)",
+    "direction": "Direction name",
+    "direction_en": "Direction name (EN)",
     "text": "Text",
     "text_en": "Text (EN)"
   },
