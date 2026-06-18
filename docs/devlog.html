@@ -81,6 +81,48 @@
 
 <!-- ============================================================ -->
 <div class="entry">
+  <div class="date">2026-06-18（夕）</div>
+  <div class="title">MODE修正・フェーズ縦並び・Booth ZIP更新・GitHub push</div>
+
+  <div class="section">
+    <div class="section-label">やったこと</div>
+    <ul>
+      <li class="item done">サイト版（src/main.js）の <code>MODE</code> を <code>'pro'</code> → <code>'trial'</code> に修正</li>
+      <li class="item done">フェーズタブを縦並びに変更（<code>flex-direction: column</code>）</li>
+      <li class="item done">EN/JP/メインサイト版をビルド（npm run build:en / build:ja / build）</li>
+      <li class="item done">app/index.html を更新・git commit & push（GitHub Pages反映）</li>
+      <li class="item done">Booth配布ZIP更新（EasyReply_EN.zip / EasyReply_JP.zip）</li>
+      <li class="item done">Booth EN版購入者（英語圏）へのバグ報告返信文を作成・送付</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-label">検討・確認したこと</div>
+    <ul>
+      <li class="item done">フェーズタブの✕ボタンが押せない原因 → <code>flex: 1</code> で各タブが狭くなり✕がはみ出してクリックできなかった</li>
+      <li class="item done">修正案：横スクロール vs 縦並び → ユーザー希望で縦並び採用</li>
+      <li class="item done">MODE確認：サイト版=trial、Booth版=pro が正しい設計と確認</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-label">却下・見送り</div>
+    <ul>
+      <li class="item warn">横スクロール方式（<code>overflow-x: auto</code>）→ ユーザーが縦積みを希望したため不採用</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-label">残タスク</div>
+    <ul>
+      <li class="item todo">Gumroad に EN/JP を登録（booth/ の ZIP を使用）</li>
+      <li class="item todo">自分のテンプレートデータを整備（ユーザー自身で対応予定）</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<div class="entry">
   <div class="date">2026-06-18</div>
   <div class="title">モーダルCSS修正・追加ボタンUIリファクタ・編集モードゲート</div>
 
