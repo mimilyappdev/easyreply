@@ -79,5 +79,51 @@
   </div>
 </div>
 
+<!-- ============================================================ -->
+<div class="entry">
+  <div class="date">2026-06-18</div>
+  <div class="title">モーダルCSS修正・追加ボタンUIリファクタ・編集モードゲート</div>
+
+  <div class="section">
+    <div class="section-label">やったこと</div>
+    <ul>
+      <li class="item done">CSS修正: <code>.modal label[hidden] { display: none; }</code> を追加 — <code>.modal label { display: flex }</code> がブラウザの <code>[hidden]</code> 属性を上書きしていたバグを修正</li>
+      <li class="item done">btn-add-direction を「返答パターン」セクションカード内に移動（旧: pro-add-controls）</li>
+      <li class="item done">btn-add-phase を「フェーズ」セクションカード内に移動</li>
+      <li class="item done">btn-add-button を「ボタンリスト」セクションカード内に移動</li>
+      <li class="item done">pro-add-controls div を全HTML（src/index.html / EasyReply_JP.html / EasyReply_EN.html）から削除</li>
+      <li class="item done">追加ボタン3種をCSS一元管理に切替: <code>.add-btn { display: none }</code> + <code>body.edit-mode .add-btn { display: block }</code></li>
+      <li class="item done">JSのstyle.display制御コードを main.js / main_ja.js / main_en.js から削除</li>
+      <li class="item done">i18n: 「内容を追加する」→「方向を追加」（ja.json / en.json）</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-label">検討・確認したこと</div>
+    <ul>
+      <li class="item done">「内容追加するやつが方向を追加してしまう」バグを調査 → JSハンドラは正しくコードレベルでは問題なし。UXの命名混乱（「内容を追加する」が方向追加を指していた）が原因と判断</li>
+      <li class="item done">追加ボタンを各セクション内に配置することで「このボタンはこのセクションに追加する」が視覚的に明確に</li>
+      <li class="item done">追加ボタンは常時表示だと誤クリックリスクあり → 編集モードON時のみ表示に（ユーザー提案）</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-label">却下・見送り</div>
+    <ul>
+      <li class="item warn">JSでdisplay制御を残す案 → CSSで一元管理する方が保守しやすいため削除</li>
+      <li class="item warn">ネストされたbutton内actionボタン（✎/✕）を外す案 → 調査したが問題なしと判断しスキップ</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-label">残タスク</div>
+    <ul>
+      <li class="item todo">動作確認（ユーザー側で実施）</li>
+      <li class="item todo">問題なければ dist ビルド（npm run build / build:en / build:ja）</li>
+      <li class="item todo">Booth 再アップロード（JP/EN 各 ZIP を差し替え）</li>
+    </ul>
+  </div>
+</div>
+
 </body>
 </html>
