@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <!-- Mimily analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Y1QD7RYSJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7Y1QD7RYSJ', { site_id: 'easyreply_lp_ko' });
+  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, follow">
+<title>EasyReply — 프리랜서 크리에이터를 위한 답장 템플릿 관리 툴</title>
+<meta name="description" content="의뢰 수락부터 납품까지, 크리에이터가 반복해서 쓰는 모든 답장을 커버하는 템플릿 관리 툴. 로컬 버전(일회성 구매 ¥880)을 BOOTH에서 만나보세요.">
+<meta property="og:title" content="EasyReply — 프리랜서 크리에이터를 위한 답장 템플릿 관리 툴">
+<meta property="og:description" content="같은 답장을 매번 처음부터 쓰지 마세요. EasyReply가 모든 상황을 커버합니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tilt+Warp&family=Kaisei+Opti:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #F7F2EC;
+    --bg-alt:    #EDE7DF;
+    --surface:   #FFFFFF;
+    --ink:       #2E2A26;
+    --muted:     #7A7068;
+    --slate:     #4A5C6A;
+    --slate-dk:  #38495A;
+    --slate-lt:  #E8EEF2;
+    --sky:       #8BA5B5;
+    --gold:      #C8943A;
+    --gold-lt:   #F5E8CF;
+    --border:    #DDD5C8;
+    --border-dk: #C0B8AE;
+    --white:     #FFFFFF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    background: var(--bg); color: var(--ink);
+    line-height: 1.7; -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* HEADER */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(247,242,236,0.93);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .hd-logo { font-family: 'Tilt Warp', cursive; font-size: 22px; color: var(--slate); }
+  .hd-kana { font-size: 11px; color: var(--muted); margin-left: 8px; }
+  .hd-right { display: flex; align-items: center; gap: 16px; }
+  .hd-lang { font-size: 12px; color: var(--muted); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; transition: color 0.15s; }
+  .hd-lang:hover { color: var(--slate); }
+  .btn-nav {
+    padding: 9px 24px; background: var(--gold); color: var(--white);
+    border: none; border-radius: 8px;
+    font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: background 0.18s; display: inline-block;
+  }
+  .btn-nav:hover { background: #B07F2E; }
+
+  /* HERO */
+  .hero {
+    max-width: 1120px; margin: 0 auto;
+    padding: 104px 48px 88px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; align-items: center;
+  }
+  .eyebrow {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.15em; color: var(--gold);
+    margin-bottom: 20px; text-transform: uppercase;
+  }
+  h1 {
+    font-family: 'Kaisei Opti', serif;
+    font-size: 54px; line-height: 1.3;
+    color: var(--slate); margin-bottom: 24px;
+  }
+  .hero-desc { font-size: 15px; color: var(--muted); line-height: 1.95; margin-bottom: 40px; }
+  .cta-group { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .btn-primary {
+    padding: 14px 34px; background: var(--gold); color: var(--white);
+    border: none; border-radius: 10px;
+    font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 15px; font-weight: 700;
+    cursor: pointer; display: inline-block;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: #B07F2E; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,148,58,0.28); }
+  .cta-note { font-size: 12px; color: var(--border-dk); }
+
+  /* MOCKUP */
+  .mockup {
+    background: var(--white); border-radius: 16px;
+    box-shadow: 0 16px 56px rgba(46,42,38,0.13);
+    border: 1px solid var(--border); overflow: hidden;
+    transform: rotate(1.5deg);
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .mockup:hover { transform: rotate(0deg) scale(1.01); }
+  .mk-hd { background: var(--slate); padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
+  .mk-hd-logo { font-family: 'Tilt Warp', cursive; font-size: 15px; color: white; }
+  .mk-hd-kana { font-size: 9px; color: rgba(255,255,255,0.45); }
+  .mk-gold { height: 2px; background: linear-gradient(90deg,#C8943A,#E0B050,#C8943A); }
+  .mk-body { display: grid; grid-template-columns: 136px 1fr; min-height: 288px; }
+  .mk-l { background: #EDE7DF; padding: 12px; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+  .mk-lbl { font-size: 9px; color: var(--muted); font-weight: 700; letter-spacing: 0.06em; margin-bottom: 1px; }
+  .mk-phases { display: flex; gap: 3px; }
+  .mk-ph { flex: 1; padding: 5px 2px; border-radius: 5px; font-size: 8px; text-align: center; background: white; color: var(--muted); border: 1px solid var(--border); }
+  .mk-ph.on { background: var(--slate); color: white; border-color: var(--slate); }
+  .mk-dirs { display: flex; gap: 3px; }
+  .mk-dir { flex: 1; padding: 5px 2px; border-radius: 6px; font-size: 8px; text-align: center; font-weight: 700; }
+  .mk-dir.a { background: var(--gold-lt); color: #9A7020; }
+  .mk-dir.b { background: var(--slate-lt); color: var(--slate); }
+  .mk-dir.c { background: #EDEDED; color: var(--muted); }
+  .mk-btn { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; font-size: 9px; color: var(--ink); }
+  .mk-btn.on { border-color: var(--sky); color: var(--slate); font-weight: 700; }
+  .mk-r { padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .mk-tones { display: flex; gap: 5px; }
+  .mk-tone { padding: 4px 10px; border-radius: 6px; font-size: 9px; border: 1.5px solid var(--border); background: white; font-family: 'Tilt Warp', cursive; }
+  .mk-tone.warm { color: var(--gold); border-color: #E0C060; }
+  .mk-tone.formal { background: var(--slate); color: white; border-color: var(--slate); }
+  .mk-prev { flex: 1; border: 1.5px dashed var(--border); border-radius: 8px; background: white; padding: 10px; font-size: 8.5px; line-height: 1.75; color: var(--ink); min-height: 130px; }
+  .mk-acts { display: flex; gap: 5px; align-items: center; }
+  .mk-copy { padding: 5px 14px; background: var(--slate); color: white; border-radius: 6px; font-size: 9px; font-weight: 700; }
+  .mk-reset { padding: 5px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 9px; color: var(--muted); background: white; }
+
+  /* PAIN */
+  .pain { background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 88px 48px; }
+  .pain-inner { max-width: 1120px; margin: 0 auto; }
+  .sec-title { font-family: 'Kaisei Opti', serif; font-size: 38px; text-align: center; color: var(--slate); margin-bottom: 60px; line-height: 1.5; }
+  .pain-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+  .pain-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 28px 24px; position: relative; overflow: hidden; }
+  .pain-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); opacity: 0.55; }
+  .pain-icon { font-size: 30px; margin-bottom: 14px; }
+  .pain-head { font-size: 15px; font-weight: 700; color: var(--slate); margin-bottom: 10px; }
+  .pain-body { font-size: 13px; color: var(--muted); line-height: 1.85; }
+
+  /* FEATURES */
+  .features { max-width: 1120px; margin: 0 auto; padding: 104px 48px; }
+  .feat-list { display: flex; flex-direction: column; gap: 72px; margin-top: 64px; }
+  .feat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .feat-row.rev { direction: rtl; }
+  .feat-row.rev > * { direction: ltr; }
+  .feat-eye { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; color: var(--sky); margin-bottom: 12px; }
+  .feat-head { font-family: 'Kaisei Opti', serif; font-size: 28px; color: var(--slate); margin-bottom: 14px; line-height: 1.5; }
+  .feat-body { font-size: 14px; color: var(--muted); line-height: 1.95; }
+  .feat-vis { background: var(--slate-lt); border-radius: 14px; border: 1px solid var(--border); padding: 24px; }
+
+  /* PLAN (single) */
+  .plans { background: var(--slate); padding: 104px 48px; }
+  .plans-inner { max-width: 560px; margin: 0 auto; }
+  .plans-title { font-family: 'Kaisei Opti', serif; font-size: 38px; color: var(--white); text-align: center; margin-bottom: 8px; }
+  .plans-sub { font-size: 14px; color: rgba(255,255,255,0.55); text-align: center; margin-bottom: 48px; }
+  .plan { background: var(--white); border: 2px solid var(--gold); border-radius: 16px; padding: 40px 36px; position: relative; }
+  .plan-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--gold); color: white; font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 20px; letter-spacing: 0.05em; white-space: nowrap; }
+  .plan-name { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 8px; color: var(--gold); }
+  .plan-price { font-family: 'Kaisei Opti', serif; font-size: 46px; line-height: 1; margin-bottom: 4px; color: var(--slate); }
+  .plan-note { font-size: 12px; margin-bottom: 28px; color: var(--muted); }
+  .plan-items { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+  .pi { font-size: 13px; display: flex; align-items: flex-start; gap: 8px; color: var(--ink); }
+  .pi .ck { color: var(--gold); font-weight: 700; flex-shrink: 0; }
+  .pi small { display: block; font-size: 11px; margin-top: 1px; color: var(--muted); }
+  .btn-buy { display: block; width: 100%; padding: 13px; text-align: center; background: var(--gold); color: white; border: none; border-radius: 9px; font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; transition: background 0.18s; }
+  .btn-buy:hover { background: #B07F2E; }
+
+  /* FOOTER CTA */
+  .fcta { padding: 104px 48px; text-align: center; }
+  .fcta-title { font-family: 'Kaisei Opti', serif; font-size: 50px; color: var(--slate); margin-bottom: 20px; line-height: 1.4; }
+  .fcta-sub { font-size: 15px; color: var(--muted); margin-bottom: 44px; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 32px 48px; display: flex; align-items: center; justify-content: space-between; background: var(--bg); gap: 24px; flex-wrap: wrap; }
+  .ft-logo { font-family: 'Tilt Warp', cursive; font-size: 18px; color: var(--slate); }
+  .ft-by { font-size: 11px; color: var(--muted); margin-left: 8px; }
+  .ft-links { display: flex; gap: 24px; }
+  .ft-link { font-size: 12px; color: var(--muted); transition: color 0.15s; }
+  .ft-link:hover { color: var(--slate); }
+  .ft-copy { font-size: 11px; color: var(--border-dk); }
+
+  /* RESPONSIVE */
+  @media (max-width: 800px) {
+    header { padding: 0 20px; }
+    .hero { grid-template-columns: 1fr; padding: 64px 20px 40px; gap: 40px; }
+    h1 { font-size: 40px; }
+    .pain { padding: 64px 20px; }
+    .pain-grid { grid-template-columns: 1fr; }
+    .sec-title { font-size: 30px; margin-bottom: 40px; }
+    .features { padding: 64px 20px; }
+    .feat-list { gap: 48px; margin-top: 40px; }
+    .feat-row { grid-template-columns: 1fr; }
+    .feat-row.rev { direction: ltr; }
+    .plans { padding: 64px 20px; }
+    .plans-title { font-size: 30px; }
+    .plan { padding: 32px 24px; }
+    .fcta { padding: 64px 20px; }
+    .fcta-title { font-size: 36px; }
+    footer { padding: 28px 20px; flex-direction: column; align-items: flex-start; }
+    .ft-links { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div>
+    <span class="hd-logo">EasyReply</span>
+    <span class="hd-kana">빠른 답장 템플릿</span>
+  </div>
+  <div class="hd-right">
+    <a href="../" class="hd-lang">日本語</a>
+    <a href="../en/" class="hd-lang">English</a>
+    <a data-cta-placement="nav" href="https://mimily7.booth.pm/items/8485831" target="_blank" rel="noopener" class="btn-nav">BOOTH에서 구매 →</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <p class="eyebrow">For Creators</p>
+    <h1>내 말투로,<br>바로 답장하기.</h1>
+    <p class="hero-desc">
+      "뭐라고 답장해야 하지?" — 이제 그런 고민은 없습니다.<br>
+      템플릿 선택 → 내용 수정 → 복사 → 전송. 30분이 30초로 줄어듭니다.
+    </p>
+    <div class="cta-group">
+      <a data-cta-placement="hero" href="https://mimily7.booth.pm/items/8485831" target="_blank" rel="noopener" class="btn-primary">BOOTH에서 구매하기 →</a>
+      <span class="cta-note">로컬 버전 · 일회성 구매 ¥880 · 온라인 한국어 버전은 준비 중입니다</span>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mk-hd">
+      <span class="mk-hd-logo">EasyReply</span>
+      <span class="mk-hd-kana">내 말투. 내 방식으로.</span>
+    </div>
+    <div class="mk-gold"></div>
+    <div class="mk-body">
+      <div class="mk-l">
+        <div class="mk-lbl">단계</div>
+        <div class="mk-phases">
+          <div class="mk-ph on">의뢰 전</div>
+          <div class="mk-ph">진행 중</div>
+          <div class="mk-ph">완료</div>
+        </div>
+        <div class="mk-lbl" style="margin-top:4px;">답장 패턴</div>
+        <div class="mk-dirs">
+          <div class="mk-dir a">수락</div>
+          <div class="mk-dir b">확인</div>
+          <div class="mk-dir c">거절</div>
+        </div>
+        <div class="mk-lbl" style="margin-top:4px;">템플릿</div>
+        <div class="mk-btn on">✓ 수락 및 확인</div>
+        <div class="mk-btn">입금 안내</div>
+        <div class="mk-btn">견적 발송</div>
+      </div>
+      <div class="mk-r">
+        <div class="mk-tones">
+          <div class="mk-tone warm">Warm</div>
+          <div class="mk-tone formal">Formal</div>
+        </div>
+        <div class="mk-prev">
+          문의 주셔서 감사합니다.<br>
+          내용을 확인 후 빠르게 답변드리겠습니다.<br><br>
+          조금만 기다려 주시면 감사하겠습니다.
+        </div>
+        <div class="mk-acts">
+          <div class="mk-copy">복사</div>
+          <div class="mk-reset">초기화</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN -->
+<section class="pain">
+  <div class="pain-inner">
+    <p class="eyebrow" style="text-align:center;">Problem</p>
+    <h2 class="sec-title">이런 답장에<br>시간을 뺏기고 있지 않나요?</h2>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-icon">💭</div>
+        <p class="pain-head">말이 안 떠오른다</p>
+        <p class="pain-body">정중하게 쓰고 싶은데, 빈 메시지 창을 멍하니 바라보는 시간이 작업 시간을 갉아먹습니다.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">📋</div>
+        <p class="pain-head">같은 문장을 또 쓴다</p>
+        <p class="pain-body">입금 안내, 시안 확인, 정중한 거절 — 거의 똑같은데 매번 처음부터 다시 씁니다.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">😰</div>
+        <p class="pain-head">거절이 어렵다</p>
+        <p class="pain-body">예산이나 일정이 맞지 않아도, 적절한 거절 문구가 떠오르지 않아 답장이 늦어집니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <p class="eyebrow" style="text-align:center;">How it works</p>
+  <h2 class="sec-title">3단계로 모든 답장을 커버</h2>
+
+  <div class="feat-list">
+
+    <div class="feat-row">
+      <div>
+        <p class="feat-eye">Phase 01 — 의뢰 전</p>
+        <h3 class="feat-head">수락, 확인, 거절 —<br>방향만 고르면 됩니다.</h3>
+        <p class="feat-body">
+          수락할 때는 견적을 그대로 문장에 삽입. 거절할 때도 예산·일정·기타 중 이유를 고르기만 하면 정중한 거절 문구가 완성됩니다.
+        </p>
+      </div>
+      <div class="feat-vis">
+        <div style="display:flex;gap:6px;margin-bottom:14px;">
+          <span style="flex:1;padding:9px 4px;background:var(--gold-lt);color:#9A7020;border-radius:8px;text-align:center;font-weight:700;font-size:12px;">수락</span>
+          <span style="flex:1;padding:9px 4px;background:var(--slate-lt);color:var(--slate);border-radius:8px;text-align:center;font-weight:700;font-size:12px;">확인 후 수락</span>
+          <span style="flex:1;padding:9px 4px;background:#EDEDED;color:var(--muted);border-radius:8px;text-align:center;font-weight:700;font-size:12px;">거절</span>
+        </div>
+        <div style="background:white;border-radius:10px;padding:14px;font-size:12px;line-height:1.8;color:var(--ink);border:1.5px dashed var(--border);">
+          문의 주셔서 감사합니다.<br>
+          예산을 알려주시면 검토 후 답변드리겠습니다.<br><br>
+          답변 기다리겠습니다.
+        </div>
+      </div>
+    </div>
+
+    <div class="feat-row rev">
+      <div>
+        <p class="feat-eye">Phase 02 — 진행 중</p>
+        <h3 class="feat-head">제작 흐름에 맞춘<br>템플릿이 준비되어 있습니다.</h3>
+        <p class="feat-body">
+          작업 시작 · 시안 확인 · 수정 대응 · 입금 안내까지. 진행 상황에 맞춰 버튼만 누르면 전문적인 답장을 보낼 수 있습니다.
+        </p>
+      </div>
+      <div class="feat-vis" style="display:flex;flex-direction:column;gap:7px;">
+        <div style="font-size:10px;font-weight:700;color:var(--sky);letter-spacing:0.08em;">입금 후 착수</div>
+        <div style="background:white;border:1px solid var(--border);border-radius:7px;padding:9px 12px;font-size:13px;">작업 시작 안내</div>
+        <div style="font-size:10px;font-weight:700;color:var(--sky);letter-spacing:0.08em;margin-top:4px;">시안</div>
+        <div style="background:white;border:1.5px solid var(--sky);border-radius:7px;padding:9px 12px;font-size:13px;color:var(--slate);font-weight:700;">✓ 시안 확인 요청</div>
+        <div style="background:white;border:1px solid var(--border);border-radius:7px;padding:9px 12px;font-size:13px;">시안 확인 후 수정 답변</div>
+        <div style="font-size:10px;font-weight:700;color:var(--sky);letter-spacing:0.08em;margin-top:4px;">완성물 · 입금</div>
+        <div style="background:white;border:1px solid var(--border);border-radius:7px;padding:9px 12px;font-size:13px;">작업 완료 · 입금 안내</div>
+      </div>
+    </div>
+
+    <div class="feat-row">
+      <div>
+        <p class="feat-eye">Phase 03 — 완료</p>
+        <h3 class="feat-head">URL과 비밀번호만 입력하면<br>납품 메시지 완성.</h3>
+        <p class="feat-body">
+          변수 입력란에 다운로드 URL과 비밀번호만 넣으면 됩니다. 포트폴리오 게재 안내 문구도 자동으로 포함됩니다.
+        </p>
+      </div>
+      <div class="feat-vis" style="display:flex;flex-direction:column;gap:10px;">
+        <div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">다운로드 URL</div>
+          <div style="background:white;border:1.5px solid var(--sky);border-radius:7px;padding:8px 12px;font-size:12px;color:var(--ink);">https://drive.google.com/...</div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">비밀번호</div>
+          <div style="background:white;border:1.5px solid var(--sky);border-radius:7px;padding:8px 12px;font-size:12px;color:var(--ink);">delivery_pass</div>
+        </div>
+        <div style="background:white;border-radius:10px;padding:12px;font-size:11px;line-height:1.8;color:var(--ink);border:1.5px dashed var(--border);">
+          작업물을 납품드립니다.<br>
+          【다운로드 URL】<br>https://drive.google.com/...<br>
+          【비밀번호】delivery_pass
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PLAN -->
+<section class="plans">
+  <div class="plans-inner">
+    <p class="eyebrow" style="text-align:center;">Plan</p>
+    <h2 class="plans-title">심플한 가격</h2>
+    <p class="plans-sub">회원가입 없이, HTML 파일 하나로 바로 사용합니다.</p>
+    <div class="plan">
+      <div class="plan-badge">로컬 버전</div>
+      <p class="plan-name">EASYREPLY</p>
+      <p class="plan-price">¥880</p>
+      <p class="plan-note">일회성 구매 · 구독 없음 · 영구 사용</p>
+      <ul class="plan-items">
+        <li class="pi"><span class="ck">✓</span>모든 템플릿 무제한 사용</li>
+        <li class="pi"><span class="ck">✓</span><span>단계 · 답장 패턴 · 버튼 무제한 추가<small>내 업종에 맞게 자유롭게 커스터마이즈</small></span></li>
+        <li class="pi"><span class="ck">✓</span><span>완전 커스터마이즈<small>어떤 템플릿이든 내 말투로 편집·저장</small></span></li>
+        <li class="pi"><span class="ck">✓</span><span>데이터 내보내기 · 가져오기<small>1클릭 완전 복원</small></span></li>
+        <li class="pi"><span class="ck">✓</span><span>광고 없음 · 완전 오프라인<small>인터넷 없이 어디서든 사용 가능</small></span></li>
+        <li class="pi"><span class="ck">✓</span><span>데이터는 내 기기에만 저장<small>외부 업로드 없음</small></span></li>
+      </ul>
+      <a data-cta-placement="pricing" href="https://mimily7.booth.pm/items/8485831" target="_blank" rel="noopener" class="btn-buy">BOOTH에서 구매하기 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="fcta">
+  <p class="eyebrow">Get started</p>
+  <h2 class="fcta-title">답장 고민할 시간에,<br>작업에 집중하세요.</h2>
+  <p class="fcta-sub">BOOTH에서 로컬 버전을 구매하면 바로 사용할 수 있습니다.</p>
+  <a data-cta-placement="footer" href="https://mimily7.booth.pm/items/8485831" target="_blank" rel="noopener" class="btn-primary">BOOTH에서 구매하기 →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <span class="ft-logo">EasyReply</span>
+    <span class="ft-by">by Mimily</span>
+  </div>
+  <div class="ft-links">
+    <a href="https://mimilyappdev.github.io/legal/terms.html" class="ft-link">이용약관</a>
+    <a href="https://mimilyappdev.github.io/legal/privacy.html" class="ft-link">개인정보처리방침</a>
+    <a href="https://mimilyappdev.github.io/" class="ft-link">Mimily 앱 목록</a>
+  </div>
+  <p class="ft-copy">© 2026 Mimily</p>
+</footer>
+
+<script>
+/* BOOTHへのリンクのクリックを計測する */
+document.addEventListener("click",e=>{
+  const link=e.target.closest&&e.target.closest('a[href*="booth.pm"]');
+  if(link&&typeof gtag==="function"){
+    gtag("event","cta_click",{
+      site_id:"easyreply_lp_ko",
+      cta_name:"easyreply_local_booth",
+      cta_placement:link.dataset.ctaPlacement||"other",
+      link_destination:"booth"
+    });
+  }
+});
+</script>
+</body>
+</html>

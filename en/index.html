@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Mimily analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Y1QD7RYSJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7Y1QD7RYSJ', { site_id: 'easyreply_lp_en' });
+  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EasyReply — Reply Templates for Freelance Creators</title>
+<meta name="description" content="From accepting commissions to final delivery — EasyReply covers every reply freelance creators need. No sign-up. Free to use.">
+<link rel="canonical" href="https://mimilyappdev.github.io/easyreply/en/">
+<link rel="alternate" hreflang="ja" href="https://mimilyappdev.github.io/easyreply/">
+<link rel="alternate" hreflang="en" href="https://mimilyappdev.github.io/easyreply/en/">
+<link rel="alternate" hreflang="x-default" href="https://mimilyappdev.github.io/easyreply/">
+<meta property="og:title" content="EasyReply — Reply Templates for Freelance Creators">
+<meta property="og:description" content="Stop writing the same replies from scratch. EasyReply has every message covered.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tilt+Warp&family=Kaisei+Opti:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #F7F2EC;
+    --bg-alt:    #EDE7DF;
+    --surface:   #FFFFFF;
+    --ink:       #2E2A26;
+    --muted:     #7A7068;
+    --slate:     #4A5C6A;
+    --slate-dk:  #38495A;
+    --slate-lt:  #E8EEF2;
+    --sky:       #8BA5B5;
+    --gold:      #C8943A;
+    --gold-lt:   #F5E8CF;
+    --border:    #DDD5C8;
+    --border-dk: #C0B8AE;
+    --white:     #FFFFFF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    background: var(--bg); color: var(--ink);
+    line-height: 1.7; -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* HEADER */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(247,242,236,0.93);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .hd-logo { font-family: 'Tilt Warp', cursive; font-size: 22px; color: var(--slate); }
+  .hd-kana { font-size: 11px; color: var(--muted); margin-left: 8px; }
+  .hd-right { display: flex; align-items: center; gap: 16px; }
+  .hd-lang { font-size: 12px; color: var(--muted); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; transition: color 0.15s; }
+  .hd-lang:hover { color: var(--slate); }
+  .btn-nav {
+    padding: 9px 24px; background: var(--slate); color: var(--white);
+    border: none; border-radius: 8px;
+    font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: background 0.18s; display: inline-block;
+  }
+  .btn-nav:hover { background: var(--slate-dk); }
+
+  /* HERO */
+  .hero {
+    max-width: 1120px; margin: 0 auto;
+    padding: 104px 48px 88px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; align-items: center;
+  }
+  .eyebrow {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.15em; color: var(--gold);
+    margin-bottom: 20px; text-transform: uppercase;
+  }
+  .hero-sale {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--gold-lt); color: #9A7020; border: 1px solid #E0C060;
+    border-radius: 20px; padding: 7px 18px; font-size: 12.5px; font-weight: 700;
+    margin-bottom: 20px; transition: background 0.15s;
+  }
+  .hero-sale:hover { background: #EFDCB0; }
+  h1 {
+    font-family: 'Kaisei Opti', serif;
+    font-size: 54px; line-height: 1.3;
+    color: var(--slate); margin-bottom: 24px;
+  }
+  .hero-desc { font-size: 15px; color: var(--muted); line-height: 1.95; margin-bottom: 40px; }
+  .cta-group { display: flex; gap: 16px; align-items: center; }
+  .btn-primary {
+    padding: 14px 34px; background: var(--slate); color: var(--white);
+    border: none; border-radius: 10px;
+    font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 15px; font-weight: 700;
+    cursor: pointer; display: inline-block;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: var(--slate-dk); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(74,92,106,0.28); }
+  .cta-note { font-size: 12px; color: var(--border-dk); }
+
+  /* MOCKUP */
+  .mockup {
+    background: var(--white); border-radius: 16px;
+    box-shadow: 0 16px 56px rgba(46,42,38,0.13);
+    border: 1px solid var(--border); overflow: hidden;
+    transform: rotate(1.5deg);
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .mockup:hover { transform: rotate(0deg) scale(1.01); }
+  .mk-hd { background: var(--slate); padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
+  .mk-hd-logo { font-family: 'Tilt Warp', cursive; font-size: 15px; color: white; }
+  .mk-hd-kana { font-size: 9px; color: rgba(255,255,255,0.45); }
+  .mk-gold { height: 2px; background: linear-gradient(90deg,#C8943A,#E0B050,#C8943A); }
+  .mk-body { display: grid; grid-template-columns: 136px 1fr; min-height: 288px; }
+  .mk-l { background: #EDE7DF; padding: 12px; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+  .mk-lbl { font-size: 9px; color: var(--muted); font-weight: 700; letter-spacing: 0.06em; margin-bottom: 1px; }
+  .mk-phases { display: flex; gap: 3px; }
+  .mk-ph { flex: 1; padding: 5px 2px; border-radius: 5px; font-size: 8px; text-align: center; background: white; color: var(--muted); border: 1px solid var(--border); }
+  .mk-ph.on { background: var(--slate); color: white; border-color: var(--slate); }
+  .mk-dirs { display: flex; gap: 3px; }
+  .mk-dir { flex: 1; padding: 5px 2px; border-radius: 6px; font-size: 8px; text-align: center; font-weight: 700; }
+  .mk-dir.a { background: var(--gold-lt); color: #9A7020; }
+  .mk-dir.b { background: var(--slate-lt); color: var(--slate); }
+  .mk-dir.c { background: #EDEDED; color: var(--muted); }
+  .mk-btn { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; font-size: 9px; color: var(--ink); }
+  .mk-btn.on { border-color: var(--sky); color: var(--slate); font-weight: 700; }
+  .mk-r { padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .mk-tones { display: flex; gap: 5px; }
+  .mk-tone { padding: 4px 10px; border-radius: 6px; font-size: 9px; border: 1.5px solid var(--border); background: white; font-family: 'Tilt Warp', cursive; }
+  .mk-tone.warm { color: var(--gold); border-color: #E0C060; }
+  .mk-tone.formal { background: var(--slate); color: white; border-color: var(--slate); }
+  .mk-prev { flex: 1; border: 1.5px dashed var(--border); border-radius: 8px; background: white; padding: 10px; font-size: 8.5px; line-height: 1.75; color: var(--ink); min-height: 130px; }
+  .mk-acts { display: flex; gap: 5px; align-items: center; }
+  .mk-copy { padding: 5px 14px; background: var(--slate); color: white; border-radius: 6px; font-size: 9px; font-weight: 700; }
+  .mk-reset { padding: 5px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 9px; color: var(--muted); background: white; }
+
+  /* PAIN */
+  .pain { background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 88px 48px; }
+  .pain-inner { max-width: 1120px; margin: 0 auto; }
+  .sec-title { font-family: 'Kaisei Opti', serif; font-size: 38px; text-align: center; color: var(--slate); margin-bottom: 60px; line-height: 1.5; }
+  .pain-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+  .pain-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 28px 24px; position: relative; overflow: hidden; }
+  .pain-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); opacity: 0.55; }
+  .pain-icon { font-size: 30px; margin-bottom: 14px; }
+  .pain-head { font-size: 15px; font-weight: 700; color: var(--slate); margin-bottom: 10px; }
+  .pain-body { font-size: 13px; color: var(--muted); line-height: 1.85; }
+
+  /* FEATURES */
+  .features { max-width: 1120px; margin: 0 auto; padding: 104px 48px; }
+  .feat-list { display: flex; flex-direction: column; gap: 72px; margin-top: 64px; }
+  .feat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .feat-row.rev { direction: rtl; }
+  .feat-row.rev > * { direction: ltr; }
+  .feat-eye { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; color: var(--sky); margin-bottom: 12px; }
+  .feat-head { font-family: 'Kaisei Opti', serif; font-size: 28px; color: var(--slate); margin-bottom: 14px; line-height: 1.5; }
+  .feat-body { font-size: 14px; color: var(--muted); line-height: 1.95; }
+  .feat-vis { background: var(--slate-lt); border-radius: 14px; border: 1px solid var(--border); padding: 24px; }
+
+  /* PLANS */
+  .plans { background: var(--slate); padding: 104px 48px; }
+  .plans-inner { max-width: 1060px; margin: 0 auto; }
+  .plans-title { font-family: 'Kaisei Opti', serif; font-size: 38px; color: var(--white); text-align: center; margin-bottom: 8px; }
+  .plans-sub { font-size: 14px; color: rgba(255,255,255,0.55); text-align: center; margin-bottom: 60px; }
+  .plan-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; align-items: start; }
+  .plan { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); border-radius: 16px; padding: 32px 28px; }
+  .plan.pro { background: var(--white); border: 2px solid var(--gold); position: relative; }
+  .plan-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--gold); color: white; font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 20px; letter-spacing: 0.05em; white-space: nowrap; }
+  .plan-name { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .plan:not(.pro) .plan-name { color: rgba(255,255,255,0.55); }
+  .plan.pro .plan-name { color: var(--gold); }
+  .plan-price { font-family: 'Kaisei Opti', serif; font-size: 42px; line-height: 1; margin-bottom: 4px; }
+  .plan:not(.pro) .plan-price { color: white; }
+  .plan.pro .plan-price { color: var(--slate); }
+  .plan-note { font-size: 12px; margin-bottom: 28px; }
+  .plan:not(.pro) .plan-note { color: rgba(255,255,255,0.4); }
+  .plan.pro .plan-note { color: var(--muted); }
+  .plan-items { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+  .pi { font-size: 13px; display: flex; align-items: flex-start; gap: 8px; }
+  .plan:not(.pro) .pi { color: rgba(255,255,255,0.8); }
+  .plan.pro .pi { color: var(--ink); }
+  .pi .ck { color: var(--gold); font-weight: 700; flex-shrink: 0; }
+  .pi .na { color: rgba(255,255,255,0.3); flex-shrink: 0; }
+  .plan.pro .pi .na { color: var(--border); }
+  .pi small { display: block; font-size: 11px; margin-top: 1px; }
+  .plan:not(.pro) .pi small { color: rgba(255,255,255,0.45); }
+  .plan.pro .pi small { color: var(--muted); }
+  .btn-free { display: block; width: 100%; padding: 12px; text-align: center; background: rgba(255,255,255,0.11); color: white; border: 1px solid rgba(255,255,255,0.22); border-radius: 9px; font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; transition: background 0.18s; }
+  .btn-free:hover { background: rgba(255,255,255,0.2); }
+  .btn-soon { display: block; width: 100%; padding: 12px; text-align: center; background: var(--slate-lt); color: var(--muted); border-radius: 9px; font-size: 13px; font-weight: 700; }
+  .btn-buy { display: block; width: 100%; padding: 12px; text-align: center; background: var(--gold); color: var(--white); border: none; border-radius: 9px; font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; transition: background 0.18s; }
+  .btn-buy:hover { background: #B07F2E; }
+  .plans-warn { max-width: 640px; margin: 0 auto 44px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); border-radius: 10px; padding: 14px 20px; font-size: 12.5px; color: rgba(255,255,255,0.85); text-align: center; line-height: 1.8; }
+
+  /* FOOTER CTA */
+  .fcta { padding: 104px 48px; text-align: center; }
+  .fcta-title { font-family: 'Kaisei Opti', serif; font-size: 50px; color: var(--slate); margin-bottom: 20px; line-height: 1.4; }
+  .fcta-sub { font-size: 15px; color: var(--muted); margin-bottom: 44px; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 32px 48px; display: flex; align-items: center; justify-content: space-between; background: var(--bg); gap: 24px; flex-wrap: wrap; }
+  .ft-logo { font-family: 'Tilt Warp', cursive; font-size: 18px; color: var(--slate); }
+  .ft-by { font-size: 11px; color: var(--muted); margin-left: 8px; }
+  .ft-links { display: flex; gap: 24px; }
+  .ft-link { font-size: 12px; color: var(--muted); transition: color 0.15s; }
+  .ft-link:hover { color: var(--slate); }
+  .ft-copy { font-size: 11px; color: var(--border-dk); }
+
+  /* RESPONSIVE */
+  @media (max-width: 800px) {
+    header { padding: 0 20px; }
+    .hero { grid-template-columns: 1fr; padding: 64px 20px 40px; gap: 40px; }
+    h1 { font-size: 40px; }
+    .pain { padding: 64px 20px; }
+    .pain-grid { grid-template-columns: 1fr; }
+    .sec-title { font-size: 30px; margin-bottom: 40px; }
+    .features { padding: 64px 20px; }
+    .feat-list { gap: 48px; margin-top: 40px; }
+    .feat-row { grid-template-columns: 1fr; }
+    .feat-row.rev { direction: ltr; }
+    .plans { padding: 64px 20px; }
+    .plan-grid { grid-template-columns: 1fr; }
+    .plans-title { font-size: 30px; }
+    .fcta { padding: 64px 20px; }
+    .fcta-title { font-size: 36px; }
+    footer { padding: 28px 20px; flex-direction: column; align-items: flex-start; }
+    .ft-links { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div>
+    <span class="hd-logo">EasyReply</span>
+    <span class="hd-kana">ラクリプ</span>
+  </div>
+  <div class="hd-right">
+    <a href="../" class="hd-lang">日本語</a>
+    <a href="../ko/" class="hd-lang">한국어</a>
+    <a href="../dist/" class="btn-nav">Start free →</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <a data-cta-placement="hero" href="https://mimily7.booth.pm/items/8485831" target="_blank" rel="noopener" class="hero-sale">🎉 Local version (one-time ¥880) now available →</a>
+    <p class="eyebrow">For Creators</p>
+    <h1>Reply in<br>your own words.</h1>
+    <p class="hero-desc">
+      No notes app. No spreadsheet.<br>
+      Just EasyReply.
+    </p>
+    <div class="cta-group">
+      <a href="../dist/" class="btn-primary">Start for free →</a>
+      <span class="cta-note">No account needed · Works in your browser</span>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mk-hd">
+      <span class="mk-hd-logo">EasyReply</span>
+      <span class="mk-hd-kana">Your words. Your way.</span>
+    </div>
+    <div class="mk-gold"></div>
+    <div class="mk-body">
+      <div class="mk-l">
+        <div class="mk-lbl">PHASE</div>
+        <div class="mk-phases">
+          <div class="mk-ph on">Before</div>
+          <div class="mk-ph">During</div>
+          <div class="mk-ph">Done</div>
+        </div>
+        <div class="mk-lbl" style="margin-top:4px;">REPLY TYPE</div>
+        <div class="mk-dirs">
+          <div class="mk-dir a">Accept</div>
+          <div class="mk-dir b">Confirm</div>
+          <div class="mk-dir c">Decline</div>
+        </div>
+        <div class="mk-lbl" style="margin-top:4px;">TEMPLATE</div>
+        <div class="mk-btn on">✓ Accept & Confirm</div>
+        <div class="mk-btn">Payment Info</div>
+        <div class="mk-btn">Send Estimate</div>
+      </div>
+      <div class="mk-r">
+        <div class="mk-tones">
+          <div class="mk-tone warm">Warm</div>
+          <div class="mk-tone formal">Formal</div>
+        </div>
+        <div class="mk-prev">
+          Thank you for your inquiry.<br>
+          I will review the details and get back to you shortly.<br><br>
+          Please allow me a little time to respond — I appreciate your patience.
+        </div>
+        <div class="mk-acts">
+          <div class="mk-copy">Copy</div>
+          <div class="mk-reset">Reset</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN -->
+<section class="pain">
+  <div class="pain-inner">
+    <p class="eyebrow" style="text-align:center;">Problem</p>
+    <h2 class="sec-title">Sound familiar?</h2>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-icon">💭</div>
+        <p class="pain-head">Words don't come easy</p>
+        <p class="pain-body">You want to reply professionally, but staring at a blank message drains time you should be spending on your work.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">📋</div>
+        <p class="pain-head">Writing the same thing, again</p>
+        <p class="pain-body">Payment details, rough draft check, polite declines — nearly identical every time, yet written from scratch every time.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">😰</div>
+        <p class="pain-head">Saying no is hard</p>
+        <p class="pain-body">When the budget or deadline doesn't work, finding the right words to decline gracefully stalls your reply for hours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <p class="eyebrow" style="text-align:center;">How it works</p>
+  <h2 class="sec-title">3 phases. Every reply covered.</h2>
+
+  <div class="feat-list">
+
+    <div class="feat-row">
+      <div>
+        <p class="feat-eye">Phase 01 — Before the Commission</p>
+        <h3 class="feat-head">Accept, clarify, or decline —<br>just pick a direction.</h3>
+        <p class="feat-body">
+          Accepting? Your estimate slots right into the message. Declining? Choose a reason — budget, deadline, schedule, or other — and a polite, professional refusal builds itself.
+        </p>
+      </div>
+      <div class="feat-vis">
+        <div style="display:flex;gap:6px;margin-bottom:14px;">
+          <span style="flex:1;padding:9px 4px;background:var(--gold-lt);color:#9A7020;border-radius:8px;text-align:center;font-weight:700;font-size:12px;">Accept</span>
+          <span style="flex:1;padding:9px 4px;background:var(--slate-lt);color:var(--slate);border-radius:8px;text-align:center;font-weight:700;font-size:12px;">Confirm first</span>
+          <span style="flex:1;padding:9px 4px;background:#EDEDED;color:var(--muted);border-radius:8px;text-align:center;font-weight:700;font-size:12px;">Decline</span>
+        </div>
+        <div style="background:white;border-radius:10px;padding:14px;font-size:12px;line-height:1.8;color:var(--ink);border:1.5px dashed var(--border);">
+          Thank you for your inquiry.<br>
+          Could you please share your budget for this project?<br><br>
+          I look forward to hearing from you.
+        </div>
+      </div>
+    </div>
+
+    <div class="feat-row rev">
+      <div>
+        <p class="feat-eye">Phase 02 — In Progress</p>
+        <h3 class="feat-head">Templates for every step<br>of production.</h3>
+        <p class="feat-body">
+          From kickoff to rough draft review to revision replies — press a button at each stage and send a polished, professional message every time.
+        </p>
+      </div>
+      <div class="feat-vis" style="display:flex;flex-direction:column;gap:7px;">
+        <div style="font-size:10px;font-weight:700;color:var(--sky);letter-spacing:0.08em;">After payment</div>
+        <div style="background:white;border:1px solid var(--border);border-radius:7px;padding:9px 12px;font-size:13px;">Start production</div>
+        <div style="font-size:10px;font-weight:700;color:var(--sky);letter-spacing:0.08em;margin-top:4px;">Rough draft</div>
+        <div style="background:white;border:1.5px solid var(--sky);border-radius:7px;padding:9px 12px;font-size:13px;color:var(--slate);font-weight:700;">✓ Send rough draft</div>
+        <div style="background:white;border:1px solid var(--border);border-radius:7px;padding:9px 12px;font-size:13px;">Revision reply</div>
+        <div style="font-size:10px;font-weight:700;color:var(--sky);letter-spacing:0.08em;margin-top:4px;">Final</div>
+        <div style="background:white;border:1px solid var(--border);border-radius:7px;padding:9px 12px;font-size:13px;">Final check & delivery</div>
+      </div>
+    </div>
+
+    <div class="feat-row">
+      <div>
+        <p class="feat-eye">Phase 03 — Delivery</p>
+        <h3 class="feat-head">Drop in the URL and password.<br>Done.</h3>
+        <p class="feat-body">
+          Enter your download link and password, and the delivery message writes itself. Works with WeTransfer, Google Drive, MEGA — anywhere you share files.
+        </p>
+      </div>
+      <div class="feat-vis" style="display:flex;flex-direction:column;gap:10px;">
+        <div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">Download URL</div>
+          <div style="background:white;border:1.5px solid var(--sky);border-radius:7px;padding:8px 12px;font-size:12px;color:var(--ink);">https://drive.google.com/...</div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">Password</div>
+          <div style="background:white;border:1.5px solid var(--sky);border-radius:7px;padding:8px 12px;font-size:12px;color:var(--ink);">delivery_pass</div>
+        </div>
+        <div style="background:white;border-radius:10px;padding:12px;font-size:11px;line-height:1.8;color:var(--ink);border:1.5px dashed var(--border);">
+          Here's your delivery!<br>
+          【Download URL】<br>https://drive.google.com/...<br>
+          【Password】delivery_pass
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PLANS -->
+<section class="plans">
+  <div class="plans-inner">
+    <p class="eyebrow" style="text-align:center;">Plans</p>
+    <h2 class="plans-title">2 Plans</h2>
+    <p class="plans-sub">Start free. Upgrade to the local version when you're ready.</p>
+    <p class="plans-warn">⚠️ In the free version, you can export your data, but you can't import it back. If your browser cache is cleared, your templates can't be restored.</p>
+    <div class="plan-grid" style="grid-template-columns:1fr 1fr;">
+
+      <div class="plan">
+        <p class="plan-name">FREE</p>
+        <p class="plan-price">$0</p>
+        <p class="plan-note">Free forever</p>
+        <ul class="plan-items">
+          <li class="pi"><span class="ck">✓</span>All templates, unlimited use</li>
+          <li class="pi"><span class="ck">✓</span>3 phases (Before / In Progress / Done)</li>
+          <li class="pi"><span class="ck">✓</span>Estimate builder</li>
+          <li class="pi"><span class="ck">✓</span>Up to 3 reply patterns</li>
+          <li class="pi"><span class="ck">✓</span><span>Data export<small>Export only · manual backup</small></span></li>
+          <li class="pi"><span class="na">—</span>Business name / SNS / DL link storage</li>
+          <li class="pi"><span class="na">—</span>Unlimited phases &amp; buttons</li>
+          <li class="pi"><span class="na">—</span><span>Data import<small>⚠️ Can't be restored if cache is cleared</small></span></li>
+          <li class="pi"><span class="na">—</span>Auto-save</li>
+        </ul>
+        <a href="../dist/" class="btn-free">Start for free</a>
+      </div>
+
+      <div class="plan pro">
+        <div class="plan-badge">Recommended</div>
+        <p class="plan-name">PRO</p>
+        <p class="plan-price">¥880</p>
+        <p class="plan-note">One-time purchase · Local version (on BOOTH)</p>
+        <ul class="plan-items">
+          <li class="pi"><span class="ck">✓</span>All templates, unlimited use</li>
+          <li class="pi"><span class="ck">✓</span>3 phases / Estimate builder</li>
+          <li class="pi"><span class="ck">✓</span><span>Unlimited reply patterns, phases &amp; buttons<small>Customize freely for your line of work</small></span></li>
+          <li class="pi"><span class="ck">✓</span><span>Business name &amp; SNS link storage<small>Auto-inserted into templates</small></span></li>
+          <li class="pi"><span class="ck">✓</span><span>DL link &amp; password storage<small>No re-entry needed</small></span></li>
+          <li class="pi"><span class="ck">✓</span>2 custom color schemes</li>
+          <li class="pi"><span class="ck">✓</span><span>Data import<small>1-click full restore</small></span></li>
+          <li class="pi"><span class="ck">✓</span><span>Auto-save<small>Backs up automatically on close</small></span></li>
+        </ul>
+        <a data-cta-placement="pricing" href="https://mimily7.booth.pm/items/8485831" target="_blank" rel="noopener" class="btn-buy">Buy on BOOTH →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="fcta">
+  <p class="eyebrow">Get started</p>
+  <h2 class="fcta-title">Stop writing replies.<br>Start creating.</h2>
+  <p class="fcta-sub">No sign-up. Runs entirely in your browser.</p>
+  <a href="../dist/" class="btn-primary">Start for free →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <span class="ft-logo">EasyReply</span>
+    <span class="ft-by">by Mimily</span>
+  </div>
+  <div class="ft-links">
+    <a href="#" class="ft-link">Terms of Use</a>
+    <a href="#" class="ft-link">Privacy Policy</a>
+    <a href="https://mimilyappdev.github.io/" class="ft-link">More Mimily apps</a>
+  </div>
+  <p class="ft-copy">© 2025 Mimily</p>
+</footer>
+
+<script>
+/* BOOTHへのリンクのクリックを計測する */
+document.addEventListener("click",e=>{
+  const link=e.target.closest&&e.target.closest('a[href*="booth.pm"]');
+  if(link&&typeof gtag==="function"){
+    gtag("event","cta_click",{
+      site_id:"easyreply_lp_en",
+      cta_name:"easyreply_local_booth",
+      cta_placement:link.dataset.ctaPlacement||"other",
+      link_destination:"booth"
+    });
+  }
+});
+</script>
+</body>
+</html>
