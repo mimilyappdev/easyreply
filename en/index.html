@@ -252,7 +252,7 @@
 <!-- HERO -->
 <section class="hero">
   <div>
-    <a data-cta-placement="hero" href="https://mimily7.booth.pm/items/8485831" target="_blank" rel="noopener" class="hero-sale">🎉 Local version (one-time ¥880) now available →</a>
+    <a data-cta-placement="hero" href="https://mimilyapptool.gumroad.com/l/easyreply" target="_blank" rel="noopener" class="hero-sale">🎉 Local version (one-time purchase) now available →</a>
     <p class="eyebrow">For Creators</p>
     <h1>Reply in<br>your own words.</h1>
     <p class="hero-desc">
@@ -441,7 +441,7 @@
         <div class="plan-badge">Recommended</div>
         <p class="plan-name">PRO</p>
         <p class="plan-price">¥880</p>
-        <p class="plan-note">One-time purchase · Local version (on BOOTH)</p>
+        <p class="plan-note">One-time purchase · Local version (Gumroad / BOOTH)</p>
         <ul class="plan-items">
           <li class="pi"><span class="ck">✓</span>All templates, unlimited use</li>
           <li class="pi"><span class="ck">✓</span>3 phases / Estimate builder</li>
@@ -452,7 +452,8 @@
           <li class="pi"><span class="ck">✓</span><span>Data import<small>1-click full restore</small></span></li>
           <li class="pi"><span class="ck">✓</span><span>Auto-save<small>Backs up automatically on close</small></span></li>
         </ul>
-        <a data-cta-placement="pricing" href="https://mimily7.booth.pm/items/8485831" target="_blank" rel="noopener" class="btn-buy">Buy on BOOTH →</a>
+        <a data-cta-placement="pricing" href="https://mimilyapptool.gumroad.com/l/easyreply" target="_blank" rel="noopener" class="btn-buy">Buy on Gumroad →</a>
+        <a data-cta-placement="pricing" href="https://mimily7.booth.pm/items/8485831" target="_blank" rel="noopener" class="btn-free" style="margin-top:8px;background:transparent;color:var(--gold);border-color:var(--gold);">Buy on BOOTH →</a>
       </div>
 
     </div>
@@ -482,15 +483,16 @@
 </footer>
 
 <script>
-/* BOOTHへのリンクのクリックを計測する */
+/* BOOTH・Gumroadへのリンクのクリックを計測する */
 document.addEventListener("click",e=>{
-  const link=e.target.closest&&e.target.closest('a[href*="booth.pm"]');
+  const link=e.target.closest&&e.target.closest('a[href*="booth.pm"],a[href*="gumroad.com"]');
   if(link&&typeof gtag==="function"){
+    const dest=link.href.includes("gumroad.com")?"gumroad":"booth";
     gtag("event","cta_click",{
       site_id:"easyreply_lp_en",
-      cta_name:"easyreply_local_booth",
+      cta_name:"easyreply_local_"+dest,
       cta_placement:link.dataset.ctaPlacement||"other",
-      link_destination:"booth"
+      link_destination:dest
     });
   }
 });
